@@ -1,0 +1,18 @@
+body{
+    width: 100%;
+    height: auto;
+}
+.right{
+    float: right;
+}
+.searchForm{
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.search-element{
+    margin-left: 10px;
+}
+.seat{
+    width: 10px;
+}

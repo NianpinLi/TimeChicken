@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!-- 加载公共头部 与 公共CSS -->
+<head th:replace="common/header :: commonHeader"></head>
+
+<body>
+
+<!-- 加载公共JS -->
+<div th:replace="common/header :: footer"></div>
+<!-- 加载专属JS -->
+<script type="text/javascript" th:src="@{/js/common.js}"></script>
+</body>
+
+</html>
