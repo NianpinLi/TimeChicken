@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<!-- 加载公共头部 与 公共CSS -->
-<head th:replace="common/header :: commonHeader"></head>
-
-<body>
-
-<!-- 加载公共JS -->
-<div th:replace="common/header :: footer"></div>
+<!-- 加载公共头部 与 公共CSS JS-->
+<head th:replace="common/common :: common"></head>
 <!-- 加载专属JS -->
-<script type="text/javascript" th:src="@{/js/common.js}"></script>
+<!--<script type="text/javascript" th:src="@{/js/index.js}"></script>-->
+<body class="flat-blue sidebar-collapse">
+<!-- 加载公共导航条 -->
+<div th:replace="common/navigation :: navigation" class="sidebar"></div>
+<div class="content-container wrap">
+    <!-- 加载公共页头 -->
+    <nav th:replace="common/navigation :: header" class="navigation navigation-default"></nav>
+    <!-- 面包屑 -->
+    <div th:replace="common/navigation :: dashboard" class="container-fluid"></div>
+</div>
+<!-- 加载公共页尾 -->
+<footer class="footer" th:replace="common/navigation :: footer"></footer>
 </body>
-
 </html>

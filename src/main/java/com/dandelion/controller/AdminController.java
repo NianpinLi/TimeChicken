@@ -2,14 +2,13 @@ package com.dandelion.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dandelion.Base.BaseController;
-import com.dandelion.bean.Admin;
 import com.dandelion.service.AdminService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +17,7 @@ import java.util.Map;
  * author:    puyiliang
  * description: 用户管理Controller
  */
-@RestController
+@Controller
 @RequestMapping("admin")
 public class AdminController extends BaseController {
 
@@ -26,8 +25,14 @@ public class AdminController extends BaseController {
     private AdminService adminService;
 
     @RequestMapping("selectAdminPageList")
-    public String selectAdminPageList(@RequestParam Map<String,String> paramsMap) throws Exception{
-        List<Admin> result = adminService.selectAdminPageList(paramsMap);
+    public @ResponseBody Map selectAdminPageList(@RequestParam Map<String,String> paramsMap) throws Exception{
+        Map result = adminService.selectAdminPageList(paramsMap);
+        return result;
+    }
+
+    @RequestMapping("loginAdmin")
+    public String loginAdmin(@RequestParam Map<String,String> paramsMap) throws Exception{
+        Map result = adminService.selectAdminPageList(paramsMap);
         Object toJSON = JSONObject.toJSON(result);
         return toJSON.toString();
     }

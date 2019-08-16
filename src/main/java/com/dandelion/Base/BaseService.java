@@ -2,11 +2,15 @@ package com.dandelion.Base;
 
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.StringUtil;
+import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Maps;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -113,5 +117,16 @@ public class BaseService<T, PK extends Serializable> {
                 }
             }
         }
+    }
+
+    public void startPage(Map<String, String> paramsMap){
+        PageHelper.offsetPage(Integer.parseInt(paramsMap.get("offset")), Integer.parseInt(paramsMap.get("limit")));
+    }
+
+    public Map pageResult(List list, long total){
+        HashMap resultMap = Maps.newHashMap();
+        resultMap.put("rows", list);
+        resultMap.put("total", total);
+        return resultMap;
     }
 }
