@@ -1,4 +1,4 @@
-package com.dandelion.Base;
+package com.dandelion.base;
 
 /**
  * ClassName: BaseDao

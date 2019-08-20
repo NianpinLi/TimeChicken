@@ -1,7 +1,6 @@
 package com.dandelion.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.dandelion.Base.BaseController;
+import com.dandelion.base.BaseController;
 import com.dandelion.service.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,10 +30,8 @@ public class AdminController extends BaseController {
     }
 
     @RequestMapping("loginAdmin")
-    public String loginAdmin(@RequestParam Map<String,String> paramsMap) throws Exception{
-        Map result = adminService.selectAdminPageList(paramsMap);
-        Object toJSON = JSONObject.toJSON(result);
-        return toJSON.toString();
+    public @ResponseBody Map loginAdmin(@RequestParam Map<String,String> paramsMap) throws Exception{
+        return adminService.loginAdmin(paramsMap);
     }
 
 }

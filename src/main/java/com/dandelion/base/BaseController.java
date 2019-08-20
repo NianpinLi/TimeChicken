@@ -1,14 +1,14 @@
-package com.dandelion.Base;
+package com.dandelion.base;
 
-import com.google.common.collect.Maps;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,16 +22,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class BaseController {
 
+    @Resource
+    private RedisTemplate<String,String> redisTemplate;
+
     protected HttpServletRequest request;
     protected HttpServletResponse response;
-
-
-//    public String successResult(Object obj){
-//        HashMap<Object, Object> resultMap = Maps.newHashMap();
-//        resultMap.put("result",obj);
-//        resultMap.put("code",)
-//        return "";
-//    }
 
     /**
      * 返回当前调用方法的类名与方法名，做为VIEW的地址

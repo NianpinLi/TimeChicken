@@ -44,8 +44,14 @@ $("#table").bootstrapTable({
         field: 'realName',
         title: '真实姓名'
     }, {
-        field: 'status',
+        field: 'adminStatus',
         title: '状态'
+    }, {
+        field: 'createName',
+        title: '创建人'
+    }, {
+        field: 'createTime',
+        title: '创建时间'
     }],
     onLoadSuccess: function () {
     },

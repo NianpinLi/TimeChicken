@@ -38,6 +38,8 @@
 
         <!-- 指定我们要操作的表明和生成的javabean类名 -->
         <table tableName="admin" domainObjectName="Admin" ></table>
+        <table tableName="role" domainObjectName="Role" ></table>
+        <table tableName="authority" domainObjectName="Authority" ></table>
 
     </context>
 </generatorConfiguration>
