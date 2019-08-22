@@ -11,7 +11,7 @@ body.flat-blue {
 
 /* SideBar */
 .flat-blue .sidebar {
-	background-color: #F64747;
+	background-color: #22A7F0;
 	border-right: 1px solid #EEEEEE;
 }
 
@@ -83,11 +83,11 @@ body.flat-blue {
 }
 
 .flat-blue .navigation-brand:hover {
-	color: #F64747;
+	color: #22A7F0;
 }
 
 .flat-blue .navigation-brand i {
-	color: #F64747;
+	color: #22A7F0;
 }
 
 .flat-blue .navigation-default {
@@ -106,12 +106,12 @@ body.flat-blue {
 
 .flat-blue .navigation-default li.dropdown.open.notification-alert > a.dropdown-toggle {
 	color: #FFF;
-	background-color: #F64747;
+	background-color: #22A7F0;
 }
 
 .flat-blue .navigation-default li.dropdown.notification-alert > a.dropdown-toggle {
 	color: #FFF;
-	background-color: #F64747;
+	background-color: #22A7F0;
 }
 
 
@@ -119,7 +119,7 @@ body.flat-blue {
 }
 
 .flat-blue .navigation-default li.dropdown.notification-alert .dropdown-title-bar {
-	background-color: #F64747;
+	background-color: #22A7F0;
 }
 
 
@@ -149,7 +149,7 @@ body.flat-blue {
 
 
 .flat-blue .navigation-default li.dropdown.notification-alert .message {
-	border:0px solid #F64747;
+	border:0px solid #22A7F0;
 }
 
 .flat-blue .navigation-default .dropdown-menu .notification-list li a {
@@ -168,7 +168,7 @@ body.flat-blue {
 	background-color: #FFF;
 }
 .flat-blue .navigation-default .dropdown-menu .notification-list li .noti-icon.noti-alert {
-	background-color:#F64747;
+	background-color:#22A7F0;
 	color: #FFF;
 }
 
@@ -211,7 +211,7 @@ Page
 }
 
 .flat-blue .page-title.red > * {
-	border-left: 5px solid #F64747;
+	border-left: 5px solid #22A7F0;
 }
 
 .flat-blue .page-title.yellow  > * {
@@ -235,7 +235,7 @@ Block Color
 }
 
 .flat-blue .banner-block.red {
-	background-color: #F64747;
+	background-color: #22A7F0;
 }
 .flat-blue .banner-block.red:hover {
 	background-color: #ed2323;
@@ -245,7 +245,7 @@ Block Color
 	color: #ed2323;
 }
 .flat-blue .banner-block.red .fa-stack .fa.fa-inverse {
-	color: #F64747;
+	color: #22A7F0;
 }
 
 
@@ -327,11 +327,11 @@ Block V.2 Color
 }
 
 .flat-blue .banner-block-v2.red .block-content > .banner-content > .title {
-	background-color: #F64747;
+	background-color: #22A7F0;
 }
 
 .flat-blue .banner-block-v2.red .block-content > .banner-content > .sub-title {
-	color: #F64747;
+	color: #22A7F0;
 }
 
 .flat-blue .banner-block-v2.yellow:hover .block-content > .banner-content > .title {
@@ -387,12 +387,12 @@ Block Content
 }
 
 .content-block.red .block-title {
-	background-color: #F64747;
+	background-color: #22A7F0;
 	color: #FFF;
 }
 
 .content-block.red table thead tr {
-	background-color:  #F64747;
+	background-color:  #22A7F0;
 	color: #FFF;
 }
 
@@ -441,7 +441,7 @@ Block Content
 }
 
 .content-block.red ul.pagination > li.active a {
-	background-color: #F64747;
+	background-color: #22A7F0;
 	color: #FFF;
 }
 
@@ -478,7 +478,7 @@ Breadcrumb
 */
 .flat-blue .breadcrumb a {
 	text-decoration: none;
-	color: #F64747;
+	color: #22A7F0;
 }
 .flat-blue .breadcrumb a:hover {
 	color: #ff9704;
