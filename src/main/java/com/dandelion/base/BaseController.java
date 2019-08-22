@@ -1,5 +1,6 @@
 package com.dandelion.base;
 
+import com.dandelion.bean.Admin;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +33,25 @@ public class BaseController {
      * 返回当前调用方法的类名与方法名，做为VIEW的地址
      * @return current class/method
      */
-    @RequestMapping("toPage")
-    public String toPage(@RequestParam String url) {
-        return url;
+    @RequestMapping("common/login")
+    public String toLogin() {
+        return "common/login";
+    }
+    @RequestMapping("common/noAuthority")
+    public String noAuthority() {
+        return "common/noAuthority";
+    }
+    @RequestMapping("common/index")
+    public String index() {
+        return "common/index";
+    }
+    @RequestMapping("common/error")
+    public String error() {
+        return "common/error";
+    }
+
+    public Admin getAdmin(){
+        return (Admin)getSession().getAttribute("ADMIN");
     }
 
     /**

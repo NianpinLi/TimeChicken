@@ -1,10 +1,14 @@
 package com.dandelion.base;
 
+import com.dandelion.bean.Admin;
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.StringUtil;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -22,9 +26,6 @@ import java.util.Map;
 public class BaseService<T, PK extends Serializable> {
 
     protected void getSearchExample(Map<String, String> paramsMap, Object object, String beanName) throws Exception{
-//        Class clazz = getClass();
-//        String name = clazz.getSimpleName();
-//        name = name.replace("Service","");
         //获取实体BeanClass
         Class beanClass = Class.forName("com.dandelion.bean." + beanName);
         for (String key : paramsMap.keySet()) {
@@ -60,9 +61,6 @@ public class BaseService<T, PK extends Serializable> {
         if (ObjectUtil.isNull(params)){
             return;
         }
-//        Class clazz = getClass();
-//        String name = clazz.getSimpleName();
-//        name = name.replace("Service","");
         //获取实体BeanClass
         Class beanClass = Class.forName("com.dandelion.bean." + beanName);
         StringBuffer methodBuffer = new StringBuffer("and");
@@ -167,6 +165,24 @@ public class BaseService<T, PK extends Serializable> {
         return methodMap;
     }
 
+    /**
+     * setAttribute 存入作用域
+     * @param name String
+     * @param value Object
+     */
+    public void setSession(String name, Object value) {
+        HttpServletRequest request= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        request.getSession().setAttribute(name,value);
+    }
+    public Object getSession(String name) {
+        HttpServletRequest request= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return request.getSession().getAttribute(name);
+    }
+
+    public Admin getAdmin(){
+        return (Admin)getSession("ADMIN");
+    }
+
     public void startPage(Map<String, String> paramsMap){
         PageHelper.offsetPage(Integer.parseInt(paramsMap.get("offset")), Integer.parseInt(paramsMap.get("limit")));
     }
@@ -189,7 +205,7 @@ public class BaseService<T, PK extends Serializable> {
      * @param message String
      * @return map
      */
-    public Map errorResult(int code, String message){
+    public Map errorResult(String code, String message){
         HashMap resultMap = Maps.newHashMap();
         resultMap.put("code", code);
         resultMap.put("message", message);
@@ -200,7 +216,7 @@ public class BaseService<T, PK extends Serializable> {
      * @param code int
      * @return map
      */
-    public Map errorResult(int code){
+    public Map errorResult(String code){
         HashMap resultMap = Maps.newHashMap();
         resultMap.put("code", code);
         resultMap.put("message", CommonMessage.MESSAGE.get(code));

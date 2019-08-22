@@ -13,14 +13,14 @@ import java.util.Map;
 public class CommonMessage {
 
     //成功
-    public static int SUCCESS = 200;
+    public static String SUCCESS = "200";
     //参数错误
-    public static int PARAMSERROR = 3000;
+    public static String PARAMSERROR = "3000";
     //系统错误
-    public static int SYSTEMERROR = 4000;
+    public static String SYSTEMERROR = "4000";
 
     //错误码默认提醒
-    public static Map<Integer, String> MESSAGE = ImmutableMap.<Integer, String>builder()
+    public static Map<String, String> MESSAGE = ImmutableMap.<String, String>builder()
             .put(CommonMessage.SUCCESS, "操作成功")
             .put(CommonMessage.PARAMSERROR, "参数错误")
             .put(CommonMessage.SYSTEMERROR, "系统错误")

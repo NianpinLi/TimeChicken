@@ -27,12 +27,12 @@
         </javaModelGenerator>
 
         <!-- 配置生成的**Mapper.xml文件所存放的路径和包（使用绝对路径） -->
-        <sqlMapGenerator targetPackage="mybatis"  targetProject="C:\workspace\family\src\main\resources">
+        <sqlMapGenerator targetPackage="mybatis"  targetProject="C:\workspace\family\src\main\resources\generator">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
         <!-- 配置生成的**Mapper.java接口文件所存放的路径和包（使用绝对路径） -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dandelion.dao"  targetProject="C:\workspace\family\src\main\java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dandelion.generator.dao"  targetProject="C:\workspace\family\src\main\java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
@@ -40,6 +40,5 @@
         <table tableName="admin" domainObjectName="Admin" ></table>
         <table tableName="role" domainObjectName="Role" ></table>
         <table tableName="authority" domainObjectName="Authority" ></table>
-
     </context>
 </generatorConfiguration>

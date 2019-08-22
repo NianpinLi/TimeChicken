@@ -1,6 +1,7 @@
 package com.dandelion.controller;
 
 import com.dandelion.base.BaseController;
+import com.dandelion.base.CommonMessage;
 import com.dandelion.service.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +30,15 @@ public class AdminController extends BaseController {
         return result;
     }
 
-    @RequestMapping("loginAdmin")
-    public @ResponseBody Map loginAdmin(@RequestParam Map<String,String> paramsMap) throws Exception{
-        return adminService.loginAdmin(paramsMap);
+    @RequestMapping("login")
+    public String loginAdmin(@RequestParam Map<String,String> paramsMap) throws Exception{
+        Map map = adminService.loginAdmin(paramsMap);
+        if (CommonMessage.SUCCESS.equals(map.get("code"))){
+            return "base/index";
+        }else{
+            setAttribute("error",map.get("message"));
+            return "base/login";
+        }
     }
 
 }

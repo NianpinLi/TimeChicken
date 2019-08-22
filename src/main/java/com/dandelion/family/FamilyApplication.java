@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("com.dandelion.dao")
 @ComponentScan("com.dandelion")
 public class FamilyApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(FamilyApplication.class, args);
 	}

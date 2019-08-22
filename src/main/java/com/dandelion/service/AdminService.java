@@ -2,12 +2,19 @@ package com.dandelion.service;
 
 import com.dandelion.base.BaseService;
 import com.dandelion.base.CommonMessage;
-import com.dandelion.bean.Admin;
-import com.dandelion.bean.AdminExample;
-import com.dandelion.dao.AdminMapper;
+import com.dandelion.bean.*;
+import com.dandelion.dao.generator.AdminMapper;
+import com.dandelion.dao.self.AdminSelfMapper;
 import com.dandelion.utils.ObjectUtil;
+import com.dandelion.utils.RedisUtil;
 import com.dandelion.utils.StringUtil;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +32,12 @@ public class AdminService extends BaseService<Admin, Integer>{
 
     @Resource
     private AdminMapper adminMapper;
+
+    @Resource
+    private AdminSelfMapper adminSelfMapper;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     /**
      * 查看所有用户
@@ -54,20 +67,46 @@ public class AdminService extends BaseService<Admin, Integer>{
     public Map loginAdmin(Map<String, String> paramsMap) throws Exception{
         String adminName = paramsMap.get("adminName");
         String adminPassword = paramsMap.get("adminPassword");
-        if (ObjectUtil.isNull(adminName) || ObjectUtil.isNull(adminPassword)){
-            return errorResult(CommonMessage.PARAMSERROR,"用户名和密码不能为空");
+        UsernamePasswordToken token = new UsernamePasswordToken(adminName, adminPassword);
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            subject.login(token);
+        }catch (UnknownAccountException e){
+            return errorResult(CommonMessage.PARAMSERROR,"账号不存在");
+        }catch (IncorrectCredentialsException e){
+            return errorResult(CommonMessage.PARAMSERROR,"密码不正确");
+        }catch (AuthenticationException e) {
+            return errorResult(CommonMessage.PARAMSERROR,"用户验证失败");
         }
+        return successResult("登录成功");
+    }
+
+    /**
+     * 通过用户Id 获取权限列表
+     * @param adminId Integer
+     * @throws Exception e
+     */
+    public List<Authority> getAuthorityByAdminId(Integer adminId){
+        return adminSelfMapper.selectAuthorityByAdminId(adminId);
+    }
+
+    /**
+     * 通过用户Id 获取角色列表
+     * @param adminId Integer
+     * @throws Exception e
+     */
+    public List<Role> getRoleByAdminId(Integer adminId){
+        return adminSelfMapper.selectRoleByAdminId(adminId);
+    }
+
+    public Admin getAdminByAdminName(String adminName) throws Exception{
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
         getSearchExample("equalToAdminName",adminName,criteria,"Admin");
         List<Admin> adminList = adminMapper.selectByExample(example);
         if (ObjectUtil.isNull(adminList)){
-            return errorResult(CommonMessage.PARAMSERROR,"用户名错误");
+            return null;
         }
-        Admin admin = adminList.get(0);
-        if(!StringUtil.verify(adminPassword, admin.getAdminPassword())){
-            return errorResult(CommonMessage.PARAMSERROR,"密码错误");
-        }
-        return successResult("登录成功");
+        return adminList.get(0);
     }
 }
