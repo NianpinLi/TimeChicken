@@ -15,7 +15,7 @@ $(".forgot-link").on("click",function(){
     $("#loginTitleBox").text("找回密码");
     $("#passwordBox").hide();
     $("#showLoginButton").show();
-
+    $("#login").action("/admin/forgetPassword");
 });
 //返回登录
 $(".login-back-link").on("click",function(){
@@ -23,6 +23,6 @@ $(".login-back-link").on("click",function(){
     $("#loginTitleBox").text("登录");
     $("#passwordBox").show();
     $("#showLoginButton").hide();
-
+    $("#login").action("/admin/login");
 });
 

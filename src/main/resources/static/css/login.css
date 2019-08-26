@@ -206,6 +206,9 @@ body {
 .login .login-back-link {
     display: none;
 }
+#registerBox{
+    display: none;
+}
 
 /* animation */
 .login .login-box.login-animated {

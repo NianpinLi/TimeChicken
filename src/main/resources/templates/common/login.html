@@ -13,43 +13,21 @@
             <img th:src="@{/image/kodinger.jpg}" alt="logo">
         </div>
         <div class="login-wrapper">
-            <div class="login-box login-login" id="loginBox">
-                <div class="login-box-inner">
-                    <form id="login">
-                        <p id="loginTitleBox">用户登录</p>
-                        <div class="login-group" id="nameBox">
-                            <label>账号： <a id="showLoginButton" href="javascript:void(0)" class="login-back-link">登录</a></label>
-                            <input type="text" autocomplete="current-name" name="name" class="login-input">
-                        </div>
-                        <div class="login-group password-group" id="passwordBox">
-                            <label>密码： <a href="javascript:void(0)" class="forgot-link">忘记密码?</a></label>
-                            <input type="password" name="password" autocomplete="current-password" class="login-input">
-                        </div>
-                        <button class="login-btn login-btn" id="submitButton">
-                            登录
-                        </button>
-                        <div class="text-foot">
-                           没有账号?点击 <a href="javascript:void(0)" class="register-link">注册</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
             <div class="login-box login-register" id="registerBox">
                 <div class="login-box-inner">
-                    <form id="register">
+                    <form id="register" method="post">
                         <p>用户注册</p>
                         <div class="login-group">
                             <label>姓名：</label>
-                            <input type="text" name="real_name" autocomplete="real_name" class="login-input">
+                            <input type="text" name="realName" autocomplete="real_name" class="login-input">
                         </div>
                         <div class="login-group">
                             <label>账号：</label>
-                            <input type="text" autocomplete="name" name="name" class="login-input">
+                            <input type="text" autocomplete="name" name="adminName" class="login-input">
                         </div>
                         <div class="login-group">
                             <label>密码：</label>
-                            <input type="password" name="password" autocomplete="current-password" class="login-input">
+                            <input type="password" name="adminPassword" autocomplete="current-password" class="login-input">
                         </div>
                         <button class="login-btn">
                             提交注册
@@ -57,6 +35,27 @@
 
                         <div class="text-foot">
                             已经有账户?点击 <a href="javascript:void(0)" class="login-link">登录</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="login-box login-login" id="loginBox">
+                <div class="login-box-inner">
+                    <form id="login" action="/admin/login" method="post">
+                        <p id="loginTitleBox">用户登录</p>
+                        <div class="login-group" id="nameBox">
+                            <label>账号： <a id="showLoginButton" href="javascript:void(0)" class="login-back-link">登录</a></label>
+                            <input type="text" autocomplete="current-name" name="adminName" class="login-input">
+                        </div>
+                        <div class="login-group password-group" id="passwordBox">
+                            <label>密码： <a href="javascript:void(0)" class="forgot-link">忘记密码?</a></label>
+                            <input type="password" name="adminPassword" autocomplete="current-password" class="login-input">
+                        </div>
+                        <button class="login-btn login-btn" id="submitButton">
+                            登录
+                        </button>
+                        <div class="text-foot">
+                           没有账号?点击 <a href="javascript:void(0)" class="register-link">注册</a>
                         </div>
                     </form>
                 </div>

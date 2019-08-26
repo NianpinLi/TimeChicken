@@ -34,10 +34,10 @@ public class AdminController extends BaseController {
     public String loginAdmin(@RequestParam Map<String,String> paramsMap) throws Exception{
         Map map = adminService.loginAdmin(paramsMap);
         if (CommonMessage.SUCCESS.equals(map.get("code"))){
-            return "base/index";
+            return "common/index";
         }else{
             setAttribute("error",map.get("message"));
-            return "base/login";
+            return "common/login";
         }
     }
 
