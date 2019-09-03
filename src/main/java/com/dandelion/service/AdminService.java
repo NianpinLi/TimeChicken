@@ -2,12 +2,14 @@ package com.dandelion.service;
 
 import com.dandelion.base.BaseService;
 import com.dandelion.base.CommonMessage;
-import com.dandelion.bean.*;
+import com.dandelion.bean.Admin;
+import com.dandelion.bean.AdminExample;
+import com.dandelion.bean.Authority;
+import com.dandelion.bean.Role;
 import com.dandelion.dao.generator.AdminMapper;
 import com.dandelion.dao.self.AdminSelfMapper;
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.RedisUtil;
-import com.dandelion.utils.StringUtil;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -70,7 +72,9 @@ public class AdminService extends BaseService<Admin, Integer>{
         UsernamePasswordToken token = new UsernamePasswordToken(adminName, adminPassword);
         Subject subject = SecurityUtils.getSubject();
         try {
+            //登陆
             subject.login(token);
+            //查询权限 将其存入session 中
         }catch (UnknownAccountException e){
             return errorResult(CommonMessage.PARAMSERROR,"账号不存在");
         }catch (IncorrectCredentialsException e){
@@ -84,7 +88,6 @@ public class AdminService extends BaseService<Admin, Integer>{
     /**
      * 通过用户Id 获取权限列表
      * @param adminId Integer
-     * @throws Exception e
      */
     public List<Authority> getAuthorityByAdminId(Integer adminId){
         return adminSelfMapper.selectAuthorityByAdminId(adminId);
@@ -93,7 +96,6 @@ public class AdminService extends BaseService<Admin, Integer>{
     /**
      * 通过用户Id 获取角色列表
      * @param adminId Integer
-     * @throws Exception e
      */
     public List<Role> getRoleByAdminId(Integer adminId){
         return adminSelfMapper.selectRoleByAdminId(adminId);
