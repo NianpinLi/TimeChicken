@@ -1,208 +1,147 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <!-- 公共导航条条 -->
-<div th:fragment="navigation" class="sidebar">
-    <div class="menu-control toggle-sidebar">
-        <a class="navigation-brand" href="#"><i class="fa fa-bar-chart"></i> Flat Admin</a>
-        <i class="fa fa-bars"></i>
+<nav th:fragment="navigation" class="side-navbar">
+    <!-- Sidebar Header-->
+    <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar"><img th:src="@{/plugin/lib/img/avatar-1.jpg}" alt="..." class="img-fluid rounded-circle"></div>
+        <div class="title">
+            <h1 class="h4">Mark Stephen</h1>
+            <p>Web Designer</p>
+        </div>
     </div>
-    <!--th:attrappend="${#lists.isEmpty(authority.childAuthorityList)} ? '' : 'data-toggle=dropdown'"-->
-    <ul class="menu">
-        <li th:each="authority : ${session.authorityList}" class="submenu" th:classappend="${#lists.isEmpty(authority.childAuthorityList)} ? '' : 'dropdown'">
-            <a th:href="${authority.authorityUrl}" th:classappend="${#lists.isEmpty(authority.childAuthorityList)} ? '' : 'dropdown-toggle'" >
-                <div>
-                    <i class="menu-icon fa fa-th-large"></i>
-                    <span class="menu-title" th:text="${authority.authorityName}"></span>
-                </div>
-            </a>
-            <ul class="dropdown-menu" th:unless="${#lists.isEmpty(authority.childAuthorityList)}" th:replace="this::tree(${authority.childAuthorityList})"></ul>
-        </li>
+    <ul class="list-unstyled" th:replace="this::tree(${session.authorityList},'')"></ul>
+    <ul class="list-unstyled">
+        <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
     </ul>
-</div>
+</nav>
 <!-- 递归模板 -->
-<ul class="dropdown-menu" th:fragment="tree(authorityList)">
-    <li th:each="authority : ${authorityList}" class="submenu" th:classappend="${#lists.isEmpty(authority.childAuthorityList)} ? '' : 'dropdown'">
-        <a th:href="${authority.authorityUrl}" th:classappend="${#lists.isEmpty(authority.childAuthorityList)} ? '' : 'dropdown-toggle'">
-            <div>
-                <i class="menu-icon fa fa-th-large"></i>
-                <span class="menu-sub-title" th:text="${authority.authorityName}"></span>
-            </div>
+<ul class="list-unstyled" th:fragment="tree(authorityList,class)" th:classappend="${class}">
+    <li th:each="authority : ${authorityList}"
+        th:attr="data-toggle=collapse,aria-expanded=false"
+    >
+        <a th:href="${#lists.isEmpty(authority.childAuthorityList)} ? ${authority.authorityUrl} : '#'+${authority.authorityName}" th:text="${authority.authorityName}">
+            <i class="icon-home"></i>
         </a>
-        <ul class="dropdown-menu" th:unless="${#lists.isEmpty(authority.childAuthorityList)}" th:replace="this::tree(${authority.childAuthorityList})"></ul>
+        <ul class="collapse list-unstyled" th:id="${authority.authorityName}"
+            th:unless="${#lists.isEmpty(authority.childAuthorityList)}"
+            th:include="this::tree(${authority.childAuthorityList},'collapse')">
+        </ul>
     </li>
 </ul>
 
-<!--<ul>-->
-    <!--<li class="submenu">-->
-        <!--<a href="index.html" class="active">-->
-            <!--<div>-->
-                <!--<i class="menu-icon fa fa-th-large"></i>-->
-                <!--<span class="menu-title">Dashboard</span>-->
-            <!--</div>-->
-        <!--</a>-->
-    <!--</li>-->
-    <!--<li class="submenu">-->
-        <!--<a href="element.html">-->
-            <!--<div>-->
-                <!--<i class="menu-icon fa fa-desktop"></i>-->
-                <!--<span class="menu-title">UI Elements</span>-->
-            <!--</div>-->
-        <!--</a>-->
-    <!--</li>-->
-    <!--<li class="submenu">-->
-        <!--<a href="table.html">-->
-            <!--<div>-->
-                <!--<i class="menu-icon fa fa-table"></i>-->
-                <!--<span class="menu-title">Table</span>-->
-            <!--</div>-->
-        <!--</a>-->
-    <!--</li>-->
-    <!--<li class="submenu">-->
-        <!--<a href="form.html">-->
-            <!--<div>-->
-                <!--<i class="menu-icon fa fa-file-text-o"></i>-->
-                <!--<span class="menu-title">Form</span>-->
-            <!--</div>-->
-        <!--</a>-->
-    <!--</li>-->
-
-    <!--<li class="submenu dropdown">-->
-        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-            <!--<div>-->
-                <!--<i class="menu-icon fa fa-slack"></i>-->
-                <!--<span class="menu-title">Page Example</span>-->
-            <!--</div>-->
-        <!--</a>-->
-        <!--<ul class="dropdown-menu">-->
-            <!--<li>-->
-                <!--<a href="login.html">-->
-                    <!--<div>-->
-                        <!--<i class="menu-icon fa fa-sign-in"></i>-->
-                        <!--<span class="menu-sub-title">Login</span>-->
-                    <!--</div>-->
-                <!--</a>-->
-            <!--</li>-->
-            <!--<li>-->
-                <!--<a href="register.html">-->
-                    <!--<div>-->
-                        <!--<i class="menu-icon fa fa-pencil-square-o"></i>-->
-                        <!--<span class="menu-sub-title">Register</span>-->
-                    <!--</div>-->
-                <!--</a>-->
-            <!--</li>-->
-        <!--</ul>-->
-    <!--</li>-->
-    <!--<li class="submenu dropdown">-->
-        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-
-            <!--<div>-->
-                <!--<i class="menu-icon fa fa-magic"></i>-->
-                <!--<span class="menu-title">Custom Elements</span>-->
-            <!--</div>-->
-        <!--</a>-->
-        <!--<ul class="dropdown-menu">-->
-            <!--<li>-->
-                <!--<a href="custom-dashboard.html">-->
-                    <!--<div>-->
-                        <!--<i class="menu-icon fa fa-bar-chart"></i>-->
-                        <!--<span class="menu-sub-title">Dashboard</span>-->
-                    <!--</div>-->
-                <!--</a>-->
-            <!--</li>-->
-        <!--</ul>-->
-    <!--</li>-->
-<!--</ul>-->
-
-
-<!-- 公共页头 -->
-<nav th:fragment="header" class="navigation navigation-default">
-    <div>
-        <div class="collapse navigation-collapse" id="bs-example-navigation-collapse-1">
-            <div class="navigation-header">
-                <button type="button" class="navigation-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navigation-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navigation-brand" href="#"><i class="fa fa-bar-chart"></i> Flat Admin</a>
-            </div>
-            <ul class="nav navigation-nav navigation-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
-                            class="fa fa fa-comments"></i> 0</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-title-bar">
-                            Notification ( 0 )
-                        </li>
-                        <li class="message">
-                            No new notification
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown notification-alert">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
-                            class="fa fa-exclamation-circle"></i> 3</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-title-bar">
-                            Notification ( 3 )
-                        </li>
-                        <li>
-                            <ul class="notification-list">
-                                <li>
-                                    <a href="#">
-                                        <div class="noti-icon noti-alert">
-                                            <i class="fa fa-exclamation-circle fa-2x"></i>
-                                        </div>
-                                        <div class="noti-message">1 new registration</div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="noti-icon noti-success">
-                                            <i class="fa fa-check fa-2x"></i>
-                                        </div>
-                                        <div class="noti-message">3 new orders</div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="noti-icon noti-primary">
-                                            <i class="fa fa-comments fa-2x"></i>
-                                        </div>
-                                        <div class="noti-message">2 customers messages</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Emily
-                        Hart <span class="caret"></span></a>
-                    <ul class="dropdown-menu user-info">
-                        <li class="dropdown-title-bar">
-                            <img th:src="@{/plugin/lib/images/profile.jpg}" class="profile-img">
-                        </li>
-                        <li>
-                            <div class="navigation-login">
-                                <h4 class="user-name">Emily Hart</h4>
-                                <p>emily_hart@email.com</p>
-                                <div class="btn-group margin-bottom-2x" role="group">
-                                    <button type="button" class="btn btn-default"><i class="fa fa-user"></i> Profile
-                                    </button>
-                                    <button type="button" class="btn btn-default"><i class="fa fa-sign-out"></i> Logout
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+<nav class="side-navbar">
+    <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+    <ul class="list-unstyled">
+        <li class="active"><a href="index.html"> <i class="icon-home"></i>Home </a></li>
+        <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
+        <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
+        <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse">
+            <i class="icon-interface-windows"></i>Example dropdown </a>
+            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                <li><a href="#">Page</a></li>
+                <li><a href="#">Page</a></li>
+                <li><a href="#">Page</a></li>
             </ul>
-        </div>
-    </div>
+        </li>
+        <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
+    </ul><span class="heading">Extras</span>
+    <ul class="list-unstyled">
+        <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
+        <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
+    </ul>
 </nav>
+
+<!-- Main Navbar-->
+<header class="header" th:fragment="header">
+    <nav class="navbar">
+        <!-- Search Box-->
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="What are you looking for..." class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <!-- Navbar Header-->
+                <div class="navbar-header">
+                    <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                    <div class="brand-text d-none d-lg-inline-block"><span>Bootstrap </span><strong>Dashboard</strong></div>
+                    <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                    <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+                </div>
+                <!-- Navbar Menu -->
+                <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                    <!-- Search-->
+                    <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                    <!-- Notifications-->
+                    <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
+                        <ul aria-labelledby="notifications" class="dropdown-menu">
+                            <li><a rel="nofollow" href="#" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+                                    <div class="notification-time"><small>4 minutes ago</small></div>
+                                </div></a></li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                                    <div class="notification-time"><small>4 minutes ago</small></div>
+                                </div></a></li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
+                                    <div class="notification-time"><small>4 minutes ago</small></div>
+                                </div></a></li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                                    <div class="notification-time"><small>10 minutes ago</small></div>
+                                </div></a></li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications                                            </strong></a></li>
+                        </ul>
+                    </li>
+                    <!-- Messages                        -->
+                    <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
+                        <ul aria-labelledby="notifications" class="dropdown-menu">
+                            <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
+                                </div></a></li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
+                                </div></a></li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
+                                </div></a></li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>Read all messages   </strong></a></li>
+                        </ul>
+                    </li>
+                    <!-- Languages dropdown    -->
+                    <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                        <ul aria-labelledby="languages" class="dropdown-menu">
+                            <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/DE.png" alt="English" class="mr-2">German</a></li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/FR.png" alt="English" class="mr-2">French                                         </a></li>
+                        </ul>
+                    </li>
+                    <!-- Logout    -->
+                    <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
 
 <!-- 面包屑 -->
 <div class="container-fluid" th:fragment="dashboard">

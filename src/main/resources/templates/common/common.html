@@ -1,29 +1,34 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<header th:fragment="common">
+<head th:fragment="common">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Family</title>
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
     <!-- CSS Libs -->
-    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/animate.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/font-awesome.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/bootstrap-select.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/awesome-bootstrap-checkbox.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/select2.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/bootstrap-table.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/theme.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/vendor/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/vendor/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/fontastic.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/style.default.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/plugin/lib/css/custom.css}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/plugin/lib/img/favicon.ico}" >
+
+
+
 
     <!-- Javascript Libs -->
-    <script type="text/javascript" th:src="@{/plugin/lib/js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/plugin/lib/js/popper.js}"></script>
-    <script type="text/javascript" th:src="@{/plugin/lib/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/plugin/lib/js/Chart.min.js}"></script>
-    <script type="text/javascript" th:src="@{/plugin/lib/js/jquery.knob.min.js}"></script>
-    <script type="text/javascript" th:src="@{/plugin/lib/js/bootstrap-select.min.js}"></script>
-    <script type="text/javascript" th:src="@{/plugin/lib/js/bootstrap-table.js}"></script>
+    <script type="text/javascript" th:src="@{/plugin/lib/vendor/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/plugin/lib/vendor/popper.js/umd/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/plugin/lib/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/plugin/lib/vendor/jquery.cookie/jquery.cookie.js}"></script>
+    <script type="text/javascript" th:src="@{/plugin/lib/vendor/chart.js/Chart.min.js}"></script>
+    <script type="text/javascript" th:src="@{/plugin/lib/vendor/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/plugin/lib/js/charts-home.js}"></script>
+    <script type="text/javascript" th:src="@{/plugin/lib/js/front.js}"></script>
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
-
-</header>
+</head>
 
 </html>
