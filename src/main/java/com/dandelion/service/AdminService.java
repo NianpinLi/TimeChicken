@@ -10,16 +10,21 @@ import com.dandelion.dao.generator.AdminMapper;
 import com.dandelion.dao.self.AdminSelfMapper;
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.RedisUtil;
+import com.dandelion.vo.AuthorityVo;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +79,26 @@ public class AdminService extends BaseService<Admin, Integer>{
         try {
             //登陆
             subject.login(token);
+            Admin admin = (Admin) subject.getSession().getAttribute("adminSession");
             //查询权限 将其存入session 中
+            List<AuthorityVo> authorityVoList = Lists.newArrayList();
+            List<Authority> AuthorityList = this.getAuthorityByAdminId(admin.getAdminId());
+            HashMap<Integer, AuthorityVo> authorityMap = Maps.newHashMap();
+            for (Authority authority : AuthorityList) {
+                AuthorityVo authorityVo = new AuthorityVo(authority);
+                Integer parentId = authority.getParentAuthorityId();
+                Integer authorityId = authority.getAuthorityId();
+                authorityMap.put(authorityId, authorityVo);
+                if (parentId != 0){
+                    AuthorityVo parent = authorityMap.get(parentId);
+                    if (parent != null){
+                        parent.addChildAuthority(authorityVo);
+                    }
+                }else{
+                    authorityVoList.add(authorityVo);
+                }
+            }
+            this.setSession("authorityList",authorityVoList);
         }catch (UnknownAccountException e){
             return errorResult(CommonMessage.PARAMSERROR,"账号不存在");
         }catch (IncorrectCredentialsException e){

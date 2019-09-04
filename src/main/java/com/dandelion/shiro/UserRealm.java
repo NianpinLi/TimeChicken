@@ -4,12 +4,15 @@ import com.dandelion.bean.Admin;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
 import com.dandelion.service.AdminService;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
@@ -52,12 +55,20 @@ public class UserRealm extends AuthorizingRealm {
         if (admin == null){
             throw new UnknownAccountException();
         }
+        // 存入用户信息
+        List<Object> principals = Lists.newArrayList();
+        principals.add(adminName);
+        principals.add(admin);
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-            token.getPrincipal(), //用户名
+            principals,
             admin.getAdminPassword(),//密码
             salt,//加盐
             getName()  //realm name
         );
+        //当验证都通过后，把用户信息放在session里
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("adminSession", admin);
+
         return authenticationInfo;
     }
 

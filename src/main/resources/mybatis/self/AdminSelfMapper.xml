@@ -11,6 +11,7 @@
         <result column="authority_name" jdbcType="VARCHAR" property="authorityName" />
         <result column="authority_url" jdbcType="VARCHAR" property="authorityUrl" />
         <result column="authority_level" jdbcType="INTEGER" property="authorityLevel" />
+        <result column="parent_authority_id" jdbcType="INTEGER" property="parentAuthorityId" />
         <result column="authority_status" jdbcType="INTEGER" property="authorityStatus" />
         <result column="create_id" jdbcType="INTEGER" property="createId" />
         <result column="create_name" jdbcType="VARCHAR" property="createName" />
@@ -37,6 +38,7 @@
         LEFT JOIN role_authority ra ON au.authority_id = ra.authority_id
         LEFT JOIN admin_role ar ON ra.role_id = ar.role_id
         WHERE ar.admin_id = #{adminId}
+        ORDER BY au.authority_level ASC,au.authority_id ASC
     </select>
 
     <select id="selectRoleByAdminId" parameterType="java.lang.Integer" resultMap="RoleMap">
