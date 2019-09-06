@@ -1,62 +1,34 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <!-- 公共导航条条 -->
-<nav th:fragment="navigation" class="side-navbar">
+<nav  class="side-navbar height-all" th:fragment="navigation">
     <!-- Sidebar Header-->
     <div class="sidebar-header d-flex align-items-center">
         <div class="avatar"><img th:src="@{/plugin/lib/img/avatar-1.jpg}" alt="..." class="img-fluid rounded-circle"></div>
         <div class="title">
-            <h1 class="h4">Mark Stephen</h1>
+            <h1 class="h4" th:text="${session.adminSession.realName}"></h1>
             <p>Web Designer</p>
         </div>
     </div>
-    <ul class="list-unstyled" th:replace="this::tree(${session.authorityList},'')"></ul>
-    <ul class="list-unstyled">
-        <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
-        <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
-        <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
-        <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
-    </ul>
+    <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+    <ul th:include="this::tree(${session.authorityList})" class="list-unstyled"></ul>
 </nav>
 <!-- 递归模板 -->
-<ul class="list-unstyled" th:fragment="tree(authorityList,class)" th:classappend="${class}">
-    <li th:each="authority : ${authorityList}"
-        th:attr="data-toggle=collapse,aria-expanded=false"
-    >
-        <a th:href="${#lists.isEmpty(authority.childAuthorityList)} ? ${authority.authorityUrl} : '#'+${authority.authorityName}" th:text="${authority.authorityName}">
-            <i class="icon-home"></i>
+<ul th:fragment="tree(authorityList)">
+    <li th:each="authority : ${authorityList}">
+        <a th:href="${authority.authorityUrl}" th:unless="!${#lists.isEmpty(authority.childAuthorityList)}">
+            <i class="icon-home"></i><span th:text="${authority.authorityName}"></span>
         </a>
-        <ul class="collapse list-unstyled" th:id="${authority.authorityName}"
+        <a th:href="'#'+${authority.authorityName}" th:unless="${#lists.isEmpty(authority.childAuthorityList)}"
+           aria-expanded="false"data-toggle="collapse">
+            <i class="icon-home"></i><span th:text="${authority.authorityName}"></span>
+        </a>
+        <ul th:id="${authority.authorityName}"
             th:unless="${#lists.isEmpty(authority.childAuthorityList)}"
-            th:include="this::tree(${authority.childAuthorityList},'collapse')">
+            th:include="this::tree(${authority.childAuthorityList})" class="collapse list-unstyled" >
         </ul>
     </li>
 </ul>
-
-<nav class="side-navbar">
-    <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
-    <ul class="list-unstyled">
-        <li class="active"><a href="index.html"> <i class="icon-home"></i>Home </a></li>
-        <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
-        <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-        <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
-        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse">
-            <i class="icon-interface-windows"></i>Example dropdown </a>
-            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
-            </ul>
-        </li>
-        <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
-    </ul><span class="heading">Extras</span>
-    <ul class="list-unstyled">
-        <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
-        <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
-        <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
-        <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
-    </ul>
-</nav>
 
 <!-- Main Navbar-->
 <header class="header" th:fragment="header">
@@ -142,26 +114,6 @@
         </div>
     </nav>
 </header>
-
-<!-- 面包屑 -->
-<div class="container-fluid" th:fragment="dashboard">
-    <div class="row">
-        <div class="col-xs-12">
-            <span class="page-title red"><h2>Dashboard</h2></span>
-        </div>
-    </div>
-    <!-- 面包屑 -->
-    <div class="row">
-        <div class="col-xs-12">
-            <ol class="breadcrumb">
-                <li><a href="#">Home</a>
-                </li>
-                <li class="active">Dashboard</a>
-                </li>
-            </ol>
-        </div>
-    </div>
-</div>
 
 <!-- 公共页尾 -->
 <footer th:fragment="footer" class="footer">

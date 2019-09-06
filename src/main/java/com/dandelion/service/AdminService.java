@@ -79,7 +79,7 @@ public class AdminService extends BaseService<Admin, Integer>{
         try {
             //登陆
             subject.login(token);
-            Admin admin = (Admin) subject.getSession().getAttribute("adminSession");
+            Admin admin = subject.getPrincipals().oneByType(Admin.class);
             //查询权限 将其存入session 中
             List<AuthorityVo> authorityVoList = Lists.newArrayList();
             List<Authority> AuthorityList = this.getAuthorityByAdminId(admin.getAdminId());
