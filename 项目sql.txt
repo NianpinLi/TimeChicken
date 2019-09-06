@@ -5,12 +5,13 @@ CREATE TABLE `admin` (
   `admin_password` varchar(255) NOT NULL COMMENT '用户登录密码',
   `admin_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '用户状态 1启用 0停用 -1删除',
   `real_name` varchar(255) NOT NULL COMMENT '用户真实姓名',
-  `create_id` int(8) DEFAULT NULL,
-  `create_name` varchar(255) DEFAULT NULL,
-  `create_time` varchar(255) DEFAULT NULL,
+  `create_id` int(8) DEFAULT NULL COMMENT '创建人ID',
+  `create_name` varchar(255) DEFAULT NULL COMMENT '创建人姓名',
+  `create_time` varchar(255) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`admin_id`),
   UNIQUE KEY `admin_name` (`admin_name`) USING BTREE COMMENT '用户名唯一索引'
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
+
 
 -- 角色表
 CREATE TABLE `role` (
@@ -21,7 +22,7 @@ CREATE TABLE `role` (
   `create_name` varchar(255) DEFAULT NULL COMMENT '创建人名称',
   `create_time` varchar(255) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
 -- 用户角色中间表
 CREATE TABLE `admin_role` (
@@ -29,20 +30,21 @@ CREATE TABLE `admin_role` (
   `admin_id` int(8) NOT NULL COMMENT '用户ID',
   `role_id` int(8) NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`admin_role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户角色中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色中间表';
 
 --权限表
 CREATE TABLE `authority` (
   `authority_id` int(8) NOT NULL AUTO_INCREMENT COMMENT '权限ID',
   `authority_name` varchar(255) NOT NULL COMMENT '权限名称',
   `authority_url` varchar(255) NOT NULL COMMENT '权限路径',
-  `authority_level` int(2) NOT NULL COMMENT '权限等级',
+  `authority_level` int(3) NOT NULL DEFAULT '0' COMMENT '权限等级 0为最高级',
+  `parent_authority_id` int(8) NOT NULL DEFAULT '0' COMMENT '上级权限ID 0为最上级权限',
   `authority_status` int(2) NOT NULL DEFAULT '1' COMMENT '权限状态 0停用 1启动 -1删除',
-  `create_id` int(8) DEFAULT NULL,
-  `create_name` varchar(255) DEFAULT NULL,
-  `create_time` varchar(255) DEFAULT NULL,
+  `create_id` int(8) DEFAULT NULL COMMENT '创建人ID',
+  `create_name` varchar(255) DEFAULT NULL COMMENT '创建人姓名',
+  `create_time` varchar(255) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`authority_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
 
 -- 角色权限中间表
 CREATE TABLE `role_authority` (
@@ -50,4 +52,5 @@ CREATE TABLE `role_authority` (
   `role_id` int(8) NOT NULL COMMENT '角色ID',
   `authority_id` int(8) NOT NULL COMMENT '权限ID',
   PRIMARY KEY (`role_authority_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限中间表';
+
