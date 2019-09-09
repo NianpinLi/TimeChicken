@@ -41,9 +41,9 @@ public class BaseController {
     public String noAuthority() {
         return "common/noAuthority";
     }
-    @RequestMapping("common/index")
+    @RequestMapping("index/index")
     public String index() {
-        return "common/index";
+        return "index/index";
     }
     @RequestMapping("common/error")
     public String error() {
@@ -98,6 +98,12 @@ public class BaseController {
         return this.getRequest().getSession();
     }
 
-
+    public String disPlay(){
+        String[] class_str = this.getClass().getName().split("\\.");
+        //方法名称
+        String action = class_str[class_str.length - 1].replace("Controller", "");
+        String method = new Exception().getStackTrace()[1].getMethodName();
+        return action + "/" + method;
+    }
 
 }

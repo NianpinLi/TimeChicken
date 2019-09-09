@@ -1,71 +1,44 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <!-- 加载公共头部 与 公共CSS JS-->
 <head th:replace="common/common :: common"></head>
-<!-- 加载专属Css -->
-<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
-<body class="flat-blue sidebar-collapse">
-<!-- 加载公共导航条 -->
-<!--<div th:replace="common/navigation :: navigation" class="sidebar"></div>-->
-<div class="content-container wrap">
-    <div class="login login-blue">
-        <div class="login-brand">
-            <img th:src="@{/image/kodinger.jpg}" alt="logo">
-        </div>
-        <div class="login-wrapper">
-            <div class="login-box login-register" id="registerBox">
-                <div class="login-box-inner">
-                    <form id="register" method="post">
-                        <p>用户注册</p>
-                        <div class="login-group">
-                            <label>姓名：</label>
-                            <input type="text" name="realName" autocomplete="real_name" class="login-input">
-                        </div>
-                        <div class="login-group">
-                            <label>账号：</label>
-                            <input type="text" autocomplete="name" name="adminName" class="login-input">
-                        </div>
-                        <div class="login-group">
-                            <label>密码：</label>
-                            <input type="password" name="adminPassword" autocomplete="current-password" class="login-input">
-                        </div>
-                        <button class="login-btn">
-                            提交注册
-                        </button>
-
-                        <div class="text-foot">
-                            已经有账户?点击 <a href="javascript:void(0)" class="login-link">登录</a>
-                        </div>
-                    </form>
+  <body>
+    <div class="page login-page">
+      <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+          <div class="row">
+            <!-- Logo & Information Panel-->
+            <div class="col-lg-6">
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                  <div class="logo">
+                    <h1>学习项目</h1>
+                  </div>
+                  <p>学习使我进步，学习使我快乐</p>
                 </div>
+              </div>
             </div>
-            <div class="login-box login-login" id="loginBox">
-                <div class="login-box-inner">
-                    <form id="login" action="/admin/login" method="post">
-                        <p id="loginTitleBox">用户登录</p>
-                        <div class="login-group" id="nameBox">
-                            <label>账号： <a id="showLoginButton" href="javascript:void(0)" class="login-back-link">登录</a></label>
-                            <input type="text" autocomplete="current-name" name="adminName" class="login-input">
-                        </div>
-                        <div class="login-group password-group" id="passwordBox">
-                            <label>密码： <a href="javascript:void(0)" class="forgot-link">忘记密码?</a></label>
-                            <input type="password" name="adminPassword" autocomplete="current-password" class="login-input">
-                        </div>
-                        <button class="login-btn login-btn" id="submitButton">
-                            登录
-                        </button>
-                        <div class="text-foot">
-                           没有账号?点击 <a href="javascript:void(0)" class="register-link">注册</a>
-                        </div>
-                    </form>
+            <!-- Form Panel    -->
+            <div class="col-lg-6 bg-white">
+              <div class="form d-flex align-items-center">
+                <div class="content">
+                  <form method="post" class="form-validate" action="/admin/login">
+                    <div class="form-group">
+                      <input id="login-username" type="text" name="adminName" required data-msg="请输入你的用户名" class="input-material">
+                      <label for="login-username" class="label-material">登录用户名</label>
+                    </div>
+                    <div class="form-group">
+                      <input id="login-password" type="password" name="adminPassword" required data-msg="请输入你的密码" class="input-material">
+                      <label for="login-password" class="label-material">登录密码</label>
+                    </div><button id="login" class="btn btn-primary">登录</button>
+                    <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+                  </form><a href="#" class="forgot-pass">忘记密码?</a><br><small>没有账户? </small><a href="register.html" class="signup">注册</a>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="copyrights text-center"><p>Design by <a href="#" class="external">Bootstrapious</a></p></div>
     </div>
-</div>
-<!-- 加载公共页尾 -->
-<footer class="footer" th:replace="common/navigation :: footer"></footer>
-<!-- 加载专属JS -->
-<script type="text/javascript" th:src="@{/js/login.js}"></script>
-</body>
+  </body>
 </html>

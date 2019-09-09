@@ -1,6 +1,6 @@
 $("#table").bootstrapTable({
-    url:"admin/selectAdminPageList",
-    method: 'GET',                      //请求方式（*）
+    url:"/admin/selectAdminPageList",
+    method: 'POST',                     //请求方式（*）
     contentType : "application/x-www-form-urlencoded",
     //toolbar: '#toolbar',              //工具按钮用哪个容器
     striped: true,                      //是否显示行间隔色

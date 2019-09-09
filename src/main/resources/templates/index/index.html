@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <!-- 加载公共头部 与 公共CSS JS-->
 <head th:replace="common/common :: common"></head>
 <!-- 加载专属JS -->
@@ -14,13 +14,6 @@
         <nav th:replace="common/navigation :: navigation"></nav>
     </div>
 </div>
-
-<!--<div class="content-container wrap">-->
-
-    <!-- 面包屑 -->
-    <!--<div th:replace="common/navigation :: dashboard" class="container-fluid"></div>-->
-<!--</div>-->
-<!-- 加载公共页尾 -->
 <footer class="footer" th:replace="common/navigation :: footer"></footer>
 </body>
 </html>

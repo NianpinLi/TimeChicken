@@ -47,25 +47,6 @@ public class AdminService extends BaseService<Admin, Integer>{
     private RedisUtil redisUtil;
 
     /**
-     * 查看所有用户
-     * @param paramsMap Map
-     * @return Map
-     * @throws Exception Exception
-     */
-    public Map selectAdminPageList(Map<String,String> paramsMap) throws Exception{
-        AdminExample example = new AdminExample();
-        AdminExample.Criteria criteria = example.createCriteria();
-        //查询条件
-        this.getSearchExample(paramsMap, criteria,"Admin");
-        //分页
-        startPage(paramsMap);
-        List<Admin> adminList = adminMapper.selectByExample(example);
-        PageInfo<Admin> pageInfo = new PageInfo<>(adminList);
-        long total = pageInfo.getTotal();
-        return pageResult(adminList, total);
-    }
-
-    /**
      * 用户登录
      * @param paramsMap Map
      * @return Map
@@ -125,6 +106,12 @@ public class AdminService extends BaseService<Admin, Integer>{
         return adminSelfMapper.selectRoleByAdminId(adminId);
     }
 
+    /**
+     * 通过用户登录姓名 获取用户对象
+     * @param adminName String
+     * @return Admin
+     * @throws Exception e
+     */
     public Admin getAdminByAdminName(String adminName) throws Exception{
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
@@ -134,5 +121,25 @@ public class AdminService extends BaseService<Admin, Integer>{
             return null;
         }
         return adminList.get(0);
+    }
+
+
+    /**
+     * 查看所有用户
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception Exception
+     */
+    public Map selectAdminPageList(Map<String,String> paramsMap) throws Exception{
+        AdminExample example = new AdminExample();
+        AdminExample.Criteria criteria = example.createCriteria();
+        //查询条件
+        this.getSearchExample(paramsMap, criteria,"Admin");
+        //分页
+        startPage(paramsMap);
+        List<Admin> adminList = adminMapper.selectByExample(example);
+        PageInfo<Admin> pageInfo = new PageInfo<>(adminList);
+        long total = pageInfo.getTotal();
+        return pageResult(adminList, total);
     }
 }
