@@ -1,3 +1,11 @@
+/* your styles go here */
+html{overflow:hidden;}
+html,body{
+    height: 100%;
+}
+.height-all{
+    height: 100%;
+}
 .empty{
     margin-left: 10px;
 }

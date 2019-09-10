@@ -1,6 +1,6 @@
 $("#table").bootstrapTable({
     url:"/admin/selectAdminPageList",
-    method: 'POST',                     //请求方式（*）
+    method: 'GET',                      //请求方式（*）
     contentType : "application/x-www-form-urlencoded",
     //toolbar: '#toolbar',              //工具按钮用哪个容器
     striped: true,                      //是否显示行间隔色
@@ -25,6 +25,7 @@ $("#table").bootstrapTable({
     cardView: false,                    //是否显示详细视图
     detailView: false,                  //是否显示父子表
     queryParams : queryParams,          //得到查询的参数
+    // height:$(window).height()-120,
     columns: [{
         checkbox: true,
         visible: true                  //是否显示复选框

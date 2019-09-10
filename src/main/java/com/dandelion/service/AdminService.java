@@ -61,9 +61,12 @@ public class AdminService extends BaseService<Admin, Integer>{
             //登陆
             subject.login(token);
             Admin admin = subject.getPrincipals().oneByType(Admin.class);
-            //查询权限 将其存入session 中
+            //查询页面权限 将其存入session 中
             List<AuthorityVo> authorityVoList = Lists.newArrayList();
-            List<Authority> AuthorityList = this.getAuthorityByAdminId(admin.getAdminId());
+            Map<String,Integer> authorityParams = Maps.newHashMap();
+            authorityParams.put("adminId",admin.getAdminId());
+            authorityParams.put("authorityType",1);
+            List<Authority> AuthorityList = this.getAuthorityByAdminId(authorityParams);
             HashMap<Integer, AuthorityVo> authorityMap = Maps.newHashMap();
             for (Authority authority : AuthorityList) {
                 AuthorityVo authorityVo = new AuthorityVo(authority);
@@ -92,10 +95,10 @@ public class AdminService extends BaseService<Admin, Integer>{
 
     /**
      * 通过用户Id 获取权限列表
-     * @param adminId Integer
+     * @param authorityParams Map
      */
-    public List<Authority> getAuthorityByAdminId(Integer adminId){
-        return adminSelfMapper.selectAuthorityByAdminId(adminId);
+    public List<Authority> getAuthorityByAdminId(Map<String,Integer> authorityParams){
+        return adminSelfMapper.selectAuthorityByAdminId(authorityParams);
     }
 
     /**

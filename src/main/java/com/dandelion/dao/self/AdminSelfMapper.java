@@ -4,6 +4,7 @@ import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName: AdminSelfMapper
@@ -12,6 +13,6 @@ import java.util.List;
  * description: 权限查询
  */
 public interface AdminSelfMapper {
-    List<Authority> selectAuthorityByAdminId(Integer adminId);
+    List<Authority> selectAuthorityByAdminId(Map<String,Integer> authorityParams);
     List<Role> selectRoleByAdminId(Integer adminId);
 }

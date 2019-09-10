@@ -1,6 +1,7 @@
 //得到查询的参数
 function queryParams(params) {
     var temp = $("#searchForm").serializeArray();
+
     temp.push(
         {"name":"offset","value":params.offset},
         {"name":"limit","value":params.limit},
@@ -18,4 +19,3 @@ function clearSearchTable() {
     $("#searchForm")[0].reset();
     $("#table").bootstrapTable("refresh");
 }
-

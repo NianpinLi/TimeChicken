@@ -10,18 +10,18 @@
             <p>Web Designer</p>
         </div>
     </div>
-    <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+    <!-- Sidebar Navidation Menus--><span class="heading">系统菜单</span>
     <ul th:include="this::tree(${session.authorityList})" class="list-unstyled"></ul>
 </nav>
 <!-- 递归模板 -->
 <ul th:fragment="tree(authorityList)">
     <li th:each="authority : ${authorityList}">
-        <a th:href="${authority.authorityUrl}"  th:unless="!${#lists.isEmpty(authority.childAuthorityList)}">
-            <i class="icon-home"></i><span th:text="${authority.authorityName}"></span>
+        <a th:href="${authority.authorityUrl}" th:unless="!${#lists.isEmpty(authority.childAuthorityList)}">
+            <i class="icon-grid"></i><span th:text="${authority.authorityName}"></span>
         </a>
-        <a th:href="'#'+${authority.authorityName}" th:unless="${#lists.isEmpty(authority.childAuthorityList)}"
-           aria-expanded="false"data-toggle="collapse">
-            <i class="icon-home"></i><span th:text="${authority.authorityName}"></span>
+        <a th:href="'#'+${authority.authorityName}"  th:unless="${#lists.isEmpty(authority.childAuthorityList)}"
+           aria-expanded="false" data-toggle="collapse">
+            <i class="icon-interface-windows"></i><span th:text="${authority.authorityName}"></span>
         </a>
         <ul th:id="${authority.authorityName}"
             th:unless="${#lists.isEmpty(authority.childAuthorityList)}"

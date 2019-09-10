@@ -47,8 +47,8 @@ public class AdminController extends BaseController {
      * @return String
      * @throws Exception e
      */
-    @RequestMapping(value = "adminPageList", method = RequestMethod.GET)
-    public String adminPageList() throws Exception{
+    @RequestMapping(value = "adminPage", method = RequestMethod.GET)
+    public String adminPage() throws Exception{
         return this.disPlay();
     }
 
@@ -58,7 +58,7 @@ public class AdminController extends BaseController {
      * @return Map
      * @throws Exception e
      */
-    @RequestMapping(value = "selectAdminPageList", method = RequestMethod.POST)
+    @RequestMapping(value = "selectAdminPageList", method = RequestMethod.GET)
     public @ResponseBody Map selectAdminPageList(@RequestParam Map<String,String> paramsMap) throws Exception{
         Map result = adminService.selectAdminPageList(paramsMap);
         return result;

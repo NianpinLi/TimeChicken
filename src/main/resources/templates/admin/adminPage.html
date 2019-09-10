@@ -2,18 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <!-- 加载公共头部 与 公共CSS JS-->
 <head th:replace="common/common :: common"></head>
-<!-- 加载专属JS -->
-<script type="text/javascript" th:src="@{/js/admin.js}"></script>
 <body>
-<div class="page">
+<div class="height-all">
     <!-- 加载公共页头 -->
     <header th:replace="common/navigation :: header"></header>
     <!-- 页面内容 -->
     <div class="page-content d-flex align-items-stretch height-all">
         <!-- 加载公共导航条 -->
         <nav th:replace="common/navigation :: navigation"></nav>
-
-        <div class="content-inner">
+        <div class="content-inner height-all">
             <!-- Page Header-->
             <header class="page-header">
                 <div class="container-fluid">
@@ -23,23 +20,21 @@
             <!-- Breadcrumb-->
             <div class="breadcrumb-holder container-fluid">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">Tables            </li>
+                    <li class="breadcrumb-item"><a href="index/index">Home</a></li>
                 </ul>
             </div>
             <section class="tables">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 col-">
                             <div class="card">
                                 <div class="card-close">
                                     <div class="dropdown">
                                         <button type="button" id="closeCard1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                                        <div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                                        <div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a></div>
                                     </div>
                                 </div>
                                 <div class="card-header d-flex align-items-center">
-                                    <!-- 页面内容 -->
                                     <form id="searchForm" class="form-inline">
                                         <div class="form-group">
                                             <label for="equalsToAdminId" class="sr-only">ID：</label>
@@ -62,7 +57,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="table" class="tables"></table>
+                                        <!--<table id="table" ></table>-->
                                     </div>
                                 </div>
                             </div>
@@ -75,4 +70,6 @@
 </div>
 <footer class="footer" th:replace="common/navigation :: footer"></footer>
 </body>
+<!-- 加载专属JS -->
+<script type="text/javascript" th:src="@{/js/admin.js}"></script>
 </html>

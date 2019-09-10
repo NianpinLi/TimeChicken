@@ -26,9 +26,9 @@ public class ShiroConfig {
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射
-        shiroFilterFactoryBean.setLoginUrl("common/login");
+        shiroFilterFactoryBean.setLoginUrl("/common/login");
         // 设置无权限时跳转的 url;
-        shiroFilterFactoryBean.setUnauthorizedUrl("common/noAuthority");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/common/noAuthority");
         // 设置拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断，因为前端模板采用了thymeleaf，这里不能直接使用 ("/static/**", "anon")来配置匿名访问，必须配置到每个静态目录
@@ -37,7 +37,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/image/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/plugin/**", "anon");
-        filterChainDefinitionMap.put("/page/common/**", "anon");
         filterChainDefinitionMap.put("/common/**", "anon");
         //开放登陆接口
         filterChainDefinitionMap.put("/admin/login", "anon");
