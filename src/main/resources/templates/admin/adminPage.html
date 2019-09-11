@@ -11,60 +11,28 @@
         <!-- 加载公共导航条 -->
         <nav th:replace="common/navigation :: navigation"></nav>
         <div class="content-inner height-all">
-            <!-- Page Header-->
-            <header class="page-header">
-                <div class="container-fluid">
-                    <h2 class="no-margin-bottom">用户管理</h2>
-                </div>
-            </header>
-            <!-- Breadcrumb-->
-            <div class="breadcrumb-holder container-fluid">
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index/index">Home</a></li>
-                </ul>
-            </div>
-            <section class="tables">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-12 col-">
-                            <div class="card">
-                                <div class="card-close">
-                                    <div class="dropdown">
-                                        <button type="button" id="closeCard1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                                        <div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a></div>
-                                    </div>
-                                </div>
-                                <div class="card-header d-flex align-items-center">
-                                    <form id="searchForm" class="form-inline">
-                                        <div class="form-group">
-                                            <label for="equalsToAdminId" class="sr-only">ID：</label>
-                                            <input type="text" class="mr-3 form-control" id="equalsToAdminId" name="equalToAdminId" placeholder="ID">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="likeAdminName" class="sr-only">用户账号：</label>
-                                            <input type="text" class="mr-3 form-control" id="likeAdminName" name="likeAdminName" placeholder="用户账号">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="likeRealName" class="sr-only">真实姓名：</label>
-                                            <input type="text" class="mr-3 form-control" id="likeRealName" name="likeRealName" placeholder="真实姓名">
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="button" onclick="searchTable()" class="btn btn btn-primary">查询</button>
-                                            <span class="empty"></span>
-                                            <button type="button" onclick="clearSearchTable()" class="btn btn btn-primary">重置查询</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <!--<table id="table" ></table>-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="top-empty">
+                <form id="searchForm" class="form-inline">
+                    <div class="form-group">
+                        <label for="equalsToAdminId" class="sr-only">ID：</label>
+                        <input type="text" class="mr-3 form-control" id="equalsToAdminId" name="equalToAdminId" placeholder="ID">
                     </div>
-                </div>
-            </section>
+                    <div class="form-group">
+                        <label for="likeAdminName" class="sr-only">用户账号：</label>
+                        <input type="text" class="mr-3 form-control" id="likeAdminName" name="likeAdminName" placeholder="用户账号">
+                    </div>
+                    <div class="form-group">
+                        <label for="likeRealName" class="sr-only">真实姓名：</label>
+                        <input type="text" class="mr-3 form-control" id="likeRealName" name="likeRealName" placeholder="真实姓名">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" onclick="searchTable()" class="btn btn btn-primary">查询</button>
+                        <span class="empty"></span>
+                        <button type="button" onclick="clearSearchTable()" class="btn btn btn-primary">重置查询</button>
+                    </div>
+                </form>
+                <table id="table" class="top-empty"></table>
+            </div>
         </div>
     </div>
 </div>

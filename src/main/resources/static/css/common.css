@@ -6,6 +6,12 @@ html,body{
 .height-all{
     height: 100%;
 }
+.height-page{
+    height: 800px;
+}
 .empty{
     margin-left: 10px;
+}
+.top-empty{
+    margin-top: 10px;
 }
