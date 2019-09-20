@@ -1,27 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>Family</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="icon" href="/layui/images/favicon.ico">
-    <link rel="stylesheet" href="/layui/lib/layui-v2.5.4/css/layui.css" media="all">
-    <link rel="stylesheet" href="/layui/css/layuimini.css" media="all">
-    <link rel="stylesheet" href="/layui/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
-    <!--[if lt IE 9]>
-    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style id="layuimini-bg-color">
-    </style>
-</head>
+<head th:replace="common/common :: commonLoad"></head>
 <body class="layui-layout-body layuimini-all">
 <div class="layui-layout layui-layout-admin">
 
@@ -96,8 +76,7 @@
     </div>
 
 </div>
-<script src="/layui/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
-<script src="/layui/js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<!-- 初始化layUIMini -->
 <script>
     layui.use(['element', 'layer', 'layuimini'], function () {
         var $ = layui.jquery,

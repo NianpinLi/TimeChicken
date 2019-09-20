@@ -22,28 +22,5 @@ public class AuthorityService extends BaseService<Authority,Integer>{
     @Resource
     private AuthorityMapper authorityMapper;
 
-    @Resource
-    private RedisUtil redisUtil;
 
-    /**
-     * 验证权限
-     * @param requestURI String
-     * @return Boolean
-     */
-    public Boolean verifyAuthority(String requestURI) {
-
-        Boolean flag = false;
-        if (requestURI.startsWith("base/")){
-            flag = true;
-        }
-        Admin admin = this.getAdmin();
-        List<Authority> authorityList = (List<Authority>) this.getSession(admin.getAdminId() + "_Authority");
-        for (Authority authority : authorityList) {
-            if (requestURI.equals(authority.getAuthorityUrl())){
-                flag = true;
-                break;
-            }
-        }
-        return flag;
-    }
 }

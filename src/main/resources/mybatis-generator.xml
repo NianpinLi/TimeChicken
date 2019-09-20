@@ -32,7 +32,7 @@
         </sqlMapGenerator>
 
         <!-- 配置生成的**Mapper.java接口文件所存放的路径和包（使用绝对路径） -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dandelion.generator.dao"  targetProject="C:\workspace\family\src\main\java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dandelion.dao.generator"  targetProject="C:\workspace\family\src\main\java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 

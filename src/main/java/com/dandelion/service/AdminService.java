@@ -185,7 +185,7 @@ public class AdminService extends BaseService<Admin, Integer>{
 
     private Map getAuthorityMap(Authority authority){
         Map authorityMap = Maps.newHashMap();
-        authorityMap.put("title",String.valueOf(authority.getAuthorityId()));
+        authorityMap.put("title",authority.getAuthorityName());
         authorityMap.put("icon",authority.getAuthorityIcon());
         if (authority.getAuthorityUrl() != null && !"#".equals(authority.getAuthorityUrl())){
             authorityMap.put("href",authority.getAuthorityUrl());
