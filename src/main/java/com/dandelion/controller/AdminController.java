@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,6 +62,16 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "selectAdminPageList", method = RequestMethod.GET)
     public @ResponseBody Map selectAdminPageList(@RequestParam Map<String,String> paramsMap) throws Exception{
         Map result = adminService.selectAdminPageList(paramsMap);
+        return result;
+    }
+
+    /**
+     * 获取登录配置
+     * @return Map
+     */
+    @RequestMapping(value = "getIndexConfig", method = RequestMethod.GET)
+    public @ResponseBody Map getIndexConfig() throws Exception{
+        Map result = adminService.getIndexConfig();
         return result;
     }
 

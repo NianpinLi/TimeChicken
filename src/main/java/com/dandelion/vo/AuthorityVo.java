@@ -14,25 +14,29 @@ import java.util.List;
  */
 @Data
 public class AuthorityVo {
-    private Integer authorityId;
-    private String authorityUrl;
-    private String authorityName;
-    private Integer parentAuthorityId;
-    private List<AuthorityVo> childAuthorityList;
+    private String title;
+    private String icon;
+    private String href;
+    private String target;
+    private List<AuthorityVo> child;
+
+
 
     public AuthorityVo(Authority authority) {
-        this.authorityId = authority.getAuthorityId();
-        this.authorityUrl = authority.getAuthorityUrl();
-        this.authorityName = authority.getAuthorityName();
-        this.parentAuthorityId = authority.getParentAuthorityId();
-        this.childAuthorityList = Lists.newArrayList();
+        this.title = String.valueOf(authority.getAuthorityId());
+        this.icon = authority.getAuthorityIcon();
+        if (authority.getAuthorityUrl() != null && !"#".equals(authority.getAuthorityUrl())){
+            this.href = authority.getAuthorityUrl();
+            this.target = "_self";
+        }
+        this.child = Lists.newArrayList();
     }
 
-    public void addChildAuthority(AuthorityVo child){
-        childAuthorityList.add(child);
+    public void addChild(AuthorityVo child){
+        this.child.add(child);
     }
 
-    public void addChildAuthorityList(List<AuthorityVo> childList){
-        childAuthorityList.addAll(childList);
+    public void addChildList(List<AuthorityVo> childList){
+        this.child.addAll(childList);
     }
 }

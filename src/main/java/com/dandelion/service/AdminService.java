@@ -60,29 +60,6 @@ public class AdminService extends BaseService<Admin, Integer>{
         try {
             //登陆
             subject.login(token);
-            Admin admin = subject.getPrincipals().oneByType(Admin.class);
-            //查询页面权限 将其存入session 中
-            List<AuthorityVo> authorityVoList = Lists.newArrayList();
-            Map<String,Integer> authorityParams = Maps.newHashMap();
-            authorityParams.put("adminId",admin.getAdminId());
-            authorityParams.put("authorityType",1);
-            List<Authority> AuthorityList = this.getAuthorityByAdminId(authorityParams);
-            HashMap<Integer, AuthorityVo> authorityMap = Maps.newHashMap();
-            for (Authority authority : AuthorityList) {
-                AuthorityVo authorityVo = new AuthorityVo(authority);
-                Integer parentId = authority.getParentAuthorityId();
-                Integer authorityId = authority.getAuthorityId();
-                authorityMap.put(authorityId, authorityVo);
-                if (parentId != 0){
-                    AuthorityVo parent = authorityMap.get(parentId);
-                    if (parent != null){
-                        parent.addChildAuthority(authorityVo);
-                    }
-                }else{
-                    authorityVoList.add(authorityVo);
-                }
-            }
-            this.setSession("authorityList",authorityVoList);
         }catch (UnknownAccountException e){
             return errorResult(CommonMessage.PARAMSERROR,"账号不存在");
         }catch (IncorrectCredentialsException e){
@@ -144,5 +121,78 @@ public class AdminService extends BaseService<Admin, Integer>{
         PageInfo<Admin> pageInfo = new PageInfo<>(adminList);
         long total = pageInfo.getTotal();
         return pageResult(adminList, total);
+    }
+
+    /**
+     * 查询登录人信息
+     * @return Map
+     */
+    public Map getIndexConfig() throws Exception{
+        Map indexConfig = Maps.newHashMap();
+
+        //清除缓存配置
+        HashMap<String, Object> clearInfo = Maps.newHashMap();
+        clearInfo.put("clearUrl", "/layui/api/clear.json");
+        //欢迎页面配置
+        HashMap<String, Object> homeInfo = Maps.newHashMap();
+        homeInfo.put("title", "首页");
+        homeInfo.put("icon", "fa fa-home");
+        homeInfo.put("href", "/common/welcome");
+        //Logo配置
+        HashMap<String, Object> logoInfo = Maps.newHashMap();
+        logoInfo.put("title", "Family");
+        logoInfo.put("image", "/layui/images/logo.png");
+        logoInfo.put("href", "");
+        //菜单权限配置
+        Map menuInfo = this.getAuthority();
+
+        indexConfig.put("clearInfo",clearInfo);
+        indexConfig.put("homeInfo",homeInfo);
+        indexConfig.put("logoInfo",logoInfo);
+        indexConfig.put("menuInfo",menuInfo);
+        return indexConfig;
+    }
+
+    //获取权限
+    private Map getAuthority(){
+        Subject subject = SecurityUtils.getSubject();
+        Admin admin = subject.getPrincipals().oneByType(Admin.class);
+        //查询页面权限
+        Map<String,Integer> authorityParams = Maps.newHashMap();
+        authorityParams.put("adminId",admin.getAdminId());
+        authorityParams.put("authorityType",1);
+        List<Authority> AuthorityList = this.getAuthorityByAdminId(authorityParams);
+        HashMap<Integer, Map> authorityMap = Maps.newHashMap();
+        HashMap<Integer, Map> authorityMenuMap = Maps.newHashMap();
+        for (Authority authority : AuthorityList) {
+            Map map = getAuthorityMap(authority);
+            Integer parentId = authority.getParentAuthorityId();
+            Integer authorityId = authority.getAuthorityId();
+            authorityMap.put(authorityId, map);
+            if (parentId != 0){
+                //非顶级菜单
+                Map parent = authorityMap.get(parentId);
+                if (parent != null){
+                    ((List)parent.get("child")).add(map);
+                }
+            }else{
+                //顶级菜单
+                authorityMenuMap.put(authorityId,map);
+            }
+        }
+        return authorityMenuMap;
+    }
+
+    private Map getAuthorityMap(Authority authority){
+        Map authorityMap = Maps.newHashMap();
+        authorityMap.put("title",String.valueOf(authority.getAuthorityId()));
+        authorityMap.put("icon",authority.getAuthorityIcon());
+        if (authority.getAuthorityUrl() != null && !"#".equals(authority.getAuthorityUrl())){
+            authorityMap.put("href",authority.getAuthorityUrl());
+            authorityMap.put("target","_self");
+        }else {
+            authorityMap.put("child",Lists.newArrayList());
+        }
+        return authorityMap;
     }
 }

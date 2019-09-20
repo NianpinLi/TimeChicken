@@ -49,6 +49,10 @@ public class BaseController {
     public String error() {
         return "common/error";
     }
+    @RequestMapping("common/welcome")
+    public String welcome() {
+        return "common/welcome";
+    }
 
     public Admin getAdmin(){
         return (Admin)getSession().getAttribute("ADMIN");

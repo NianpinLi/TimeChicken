@@ -10,6 +10,7 @@
         <id column="authority_id" jdbcType="INTEGER" property="authorityId" />
         <result column="authority_name" jdbcType="VARCHAR" property="authorityName" />
         <result column="authority_url" jdbcType="VARCHAR" property="authorityUrl" />
+        <result column="authority_icon" jdbcType="VARCHAR" property="authorityIcon" />
         <result column="authority_level" jdbcType="INTEGER" property="authorityLevel" />
         <result column="parent_authority_id" jdbcType="INTEGER" property="parentAuthorityId" />
         <result column="authority_status" jdbcType="INTEGER" property="authorityStatus" />
