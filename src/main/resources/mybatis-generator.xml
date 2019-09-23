@@ -27,7 +27,7 @@
         </javaModelGenerator>
 
         <!-- 配置生成的**Mapper.xml文件所存放的路径和包（使用绝对路径） -->
-        <sqlMapGenerator targetPackage="mybatis"  targetProject="C:\workspace\family\src\main\resources\generator">
+        <sqlMapGenerator targetPackage="generator"  targetProject="C:\workspace\family\src\main\resources\mybatis">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 

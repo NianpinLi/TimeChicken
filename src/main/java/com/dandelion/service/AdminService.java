@@ -61,13 +61,13 @@ public class AdminService extends BaseService<Admin, Integer>{
             //登陆
             subject.login(token);
         }catch (UnknownAccountException e){
-            return errorResult(CommonMessage.PARAMSERROR,"账号不存在");
+            return errorResult(CommonMessage.PARAMS_ERROR,"账号不存在",false);
         }catch (IncorrectCredentialsException e){
-            return errorResult(CommonMessage.PARAMSERROR,"密码不正确");
+            return errorResult(CommonMessage.PARAMS_ERROR,"密码不正确",false);
         }catch (AuthenticationException e) {
-            return errorResult(CommonMessage.PARAMSERROR,"用户验证失败");
+            return errorResult(CommonMessage.PARAMS_ERROR,"用户验证失败",false);
         }
-        return successResult("登录成功");
+        return successResult("登录成功",false);
     }
 
     /**
@@ -169,7 +169,7 @@ public class AdminService extends BaseService<Admin, Integer>{
             Integer parentId = authority.getParentAuthorityId();
             Integer authorityId = authority.getAuthorityId();
             authorityMap.put(authorityId, map);
-            if (parentId != 0){
+            if (parentId != -1){
                 //非顶级菜单
                 Map parent = authorityMap.get(parentId);
                 if (parent != null){

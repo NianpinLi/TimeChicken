@@ -184,7 +184,7 @@ public class BaseService<T, PK extends Serializable> {
     }
 
     public void startPage(Map<String, String> paramsMap){
-        PageHelper.offsetPage(Integer.parseInt(paramsMap.get("offset")), Integer.parseInt(paramsMap.get("limit")));
+        PageHelper.startPage(Integer.parseInt(paramsMap.get("page")), Integer.parseInt(paramsMap.get("limit")));
     }
 
     /**
@@ -195,20 +195,24 @@ public class BaseService<T, PK extends Serializable> {
      */
     public Map pageResult(List list, long total){
         HashMap resultMap = Maps.newHashMap();
-        resultMap.put("rows", list);
-        resultMap.put("total", total);
+        resultMap.put("data", list);
+        resultMap.put("count", total);
+        resultMap.put("code", 0);
+        resultMap.put("msg", CommonMessage.MESSAGE.get(0));
         return resultMap;
     }
     /**
      * 错误信息返回
      * @param code int
      * @param message String
+     * @param flag String 是否关闭当前页面 true管理 false不关闭
      * @return map
      */
-    public Map errorResult(String code, String message){
+    public Map errorResult(Integer code, String message,boolean flag){
         HashMap resultMap = Maps.newHashMap();
         resultMap.put("code", code);
-        resultMap.put("message", message);
+        resultMap.put("msg", message);
+        resultMap.put("close", flag);
         return resultMap;
     }
     /**
@@ -216,20 +220,22 @@ public class BaseService<T, PK extends Serializable> {
      * @param code int
      * @return map
      */
-    public Map errorResult(String code){
+    public Map errorResult(Integer code, boolean flag){
         HashMap resultMap = Maps.newHashMap();
         resultMap.put("code", code);
-        resultMap.put("message", CommonMessage.MESSAGE.get(code));
+        resultMap.put("msg", CommonMessage.MESSAGE.get(code));
+        resultMap.put("close", flag);
         return resultMap;
     }
     /**
      * 成功信息返回
      * @return map
      */
-    public Map successResult(){
+    public Map successResult(boolean flag){
         HashMap resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.SUCCESS);
-        resultMap.put("message", CommonMessage.MESSAGE.get(CommonMessage.SUCCESS));
+        resultMap.put("msg", CommonMessage.MESSAGE.get(CommonMessage.SUCCESS));
+        resultMap.put("close", flag);
         return resultMap;
     }
     /**
@@ -237,10 +243,11 @@ public class BaseService<T, PK extends Serializable> {
      * @param message String
      * @return map
      */
-    public Map successResult(String message){
+    public Map successResult(String message, boolean flag){
         HashMap resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.SUCCESS);
-        resultMap.put("message", message);
+        resultMap.put("msg", message);
+        resultMap.put("close", flag);
         return resultMap;
     }
 }
