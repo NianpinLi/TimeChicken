@@ -2,6 +2,7 @@ package com.dandelion.controller;
 
 import com.dandelion.base.BaseController;
 import com.dandelion.service.AuthorityService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,7 @@ public class AuthorityController extends BaseController {
      * 跳转添加权限页面
      * @return String
      */
+    @RequiresPermissions("authority/addAuthorityPage")
     @RequestMapping(value = "addAuthorityPage", method = RequestMethod.GET)
     public String addAuthorityPage(){
         return this.disPlay();
@@ -42,6 +44,7 @@ public class AuthorityController extends BaseController {
     /**
      * 查询所有权限列表
      */
+    @RequiresPermissions("authority/authorityList")
     @RequestMapping(value = "authorityList", method = RequestMethod.GET)
     public @ResponseBody Map authorityList() throws Exception{
         return authorityService.authorityList();
@@ -49,6 +52,7 @@ public class AuthorityController extends BaseController {
     /**
      * 查询分页权限列表
      */
+    @RequiresPermissions("authority/authorityPageList")
     @RequestMapping(value = "authorityPageList", method = RequestMethod.GET)
     public @ResponseBody Map authorityPageList(@RequestParam Map<String, String> paramsMap) throws Exception{
         return authorityService.authorityPageList(paramsMap);

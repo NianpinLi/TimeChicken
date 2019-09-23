@@ -37,14 +37,18 @@ CREATE TABLE `authority` (
   `authority_id` int(8) NOT NULL AUTO_INCREMENT COMMENT '权限ID',
   `authority_name` varchar(255) NOT NULL COMMENT '权限名称',
   `authority_url` varchar(255) NOT NULL COMMENT '权限路径',
+  `authority_icon` varchar(255) DEFAULT 'fa fa-file-text' COMMENT '权限图表样式',
+  `authority_identifier` varchar(255) DEFAULT NULL COMMENT '权限标识 增删改查',
   `authority_level` int(3) NOT NULL DEFAULT '0' COMMENT '权限等级 0为最高级',
-  `parent_authority_id` int(8) NOT NULL DEFAULT '0' COMMENT '上级权限ID 0为最上级权限',
+  `parent_authority_id` int(8) NOT NULL DEFAULT '-1' COMMENT '上级权限ID -1为最上级权限',
   `authority_status` int(2) NOT NULL DEFAULT '1' COMMENT '权限状态 0停用 1启动 -1删除',
+  `authority_type` int(2) DEFAULT NULL COMMENT '权限类型 1，页面 2，按钮',
   `create_id` int(8) DEFAULT NULL COMMENT '创建人ID',
   `create_name` varchar(255) DEFAULT NULL COMMENT '创建人姓名',
   `create_time` varchar(255) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`authority_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
+
 
 -- 角色权限中间表
 CREATE TABLE `role_authority` (

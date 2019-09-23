@@ -6,16 +6,12 @@ layui.use(['form', 'iconPickerFa', 'tableSelect'], function () {
 
     //监听提交
     form.on('submit(submit)', function (data) {
-        // var data = JSON.stringify(data.field);
-        // layer.alert(, {
-        //     title: '最终的提交信息'
-        // });
         $.post(
             "/authority/saveAuthority",
             data.field,
             function(obj){
                 //回调函数
-                responeObj(obj);
+                responseObj(obj);
             },
             "JSON"
         );
@@ -43,7 +39,7 @@ layui.use(['form', 'iconPickerFa', 'tableSelect'], function () {
             console.log(d);
         }
     });
-    //上次权限菜单下拉选择模块初始化
+    //上级权限菜单下拉选择模块初始化
     tableSelect.render({
         elem: '#parentAuthorityName',	//定义输入框input对象 必填
         checkedKey: 'authorityId', //表格的唯一建值，非常重要，影响到选中状态 必填

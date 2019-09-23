@@ -19,27 +19,28 @@ public class ObjectUtil {
      */
     public static boolean isNull(Object obj) {
         if(obj != null) {
-            if (obj instanceof java.lang.String && !"".equals(obj)){
-                return false;
+            if (obj instanceof java.lang.String && "".equals(obj)){
+                return true;
             }
             if (obj instanceof java.util.List){
                 List list = (List)obj;
-                if (list.size() > 0){
-                    return false;
+                if (list.size() == 0){
+                    return true;
                 }
             }
             if (obj instanceof java.util.Map){
                 Map map = (Map)obj;
-                if (map.size() > 0){
-                    return false;
+                if (map.size() == 0){
+                    return true;
                 }
             }
             if (obj instanceof java.util.Set){
                 Set set = (Set)obj;
-                if (set.size() > 0){
-                    return false;
+                if (set.size() == 0){
+                    return true;
                 }
             }
+            return false;
         }
         return true;
     }

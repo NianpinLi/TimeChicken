@@ -1,5 +1,5 @@
 //请求返回
-function responeObj(obj){
+function responseObj(obj){
     //返回码
     var code = obj.code;
     //提示信息
@@ -25,8 +25,12 @@ function responeObj(obj){
         skin: 'layer-ext-moon'
     },function(){
         if (close){
+            //关闭
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
+        }else{
+            //刷新
+            location.reload();
         }
     })
 }

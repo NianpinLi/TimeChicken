@@ -11,6 +11,7 @@
         <result column="authority_name" jdbcType="VARCHAR" property="authorityName" />
         <result column="authority_url" jdbcType="VARCHAR" property="authorityUrl" />
         <result column="authority_icon" jdbcType="VARCHAR" property="authorityIcon" />
+        <result column="authority_identifier" jdbcType="VARCHAR" property="authorityIdentifier" />
         <result column="authority_level" jdbcType="INTEGER" property="authorityLevel" />
         <result column="parent_authority_id" jdbcType="INTEGER" property="parentAuthorityId" />
         <result column="authority_status" jdbcType="INTEGER" property="authorityStatus" />
@@ -39,10 +40,14 @@
         FROM authority au
         LEFT JOIN role_authority ra ON au.authority_id = ra.authority_id
         LEFT JOIN admin_role ar ON ra.role_id = ar.role_id
-        WHERE ar.admin_id = #{adminId}
-        <if test="authorityType != null and authorityType != ''">
-            AND au.authority_type = #{authorityType}
-        </if>
+        <where>
+            <if test="adminId != null and adminId != ''">
+                AND ar.admin_id = #{adminId}
+            </if>
+            <if test="authorityType != null and authorityType != ''">
+                AND au.authority_type = #{authorityType}
+            </if>
+        </where>
         ORDER BY au.authority_level ASC,au.authority_id ASC
     </select>
 

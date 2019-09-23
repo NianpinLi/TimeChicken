@@ -75,6 +75,10 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param authorityParams Map
      */
     public List<Authority> getAuthorityByAdminId(Map<String,Integer> authorityParams){
+        //拥有所有权限
+        if(authorityParams.get("adminId") == 1){
+            authorityParams.put("adminId",null);
+        }
         return adminSelfMapper.selectAuthorityByAdminId(authorityParams);
     }
 

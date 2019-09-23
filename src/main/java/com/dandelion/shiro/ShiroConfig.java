@@ -2,6 +2,7 @@ package com.dandelion.shiro;
 
 
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
@@ -70,5 +71,17 @@ public class ShiroConfig {
     public UserRealm userRealm() {
         UserRealm userRealm = new UserRealm();
         return userRealm;
+    }
+
+    /**
+     * 加入注解的使用，不加入这个注解不生效
+     * AuthorizationAttributeSourceAdvisor，shiro里实现的Advisor类，
+     * 内部使用AopAllianceAnnotationsAuthorizingMethodInterceptor来拦截用以下注解的方法。
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
+        AuthorizationAttributeSourceAdvisor aASA = new AuthorizationAttributeSourceAdvisor();
+        aASA.setSecurityManager(securityManager());
+        return aASA;
     }
 }

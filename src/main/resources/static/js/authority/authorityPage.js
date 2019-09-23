@@ -55,7 +55,10 @@ layui.use(['table', 'treetable'], function () {
             shadeClose: true,
             shade: 0,
             area: ['550px', '550px'],
-            content: ['/authority/addAuthorityPage','no']
+            content: ['/authority/addAuthorityPage','no'],
+            end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
+                location.reload();　　//layer.open关闭刷新
+            }
         });
     });
 
