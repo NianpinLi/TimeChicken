@@ -6,7 +6,6 @@ import com.dandelion.bean.Role;
 import com.dandelion.service.AdminService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -20,7 +19,6 @@ import org.apache.shiro.util.ByteSource;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * ClassName: UserRealm
@@ -79,27 +77,25 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        Object principal = principals.getPrimaryPrincipal();
+        Object principal = principals.oneByType(Admin.class);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         if (principal instanceof Admin) {
             Admin admin = (Admin) principal;
-            Set<String> roles = Sets.newHashSet();
-            List<Role> roleList = adminService.getRoleByAdminId(admin.getAdminId());
-            for (Role role : roleList) {
-                roles.add(role.getRoleName());
-            }
-            //存入角色名称
-            authorizationInfo.addRoles(roles);
-            Set<String> permissions = Sets.newHashSet();
             Map<String,Integer> authorityParams = Maps.newHashMap();
+            authorityParams.put("adminId",admin.getAdminId());
+            List<Role> roleList = adminService.getRoleByAdminId(authorityParams);
+            for (Role role : roleList) {
+                //存入角色名称
+                authorizationInfo.addRole(role.getRoleName());
+            }
             authorityParams.put("adminId",admin.getAdminId());
             List<Authority> authorityList = adminService.getAuthorityByAdminId(authorityParams);
             for (Authority authority : authorityList) {
-                permissions.add(authority.getAuthorityUrl());
+                //存入权限
+                authorizationInfo.addStringPermission(authority.getAuthorityUrl());
             }
-            //存入权限
-            authorizationInfo.addStringPermissions(permissions);
         }
         return authorizationInfo;
     }
+
 }

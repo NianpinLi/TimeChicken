@@ -7,7 +7,6 @@ import com.dandelion.bean.Authority;
 import com.dandelion.bean.AuthorityExample;
 import com.dandelion.dao.generator.AuthorityMapper;
 import com.dandelion.utils.ObjectUtil;
-import com.dandelion.utils.RedisUtil;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +27,11 @@ public class AuthorityService extends BaseService<Authority,Integer>{
     private AuthorityMapper authorityMapper;
 
 
-    public Map authorityList() {
+    public Map authorityList(Map<String, String> paramsMap) throws Exception{
         AuthorityExample example = new AuthorityExample();
+        AuthorityExample.Criteria criteria = example.createCriteria();
+        //查询条件
+        this.getSearchExample(paramsMap, criteria,"Authority");
         List<Authority> authorityList = authorityMapper.selectByExample(example);
         int total = authorityList.size();
         return this.pageResult(authorityList, total);
@@ -43,6 +45,7 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         AuthorityExample.Criteria criteria = example.createCriteria();
         //查询条件
         this.getSearchExample(paramsMap, criteria,"Authority");
+//        example.setOrderByClause();
         //分页
         startPage(paramsMap);
         List<Authority> authorityList = authorityMapper.selectByExample(example);
@@ -70,5 +73,19 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         //新增权限
         authorityMapper.insertSelective(authority);
         return this.successResult(true);
+    }
+
+    public Map deleteAuthority(Map<String, String> paramsMap) throws Exception{
+        AuthorityExample example = new AuthorityExample();
+        AuthorityExample.Criteria criteria = example.createCriteria();
+        //查询条件
+        this.getSearchExample(paramsMap, criteria,"Authority");
+        authorityMapper.deleteByExample(example);
+        return this.successResult(false);
+    }
+
+    public void getAuthorityById(Map<String, String> paramsMap) {
+        Authority authority = authorityMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("authorityId")));
+        this.setAttribute("authority",authority);
     }
 }

@@ -25,6 +25,10 @@ import java.util.Map;
  */
 public class BaseService<T, PK extends Serializable> {
 
+//    protected void getSearchExample(Map<String, String> paramsMap,){
+//
+//    }
+
     protected void getSearchExample(Map<String, String> paramsMap, Object object, String beanName) throws Exception{
         //获取实体BeanClass
         Class beanClass = Class.forName("com.dandelion.bean." + beanName);
@@ -166,17 +170,43 @@ public class BaseService<T, PK extends Serializable> {
     }
 
     /**
-     * setAttribute 存入作用域
+     * setSession 存入Session作用域
      * @param name String
      * @param value Object
+     *
      */
     public void setSession(String name, Object value) {
         HttpServletRequest request= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         request.getSession().setAttribute(name,value);
     }
+    /**
+     * getSession 获取Session作用域
+     * @param name String
+     * @return Object
+     */
     public Object getSession(String name) {
         HttpServletRequest request= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return request.getSession().getAttribute(name);
+    }
+
+    /**
+     * setAttribute 存入Session作用域
+     * @param name String
+     * @param value Object
+     *
+     */
+    public void setAttribute(String name, Object value) {
+        HttpServletRequest request= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        request.setAttribute(name,value);
+    }
+    /**
+     * getAttribute 获取Session作用域
+     * @param name String
+     * @return Object
+     */
+    public Object getAttribute(String name) {
+        HttpServletRequest request= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return request.getAttribute(name);
     }
 
     public Admin getAdmin(){

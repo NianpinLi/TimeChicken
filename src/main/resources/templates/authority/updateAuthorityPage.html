@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common :: commonLoad"></head>
+<script th:src="@{/js/authority/addAuthorityPage.js}" charset="utf-8"></script>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>权限信息</legend>
+        </fieldset>
+
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="authorityName" lay-verify="required" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限图标</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="authorityIcon" id="iconPicker"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限路径</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="authorityUrl" lay-verify="required" placeholder="请输入,不存在请输入#" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限类型</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="authorityType" value="1" title="页面" checked="">
+                    <input type="radio" name="authorityType" value="2" title="按钮">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限标识</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="authorityIdentifier" value="1" title="新增">
+                    <input type="radio" name="authorityIdentifier" value="2" title="查询">
+                    <input type="radio" name="authorityIdentifier" value="3" title="修改">
+                    <input type="radio" name="authorityIdentifier" value="4" title="删除">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">上级权限</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="parentAuthorityName"placeholder="请输入" autocomplete="off" class="layui-input">
+                    <input type="hidden" name="parentAuthorityId" id="parentAuthorityId" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

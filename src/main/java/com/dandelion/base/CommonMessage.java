@@ -20,12 +20,14 @@ public class CommonMessage {
     public static Integer PARAMS_ERROR = 2;
     //系统错误
     public static Integer SYSTEM_ERROR = 3;
-
+    //系统错误
+    public static Integer PERMISSION_ERROR = 4;
     //错误码默认提醒
     public static Map<Integer, String> MESSAGE = ImmutableMap.<Integer, String>builder()
             .put(CommonMessage.SUCCESS, "操作成功")
             .put(CommonMessage.ERROR, "操作失败")
             .put(CommonMessage.PARAMS_ERROR, "参数错误")
             .put(CommonMessage.SYSTEM_ERROR, "系统错误")
+            .put(CommonMessage.PERMISSION_ERROR, "权限异常")
             .build();
 }

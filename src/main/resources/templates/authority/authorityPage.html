@@ -1,17 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head th:replace="common/common :: commonLoad"></head>
 <script th:src="@{/js/authority/authorityPage.js}" charset="utf-8"></script>
 
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
+        <shiro:hasPermission name="/authority/authorityList">
+            <fieldset class="layui-elem-field layuimini-search" >
+                <legend>搜索信息</legend>
+                <div style="margin: 10px 10px 10px 10px">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <a class="layui-btn" lay-submit="" lay-filter="data-search-btn">搜索</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </shiro:hasPermission>
         <div>
             <div class="layui-btn-group">
                 <button class="layui-btn" id="btn-expand">全部展开</button>
                 <button class="layui-btn" id="btn-fold">全部折叠</button>
-                <button class="layui-btn" id="btn-add">新增权限</button>
+                <shiro:hasPermission name="/authority/addAuthorityPage">
+                    <button class="layui-btn" id="btn-add">新增权限</button>
+                </shiro:hasPermission>
             </div>
             <table id="menu-table" class="layui-table" lay-filter="menu-table"></table>
         </div>

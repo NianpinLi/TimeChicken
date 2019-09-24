@@ -10,7 +10,6 @@ import com.dandelion.dao.generator.AdminMapper;
 import com.dandelion.dao.self.AdminSelfMapper;
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.RedisUtil;
-import com.dandelion.vo.AuthorityVo;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -19,7 +18,6 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +71,7 @@ public class AdminService extends BaseService<Admin, Integer>{
     /**
      * 通过用户Id 获取权限列表
      * @param authorityParams Map
+     * @return List
      */
     public List<Authority> getAuthorityByAdminId(Map<String,Integer> authorityParams){
         //拥有所有权限
@@ -84,10 +83,15 @@ public class AdminService extends BaseService<Admin, Integer>{
 
     /**
      * 通过用户Id 获取角色列表
-     * @param adminId Integer
+     * @param authorityParams Map
+     * @return List
      */
-    public List<Role> getRoleByAdminId(Integer adminId){
-        return adminSelfMapper.selectRoleByAdminId(adminId);
+    public List<Role> getRoleByAdminId(Map<String,Integer> authorityParams){
+        //拥有所有角色
+        if(authorityParams.get("adminId") == 1){
+            authorityParams.put("adminId",null);
+        }
+        return adminSelfMapper.selectRoleByAdminId(authorityParams);
     }
 
     /**

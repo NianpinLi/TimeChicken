@@ -18,19 +18,23 @@ function responseObj(obj){
             case 1 : msg = '操作失败';break;
             case 2 : msg = '参数异常';break;
             case 3 : msg = '系统异常';break;
+            case 4 : msg = '权限异常';break;
         }
     }
     layer.alert(msg, {
         icon: icon,
-        skin: 'layer-ext-moon'
-    },function(){
-        if (close){
-            //关闭
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);
-        }else{
-            //刷新
-            location.reload();
+        shade: [0],
+        time: 1000,
+        skin: 'layer-ext-moon',
+        end: function () {
+            if (close){
+                //关闭
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            }else{
+                //刷新
+                location.reload();
+            }
         }
     })
 }

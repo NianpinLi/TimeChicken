@@ -2,8 +2,9 @@ package com.dandelion.dao.generator;
 
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.AuthorityExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AuthorityMapper {
     /**

@@ -36,7 +36,7 @@
 
     <select id="selectAuthorityByAdminId" parameterType="java.util.Map" resultMap="AuthorityMap">
         SELECT
-          au.*
+          DISTINCT au.*
         FROM authority au
         LEFT JOIN role_authority ra ON au.authority_id = ra.authority_id
         LEFT JOIN admin_role ar ON ra.role_id = ar.role_id
@@ -51,11 +51,15 @@
         ORDER BY au.authority_level ASC,au.authority_id ASC
     </select>
 
-    <select id="selectRoleByAdminId" parameterType="java.lang.Integer" resultMap="RoleMap">
+    <select id="selectRoleByAdminId" parameterType="java.util.Map" resultMap="RoleMap">
         SELECT
-        au.*
+          DISTINCT au.*
         FROM role au
         LEFT JOIN admin_role ar ON au.role_id = ar.role_id
-        WHERE ar.admin_id = #{adminId}
+        <where>
+            <if test="adminId != null and adminId != ''">
+                AND ar.admin_id = #{adminId}
+            </if>
+        </where>
     </select>
 </mapper>

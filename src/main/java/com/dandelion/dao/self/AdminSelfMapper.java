@@ -14,5 +14,5 @@ import java.util.Map;
  */
 public interface AdminSelfMapper {
     List<Authority> selectAuthorityByAdminId(Map<String,Integer> authorityParams);
-    List<Role> selectRoleByAdminId(Integer adminId);
+    List<Role> selectRoleByAdminId(Map<String,Integer> authorityParams);
 }
