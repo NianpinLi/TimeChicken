@@ -10,6 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -25,9 +26,24 @@ import java.util.Map;
  */
 public class BaseService<T, PK extends Serializable> {
 
-//    protected void getSearchExample(Map<String, String> paramsMap,){
-//
-//    }
+    protected void setOrderByClause(Map<String, String> paramsMap, Object example, String beanName) throws Exception{
+        if(!ObjectUtil.isNull(paramsMap.get("field")) && !ObjectUtil.isNull(paramsMap.get("order"))){
+            String field = paramsMap.get("field");
+            String order = paramsMap.get("order");
+            //获取实体BeanClass
+            Class beanClass = Class.forName("com.dandelion.bean." + beanName);
+            for (Field fieldName : beanClass.getDeclaredFields()) {
+                if(field.equals(fieldName.getName())){
+                    //实体存在属性，执行，防止SQL注入
+                    Class<?> exampleClass = example.getClass();
+                    String value = StringUtil.underline(field) + " " + order;
+                    Method method = exampleClass.getMethod("setOrderByClause", String.class);
+                    method.invoke(example, value);
+                    return;
+                }
+            }
+        }
+    }
 
     protected void getSearchExample(Map<String, String> paramsMap, Object object, String beanName) throws Exception{
         //获取实体BeanClass
@@ -39,21 +55,31 @@ public class BaseService<T, PK extends Serializable> {
             }
             Map methodMap = getMethodMap(key);
             String[] methodArray = (String[]) methodMap.get("methodArray");
-            int like = (int) methodMap.get("like");
+            int type = (int) methodMap.get("type");
             if (ObjectUtil.isNull(methodArray[0])){
                 continue;
             }
-            if (like == 2){
+            if (type == -1){
+                //不支持的参数
                 continue;
             }
+            methodBuffer.append(methodArray[0]).append(methodArray[1]);
+            //方法名
             methodBuffer.append(methodArray[0]).append(methodArray[1]);
             String attribute = StringUtil.stringFirstLowCase(methodArray[0]);
             //获取属性类型Class
             Class attributeType = beanClass.getDeclaredField(attribute).getType();
             Class criteriaClass = object.getClass();
+            String value = String.valueOf(paramsMap.get(key));
+            if(type == 2){
+                // isNull
+                Method method = criteriaClass.getMethod(methodBuffer.toString());
+                method.invoke(object);
+                return;
+            }
             Method method = criteriaClass.getMethod(methodBuffer.toString(), attributeType);
-            String value = paramsMap.get(key);
-            if (like == 1){
+            if(type == 1){
+                // like
                 method.invoke(object,"%"+value+"%");
             }else {
                 invokeMethod(method,attributeType,object,value);
@@ -70,20 +96,29 @@ public class BaseService<T, PK extends Serializable> {
         StringBuffer methodBuffer = new StringBuffer("and");
         Map methodMap = getMethodMap(params);
         String[] methodArray = (String[]) methodMap.get("methodArray");
-        int like = (int) methodMap.get("like");
+        int type = (int) methodMap.get("type");
         if (ObjectUtil.isNull(methodArray[0])){
             return;
         }
-        if (like == 2){
+        if (type == -1){
+            //不支持的参数
             return;
         }
+        //方法名
         methodBuffer.append(methodArray[0]).append(methodArray[1]);
         String attribute = StringUtil.stringFirstLowCase(methodArray[0]);
         //获取属性类型Class
         Class attributeType = beanClass.getDeclaredField(attribute).getType();
         Class criteriaClass = object.getClass();
+        if(type == 2){
+            // isNull
+            Method method = criteriaClass.getMethod(methodBuffer.toString());
+            method.invoke(object);
+            return;
+        }
         Method method = criteriaClass.getMethod(methodBuffer.toString(), attributeType);
-        if (like == 1){
+        if(type == 1){
+            // like
             method.invoke(object,"%"+value+"%");
         }else {
             invokeMethod(method,attributeType,object,value);
@@ -114,7 +149,7 @@ public class BaseService<T, PK extends Serializable> {
     }
 
     private static Map getMethodMap(String key){
-        int like = 0;
+        int type = 0;
         String[] methodArray = new String[2];
         if (key.startsWith("equalTo")){
             methodArray[0] = key.substring(7,key.length());
@@ -137,34 +172,42 @@ public class BaseService<T, PK extends Serializable> {
         }else if (key.startsWith("between")){
             methodArray[0] = key.substring(7,key.length());
             methodArray[1] = "Between";
+            type = 4;
         }else if (key.startsWith("notBetween")){
             methodArray[0] = key.substring(10,key.length());
             methodArray[1] = "NotBetween";
+            type = 4;
         }else if (key.startsWith("in")){
             methodArray[0] = key.substring(2,key.length());
             methodArray[1] = "In";
+            type = 3;
         }else if (key.startsWith("notIn")){
             methodArray[0] = key.substring(5,key.length());
             methodArray[1] = "NotIn";
+            type = 3;
         }else if (key.startsWith("isNull")){
             methodArray[0] = key.substring(6,key.length());
             methodArray[1] = "IsNull";
+            type = 2;
         }else if (key.startsWith("isNotNull")){
             methodArray[0] = key.substring(9,key.length());
             methodArray[1] = "IsNotNull";
+            type = 2;
         }else if (key.startsWith("like")){
             methodArray[0] = key.substring(4,key.length());
             methodArray[1] = "Like";
-            like = 1;
+            type = 1;
         }else if (key.startsWith("notLike")){
             methodArray[0] = key.substring(7,key.length());
             methodArray[1] = "NotLike";
-            like = 1;
+            type = 1;
         }else{
-            like = 2;
+            type = -1;
         }
         HashMap<String, Object> methodMap = Maps.newHashMap();
-        methodMap.put("like",like);
+
+        //参数类型 -1 不支持 1 like 2 isNull 3 in 4 between
+        methodMap.put("type",type);
         methodMap.put("methodArray",methodArray);
         return methodMap;
     }
@@ -210,7 +253,7 @@ public class BaseService<T, PK extends Serializable> {
     }
 
     public Admin getAdmin(){
-        return (Admin)getSession("ADMIN");
+        return (Admin)getSession("adminSession");
     }
 
     public void startPage(Map<String, String> paramsMap){

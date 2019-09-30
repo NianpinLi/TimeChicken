@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="common/common :: commonLoad"></head>
+<script th:src="@{/js/authority/authorityPage.js}" charset="utf-8"></script>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div>
+            <div class="layui-btn-group">
+                <button class="layui-btn" id="btn-expand">全部展开</button>
+                <button class="layui-btn" id="btn-fold">全部折叠</button>
+            </div>
+            <table id="menu-table" class="layui-table" lay-filter="menu-table"></table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

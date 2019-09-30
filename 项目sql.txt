@@ -1,4 +1,3 @@
--- 用户表
 CREATE TABLE `admin` (
   `admin_id` int(8) NOT NULL AUTO_INCREMENT COMMENT 'ID 自增',
   `admin_name` varchar(255) NOT NULL COMMENT '用户登录名',
@@ -12,33 +11,37 @@ CREATE TABLE `admin` (
   UNIQUE KEY `admin_name` (`admin_name`) USING BTREE COMMENT '用户名唯一索引'
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
-
--- 角色表
-CREATE TABLE `role` (
-  `role_id` int(8) NOT NULL AUTO_INCREMENT COMMENT '角色Id',
-  `role_name` varchar(255) DEFAULT NULL COMMENT '角色名称',
-  `role_status` int(2) DEFAULT '1' COMMENT '角色状态 0停用 1启用 -1删除',
-  `create_id` int(8) DEFAULT NULL COMMENT '创建人ID',
-  `create_name` varchar(255) DEFAULT NULL COMMENT '创建人名称',
-  `create_time` varchar(255) DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
-
--- 用户角色中间表
 CREATE TABLE `admin_role` (
   `admin_role_id` int(8) NOT NULL AUTO_INCREMENT,
   `admin_id` int(8) NOT NULL COMMENT '用户ID',
   `role_id` int(8) NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`admin_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色中间表';
 
---权限表
+CREATE TABLE `role` (
+  `role_id` int(8) NOT NULL AUTO_INCREMENT COMMENT '角色Id',
+  `role_name` varchar(255) DEFAULT NULL COMMENT '角色名称',
+  `role_status` int(2) DEFAULT '1' COMMENT '角色状态 0停用 1启用 -1删除',
+  `role_describe` varchar(255) DEFAULT NULL COMMENT '角色描述',
+  `create_id` int(8) DEFAULT NULL COMMENT '创建人ID',
+  `create_name` varchar(255) DEFAULT NULL COMMENT '创建人名称',
+  `create_time` varchar(255) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+
+CREATE TABLE `role_authority` (
+  `role_authority_id` int(8) NOT NULL AUTO_INCREMENT,
+  `role_id` int(8) NOT NULL COMMENT '角色ID',
+  `authority_id` int(8) NOT NULL COMMENT '权限ID',
+  PRIMARY KEY (`role_authority_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限中间表';
+
 CREATE TABLE `authority` (
   `authority_id` int(8) NOT NULL AUTO_INCREMENT COMMENT '权限ID',
   `authority_name` varchar(255) NOT NULL COMMENT '权限名称',
   `authority_url` varchar(255) NOT NULL COMMENT '权限路径',
   `authority_icon` varchar(255) DEFAULT 'fa fa-file-text' COMMENT '权限图表样式',
-  `authority_identifier` varchar(255) DEFAULT NULL COMMENT '权限标识 增删改查',
+  `authority_identifier` int(255) DEFAULT NULL COMMENT '权限标识 1增 2查 3改 4删',
   `authority_level` int(3) NOT NULL DEFAULT '0' COMMENT '权限等级 0为最高级',
   `parent_authority_id` int(8) NOT NULL DEFAULT '-1' COMMENT '上级权限ID -1为最上级权限',
   `authority_status` int(2) NOT NULL DEFAULT '1' COMMENT '权限状态 0停用 1启动 -1删除',
@@ -47,14 +50,21 @@ CREATE TABLE `authority` (
   `create_name` varchar(255) DEFAULT NULL COMMENT '创建人姓名',
   `create_time` varchar(255) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`authority_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
 
-
--- 角色权限中间表
-CREATE TABLE `role_authority` (
-  `role_authority_id` int(8) NOT NULL AUTO_INCREMENT,
-  `role_id` int(8) NOT NULL COMMENT '角色ID',
-  `authority_id` int(8) NOT NULL COMMENT '权限ID',
-  PRIMARY KEY (`role_authority_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限中间表';
+-- 初始化用户
+INSERT INTO `admin` VALUES (1, 'admin', '000000', 1, 'AdminManager', 1, 'AdminManager', '2019-09-30');
+-- 初始化权限
+INSERT INTO `authority` VALUES (1, '系统管理', '#', 'fa fa-apple', NULL, 0, -1, 1, 1, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (2, '权限管理', '/authority/getAuthorityPage', 'fa fa-address-card', NULL, 1, 1, 1, 1, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (3, '查询权限列表', '/authority/getAuthorityList', 'fa fa-align-left', 2, 2, 2, 1, 2, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (4, '新增权限', '/authority/addAuthorityPage', 'fa fa-calendar-plus-o', 1, 2, 2, 1, 2, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (40, '修改权限', '/authority/updateAuthorityPage', 'fa fa-edit', 3, 0, 2, 1, 2, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (41, '删除权限', '/authority/deleteAuthority', 'fa fa-calendar-minus-o', 4, 0, 2, 1, 2, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (42, '角色管理', '/role/getRolePage', 'fa fa-address-book', NULL, 0, 1, 1, 1, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (43, '查询角色', '/role/getRoleList', 'fa fa-address-book-o', 2, 0, 42, 1, 2, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (44, '新增角色', '/role/addRolePage', 'fa fa-calendar-plus-o', 1, 0, 42, 1, 2, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (45, '修改角色', '/role/updateRolePage', 'fa fa-edit', 3, 0, 42, 1, 2, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (46, '删除角色', '/role/deleteRole', 'fa fa-window-minimize', 4, 0, 42, 1, 2, 1, '1', '2019-09-30');
+INSERT INTO `authority` VALUES (48, '分配权限', '/role/empowermentAuthority', 'fa fa-bolt', 3, 0, 42, 1, 2, 1, '1', '2019-09-30');
 

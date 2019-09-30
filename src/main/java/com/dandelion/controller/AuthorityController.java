@@ -2,6 +2,7 @@ package com.dandelion.controller;
 
 import com.dandelion.base.BaseController;
 import com.dandelion.service.AuthorityService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +29,20 @@ public class AuthorityController extends BaseController {
      * 跳转权限管理页面
      * @return String
      */
-    @RequiresPermissions("/authority/authorityPage")
-    @RequestMapping(value = "authorityPage", method = RequestMethod.GET)
-    public String authorityPage(){
+    @RequiresPermissions("/authority/getAuthorityPage")
+    @RequestMapping(value = "getAuthorityPage", method = RequestMethod.GET)
+    public String getAuthorityPage() throws Exception{
         return this.disPlay();
     }
+    /**
+     * 查询所有权限列表
+     */
+    @RequiresPermissions("/authority/getAuthorityList")
+    @RequestMapping(value = "getAuthorityList", method = RequestMethod.GET)
+    public @ResponseBody Map getAuthorityList(@RequestParam Map<String, String> paramsMap) throws Exception{
+        return authorityService.getAuthorityList(paramsMap);
+    }
+
     /**
      * 跳转添加权限页面
      * @return String
@@ -42,36 +52,14 @@ public class AuthorityController extends BaseController {
     public String addAuthorityPage(){
         return this.disPlay();
     }
-    /**
-     * 查询所有权限列表
-     */
-    @RequiresPermissions("/authority/authorityList")
-    @RequestMapping(value = "authorityList", method = RequestMethod.GET)
-    public @ResponseBody Map authorityList(@RequestParam Map<String, String> paramsMap) throws Exception{
-        return authorityService.authorityList(paramsMap);
-    }
+
     /**
      * 查询分页权限列表
      */
-    @RequestMapping(value = "authorityPageList", method = RequestMethod.GET)
-    public @ResponseBody Map authorityPageList(@RequestParam Map<String, String> paramsMap) throws Exception{
-        return authorityService.authorityPageList(paramsMap);
-    }
-    /**
-     * 新增权限
-     */
     @RequiresPermissions("/authority/addAuthorityPage")
-    @RequestMapping(value = "saveAuthority", method = RequestMethod.POST)
-    public @ResponseBody Map saveAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
-        return authorityService.saveAuthority(paramsMap);
-    }
-
-    /**
-     * 删除权限
-     */
-    @RequestMapping(value = "deleteAuthority", method = RequestMethod.POST)
-    public @ResponseBody Map deleteAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
-        return authorityService.deleteAuthority(paramsMap);
+    @RequestMapping(value = "getAuthorityPageList", method = RequestMethod.GET)
+    public @ResponseBody Map getAuthorityPageList(@RequestParam Map<String, String> paramsMap) throws Exception{
+        return authorityService.getAuthorityPageList(paramsMap);
     }
 
     /**
@@ -87,13 +75,19 @@ public class AuthorityController extends BaseController {
     }
 
     /**
-     * 跳转添加权限页面
-     * @return String
+     * 新增/修改 权限
      */
-    @RequiresPermissions("/authority/updateAuthority")
-    @RequestMapping(value = "updateAuthority", method = RequestMethod.GET)
-    public String updateAuthority(){
-        return this.disPlay();
+    @RequiresPermissions(value={"/authority/addAuthorityPage","/authority/updateAuthorityPage"},logical= Logical.OR)
+    @RequestMapping(value = "saveAuthority", method = RequestMethod.POST)
+    public @ResponseBody Map saveAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
+        return authorityService.saveAuthority(paramsMap);
     }
 
+    /**
+     * 删除权限
+     */
+    @RequestMapping(value = "deleteAuthority", method = RequestMethod.POST)
+    public @ResponseBody Map deleteAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
+        return authorityService.deleteAuthority(paramsMap);
+    }
 }

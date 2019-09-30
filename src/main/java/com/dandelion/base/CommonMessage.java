@@ -20,7 +20,7 @@ public class CommonMessage {
     public static Integer PARAMS_ERROR = 2;
     //系统错误
     public static Integer SYSTEM_ERROR = 3;
-    //系统错误
+    //无权限错误
     public static Integer PERMISSION_ERROR = 4;
     //错误码默认提醒
     public static Map<Integer, String> MESSAGE = ImmutableMap.<Integer, String>builder()

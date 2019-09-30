@@ -2,10 +2,10 @@ package com.dandelion.service;
 
 import com.alibaba.fastjson.JSON;
 import com.dandelion.base.BaseService;
-import com.dandelion.bean.Admin;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.AuthorityExample;
 import com.dandelion.dao.generator.AuthorityMapper;
+import com.dandelion.utils.DateUtil;
 import com.dandelion.utils.ObjectUtil;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class AuthorityService extends BaseService<Authority,Integer>{
     private AuthorityMapper authorityMapper;
 
 
-    public Map authorityList(Map<String, String> paramsMap) throws Exception{
+    public Map getAuthorityList(Map<String, String> paramsMap) throws Exception{
         AuthorityExample example = new AuthorityExample();
         AuthorityExample.Criteria criteria = example.createCriteria();
         //查询条件
@@ -37,7 +37,7 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         return this.pageResult(authorityList, total);
     }
 
-    public Map authorityPageList(Map<String,String> paramsMap) throws Exception{
+    public Map getAuthorityPageList(Map<String,String> paramsMap) throws Exception{
         //查询页面权限
         paramsMap.put("equalsToAuthorityType","1");
 
@@ -45,11 +45,11 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         AuthorityExample.Criteria criteria = example.createCriteria();
         //查询条件
         this.getSearchExample(paramsMap, criteria,"Authority");
-//        example.setOrderByClause();
+        //example.setOrderByClause();
         //分页
         startPage(paramsMap);
         List<Authority> authorityList = authorityMapper.selectByExample(example);
-        PageInfo<Admin> pageInfo = new PageInfo(authorityList);
+        PageInfo<Authority> pageInfo = new PageInfo(authorityList);
         long total = pageInfo.getTotal();
         return pageResult(authorityList, total);
     }
@@ -59,28 +59,35 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         Authority authority = JSON.parseObject(JSON.toJSONString(paramsMap),Authority.class);
         String authorityIcon = authority.getAuthorityIcon();
         //权限图标存储
-        if (!ObjectUtil.isNull(authorityIcon)){
+        if (!ObjectUtil.isNull(authorityIcon) && authorityIcon.startsWith("fa-")){
             authority.setAuthorityIcon("fa "+authorityIcon);
         }
         //页面权限没有标识
         if (authority.getAuthorityType() == 1){
             authority.setAuthorityIdentifier(null);
         }
-        if(ObjectUtil.isNull(authority.getParentAuthorityId())){
-            //无上级权限
-            authority.setParentAuthorityId(-1);
+
+        if(ObjectUtil.isNull(paramsMap.get("authorityId"))){
+            //不存在权限Id 新增
+            authority.setCreateName(this.getAdmin().getRealName());
+            authority.setCreateId(this.getAdmin().getAdminId());
+            authority.setCreateTime(DateUtil.getNowDate_EN());
+            if(ObjectUtil.isNull(authority.getParentAuthorityId())) {
+                //无上级权限
+                authority.setParentAuthorityId(-1);
+            }
+            //新增权限
+            authorityMapper.insertSelective(authority);
+        }else{
+            //存在权限Id 修改
+            authorityMapper.updateByPrimaryKeySelective(authority);
         }
-        //新增权限
-        authorityMapper.insertSelective(authority);
+
         return this.successResult(true);
     }
 
     public Map deleteAuthority(Map<String, String> paramsMap) throws Exception{
-        AuthorityExample example = new AuthorityExample();
-        AuthorityExample.Criteria criteria = example.createCriteria();
-        //查询条件
-        this.getSearchExample(paramsMap, criteria,"Authority");
-        authorityMapper.deleteByExample(example);
+        authorityMapper.deleteByPrimaryKey(Integer.parseInt(paramsMap.get("equalToAuthorityId")));
         return this.successResult(false);
     }
 

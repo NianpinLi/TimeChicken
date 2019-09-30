@@ -19,7 +19,7 @@ layui.use(['table', 'treetable','form'], function () {
             treePidName: 'parentAuthorityId',//pid字段的名称
             where:result,//查询条件
             elem: '#menu-table',
-            url: '/authority/authorityList',
+            url: '/authority/getAuthorityList',
             page: false,
             cols: [
                 [
@@ -68,7 +68,7 @@ layui.use(['table', 'treetable','form'], function () {
             area: ['550px', '550px'],
             content: ['/authority/addAuthorityPage','no'],
             end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                location.reload();　　//layer.open关闭刷新
+                window.location.reload();　　//layer.open关闭刷新
             }
         });
     });
@@ -87,22 +87,23 @@ layui.use(['table', 'treetable','form'], function () {
                     {"equalToAuthorityId":data.id},
                     function (obj) {
                         responseObj(obj);
+                        window.location.reload();
                     },
                     "JSON"
                 );
             });
         } else if (layEvent === 'edit') {
-            var url = '/authority/addAuthorityPage?authorityId='+data.id;
+            var url = '/authority/updateAuthorityPage?authorityId='+data.id;
             //新增权限弹窗
             layer.open({
                 type: 2,
-                title: '新增权限',
+                title: '修改权限',
                 shadeClose: true,
                 shade: 0,
                 area: ['550px', '550px'],
                 content: [url ,'no'],
                 end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                    location.reload();　　//layer.open关闭刷新
+                    window.location.reload();　　//layer.open关闭刷新
                 }
             });
 

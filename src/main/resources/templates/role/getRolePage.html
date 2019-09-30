@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:replace="common/common :: commonLoad"></head>
+<script th:src="@{/js/role/rolePage.js}" charset="utf-8"></script>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <shiro:hasPermission name="/role/getRoleList">
+            <fieldset class="layui-elem-field layuimini-search" >
+                <legend>搜索信息</legend>
+                <div style="margin: 10px 10px 10px 10px">
+                    <form class="layui-form layui-form-pane" id="searchForm" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">角色名称</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="likeRoleName" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">角色状态</label>
+                                <div class="layui-input-inline">
+                                    <select name="equalToRoleStatus" lay-filter="roleStatus">
+                                        <option value="">请选择</option>
+                                        <option value="0">停用</option>
+                                        <option value="1">启用</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <a class="layui-btn" lay-submit="" lay-filter="data-search-btn">查看</a>
+                                <button type="reset" class="layui-btn">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </shiro:hasPermission>
+        <div>
+            <div class="layui-btn-group">
+                <shiro:hasPermission name="/role/addRolePage">
+                    <button class="layui-btn" id="btn-add">添加角色</button>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="/role/changeRoleStatus">
+                    <button class="layui-btn" id="btn-change">启用/停用</button>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="/role/deleteRole">
+                    <button class="layui-btn layui-btn-danger" id="btn-delete">批量删除</button>
+                </shiro:hasPermission>
+            </div>
+            <table id="currentTable" class="layui-table" lay-filter="currentTable"></table>
+        </div>
+    </div>
+</div>
+<!-- 操作列 -->
+<script type="text/html" id="currentTableBar">
+    <shiro:hasPermission name="/role/empowermentAuthority">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="empowerment">分配权限</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="/role/updateRolePage">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="/role/deleteRole">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </shiro:hasPermission>
+</script>
+</body>
+</html>

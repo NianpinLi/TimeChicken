@@ -108,5 +108,4 @@ public class BaseController {
         String method = new Exception().getStackTrace()[1].getMethodName();
         return action + "/" + method;
     }
-
 }
