@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/common :: commonLoad"></head>
-<script th:src="@{/js/role/updateRolePage.js}" charset="utf-8"></script>
+<script th:src="@{/js/role/addRole.js}" charset="utf-8"></script>
 
 <body>
 <div class="layuimini-container">
@@ -14,14 +14,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">角色名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="roleName" th:value="${role.roleName}" lay-verify="required" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
-                    <input type="hidden" name="roleId" lay-verify="required" th:value="${role.roleId}" autocomplete="off" class="layui-input">
+                    <input type="text" name="roleName" lay-verify="required" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">角色描述</label>
                 <div class="layui-input-inline">
-                    <textarea placeholder="请输入内容" th:text="${role.roleDescribe}"  class="layui-textarea" name="roleDescribe"></textarea>
+                    <textarea placeholder="请输入内容" class="layui-textarea" name="roleDescribe"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">

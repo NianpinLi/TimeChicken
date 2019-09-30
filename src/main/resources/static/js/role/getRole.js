@@ -79,7 +79,7 @@ layui.use(['table', 'table','form'], function () {
             shadeClose: true,
             shade: 0,
             area: ['380px', '390px'],
-            content: ['/role/addRolePage','no'],
+            content: ['/role/addRole','no'],
             end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
                 table.reload("currentTable");　　//layer.open关闭刷新
             }
@@ -128,7 +128,7 @@ layui.use(['table', 'table','form'], function () {
                 );
             });
         } else if (layEvent === 'edit') {
-            var url = '/role/updateRolePage?roleId='+data.roleId;
+            var url = '/role/updateRole?roleId='+data.roleId;
             //修改角色弹窗
             layer.open({
                 type: 2,
@@ -143,8 +143,19 @@ layui.use(['table', 'table','form'], function () {
             });
 
         } else if(layEvent === 'empowerment'){
+            var url = '/role/empowermentAuthority';
             //角色分配权限弹窗
-
+            layer.open({
+                type: 2,
+                title: '分配权限',
+                shadeClose: true,
+                shade: 0,
+                area: ['380px', '390px'],
+                content: [url ,'no'],
+                end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
+                    table.reload("currentTable");//layer.open关闭刷新
+                }
+            });
         }
     });
 });

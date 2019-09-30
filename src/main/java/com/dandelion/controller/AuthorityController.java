@@ -29,9 +29,9 @@ public class AuthorityController extends BaseController {
      * 跳转权限管理页面
      * @return String
      */
-    @RequiresPermissions("/authority/getAuthorityPage")
-    @RequestMapping(value = "getAuthorityPage", method = RequestMethod.GET)
-    public String getAuthorityPage() throws Exception{
+    @RequiresPermissions("/authority/getAuthority")
+    @RequestMapping(value = "getAuthority", method = RequestMethod.GET)
+    public String getAuthority() throws Exception{
         return this.disPlay();
     }
     /**
@@ -47,16 +47,16 @@ public class AuthorityController extends BaseController {
      * 跳转添加权限页面
      * @return String
      */
-    @RequiresPermissions("/authority/addAuthorityPage")
-    @RequestMapping(value = "addAuthorityPage", method = RequestMethod.GET)
-    public String addAuthorityPage(){
+    @RequiresPermissions("/authority/addAuthority")
+    @RequestMapping(value = "addAuthority", method = RequestMethod.GET)
+    public String addAuthority(){
         return this.disPlay();
     }
 
     /**
      * 查询分页权限列表
      */
-    @RequiresPermissions("/authority/addAuthorityPage")
+    @RequiresPermissions("/authority/addAuthority")
     @RequestMapping(value = "getAuthorityPageList", method = RequestMethod.GET)
     public @ResponseBody Map getAuthorityPageList(@RequestParam Map<String, String> paramsMap) throws Exception{
         return authorityService.getAuthorityPageList(paramsMap);
@@ -66,9 +66,9 @@ public class AuthorityController extends BaseController {
      * 跳转修改权限页面
      * @return String
      */
-    @RequiresPermissions("/authority/updateAuthorityPage")
-    @RequestMapping(value = "updateAuthorityPage", method = RequestMethod.GET)
-    public String updateAuthorityPage(@RequestParam Map<String, String> paramsMap){
+    @RequiresPermissions("/authority/updateAuthority")
+    @RequestMapping(value = "updateAuthority", method = RequestMethod.GET)
+    public String updateAuthority(@RequestParam Map<String, String> paramsMap){
         //查询权限数据并存入作用域
         authorityService.getAuthorityById(paramsMap);
         return this.disPlay();
@@ -77,7 +77,7 @@ public class AuthorityController extends BaseController {
     /**
      * 新增/修改 权限
      */
-    @RequiresPermissions(value={"/authority/addAuthorityPage","/authority/updateAuthorityPage"},logical= Logical.OR)
+    @RequiresPermissions(value={"/authority/addAuthority","/authority/updateAuthority"},logical= Logical.OR)
     @RequestMapping(value = "saveAuthority", method = RequestMethod.POST)
     public @ResponseBody Map saveAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
         return authorityService.saveAuthority(paramsMap);

@@ -66,7 +66,7 @@ layui.use(['table', 'treetable','form'], function () {
             shadeClose: true,
             shade: 0,
             area: ['550px', '550px'],
-            content: ['/authority/addAuthorityPage','no'],
+            content: ['/authority/addAuthority','no'],
             end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
                 window.location.reload();　　//layer.open关闭刷新
             }
@@ -93,7 +93,7 @@ layui.use(['table', 'treetable','form'], function () {
                 );
             });
         } else if (layEvent === 'edit') {
-            var url = '/authority/updateAuthorityPage?authorityId='+data.id;
+            var url = '/authority/updateAuthority?authorityId='+data.id;
             //新增权限弹窗
             layer.open({
                 type: 2,

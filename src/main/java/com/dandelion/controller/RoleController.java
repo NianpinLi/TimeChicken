@@ -30,7 +30,7 @@ public class RoleController extends BaseController{
      * 跳转角色管理页面
      * @return String
      */
-    @RequiresPermissions("/role/getRolePage")
+    @RequiresPermissions("/role/getRole")
     @RequestMapping(value = "getRolePage", method = RequestMethod.GET)
     public String getRolePage() throws Exception{
         return this.disPlay();
@@ -51,8 +51,8 @@ public class RoleController extends BaseController{
      * 跳转角色添加页面
      * @return String
      */
-    @RequiresPermissions("/role/addRolePage")
-    @RequestMapping(value = "addRolePage", method = RequestMethod.GET)
+    @RequiresPermissions("/role/addRole")
+    @RequestMapping(value = "addRole", method = RequestMethod.GET)
     public String addRolePage() throws Exception{
         return this.disPlay();
     }
@@ -61,8 +61,8 @@ public class RoleController extends BaseController{
      * 跳转角色修改页面
      * @return String
      */
-    @RequiresPermissions("/role/updateRolePage")
-    @RequestMapping(value = "updateRolePage", method = RequestMethod.GET)
+    @RequiresPermissions("/role/updateRole")
+    @RequestMapping(value = "updateRole", method = RequestMethod.GET)
     public String updateRolePage(@RequestParam Map<String, String> paramsMap){
         //查询权限数据并存入作用域
         roleService.getRoleById(paramsMap);
@@ -72,7 +72,7 @@ public class RoleController extends BaseController{
     /**
      * 新增/修改 权限
      */
-    @RequiresPermissions(value = {"/role/addRolePage","/role/updateRolePage"},logical= Logical.OR)
+    @RequiresPermissions(value = {"/role/addRole","/role/updateRole"},logical= Logical.OR)
     @RequestMapping(value = "saveRole", method = RequestMethod.POST)
     public @ResponseBody Map saveRole(@RequestParam Map<String, String> paramsMap) throws Exception{
         return roleService.saveRole(paramsMap);
