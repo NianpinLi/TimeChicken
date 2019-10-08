@@ -31,8 +31,8 @@ public class RoleController extends BaseController{
      * @return String
      */
     @RequiresPermissions("/role/getRole")
-    @RequestMapping(value = "getRolePage", method = RequestMethod.GET)
-    public String getRolePage() throws Exception{
+    @RequestMapping(value = "getRole", method = RequestMethod.GET)
+    public String getRole() throws Exception{
         return this.disPlay();
     }
 
