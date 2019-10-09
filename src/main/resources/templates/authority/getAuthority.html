@@ -26,7 +26,7 @@
             <div class="layui-btn-group">
                 <button class="layui-btn" id="btn-expand">全部展开</button>
                 <button class="layui-btn" id="btn-fold">全部折叠</button>
-                <shiro:hasPermission name="/authority/addAuthorityPage">
+                <shiro:hasPermission name="/authority/addAuthority">
                     <button class="layui-btn" id="btn-add">新增权限</button>
                 </shiro:hasPermission>
             </div>
@@ -36,7 +36,7 @@
 </div>
 <!-- 操作列 -->
 <script type="text/html" id="auth-state">
-    <shiro:hasPermission name="/authority/updateAuthorityPage">
+    <shiro:hasPermission name="/authority/updateAuthority">
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     </shiro:hasPermission>
     <shiro:hasPermission name="/authority/deleteAuthority">

@@ -3,18 +3,23 @@
       xmlns:th="http://www.thymeleaf.org"
 >
 <head th:replace="common/common :: commonLoad"></head>
-<script th:src="@{/js/authority/authorityPage.js}" charset="utf-8"></script>
-
+<script th:src="@{/js/role/empowermentAuthority.js}" charset="utf-8"></script>
+<script th:src="@{/layui/js/lay-module/layui-xTree/layui-xtree.js}" charset="utf-8"></script>
+<!--<script th:src="@{/zTree/jquery.ztree.all.min.js}" charset="utf-8"></script>-->
+<!--<link th:href="@{/zTree/css/zTreeStyle/zTreeStyle.css}" rel="stylesheet" media="all">-->
 <body>
 <div class="layuimini-container">
-    <div class="layuimini-main">
-        <div>
-            <div class="layui-btn-group">
-                <button class="layui-btn" id="btn-expand">全部展开</button>
-                <button class="layui-btn" id="btn-fold">全部折叠</button>
+    <div class="layuimini-main" style="height: 90%;">
+        <form class="layui-form" id="treeForm" >
+            <input type="hidden" id="roleId" th:value="${roleId}">
+            <div id="tree" style="width:325px;height: 500px;border:1px solid black;padding: 10px 0 25px 5px;"></div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
             </div>
-            <table id="menu-table" class="layui-table" lay-filter="menu-table"></table>
-        </div>
+        </form>
     </div>
 </div>
 </body>

@@ -323,4 +323,17 @@ public class BaseService<T, PK extends Serializable> {
         resultMap.put("close", flag);
         return resultMap;
     }
+
+    /**
+     * 成功信息返回
+     * @param data Object
+     * @return map
+     */
+    public Map successResult(Object data, boolean flag){
+        HashMap resultMap = Maps.newHashMap();
+        resultMap.put("code", CommonMessage.SUCCESS);
+        resultMap.put("data", data);
+        resultMap.put("close", flag);
+        return resultMap;
+    }
 }

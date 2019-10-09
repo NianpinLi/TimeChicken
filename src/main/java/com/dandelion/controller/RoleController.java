@@ -70,7 +70,7 @@ public class RoleController extends BaseController{
     }
 
     /**
-     * 新增/修改 权限
+     * 新增/修改 角色
      */
     @RequiresPermissions(value = {"/role/addRole","/role/updateRole"},logical= Logical.OR)
     @RequestMapping(value = "saveRole", method = RequestMethod.POST)
@@ -79,10 +79,29 @@ public class RoleController extends BaseController{
     }
 
     /**
-     * 删除权限
+     * 删除角色
      */
+    @RequiresPermissions(value = {"/role/deleteRole"})
     @RequestMapping(value = "deleteRole", method = RequestMethod.POST)
     public @ResponseBody Map deleteRole(@RequestParam Map<String, String> paramsMap) throws Exception{
         return roleService.deleteRole(paramsMap);
     }
+    /**
+     * 跳转角色分配权限页面
+     */
+    @RequiresPermissions(value = {"/role/empowermentAuthority"})
+    @RequestMapping(value = "empowermentAuthority", method = RequestMethod.GET)
+    public String empowermentAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
+        this.setAttribute("roleId", paramsMap.get("roleId"));
+        return this.disPlay();
+    }/**
+     * 跳转角色分配权限页面
+     */
+    @RequiresPermissions(value = {"/role/empowermentAuthority"})
+    @RequestMapping(value = "getRoleAuthorityTree", method = RequestMethod.POST)
+    public @ResponseBody Map getRoleAuthorityTree(@RequestParam Map<String, String> paramsMap) throws Exception{
+        //查询(现有权限,所有权限并组成树形结构)
+        return roleService.empowermentAuthority(paramsMap);
+    }
+
 }
