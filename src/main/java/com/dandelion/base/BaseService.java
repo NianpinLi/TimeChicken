@@ -65,7 +65,6 @@ public class BaseService<T, PK extends Serializable> {
             }
             methodBuffer.append(methodArray[0]).append(methodArray[1]);
             //方法名
-            methodBuffer.append(methodArray[0]).append(methodArray[1]);
             String attribute = StringUtil.stringFirstLowCase(methodArray[0]);
             //获取属性类型Class
             Class attributeType = beanClass.getDeclaredField(attribute).getType();
@@ -141,6 +140,10 @@ public class BaseService<T, PK extends Serializable> {
             method.invoke(object, value.charAt(0));
         }else if ("short".equals(attributeTypeString) || "java.lang.Short".equals(attributeTypeString)){
             method.invoke(object, Short.parseShort(value));
+        }else if ("byte".equals(attributeTypeString) || "java.lang.Byte".equals(attributeTypeString)){
+            method.invoke(object, Byte.parseByte(value));
+        }else if ("boolean".equals(attributeTypeString) || "java.lang.Boolean".equals(attributeTypeString)){
+            method.invoke(object, Boolean.parseBoolean(value));
         }else if ("java.math.BigDecimal".equals(attributeTypeString)){
             method.invoke(object, new BigDecimal(value));
         }else if ("java.math.BigInteger".equals(attributeTypeString)){
@@ -252,7 +255,7 @@ public class BaseService<T, PK extends Serializable> {
         return request.getAttribute(name);
     }
 
-    public Admin getAdmin(){
+    public Admin getLoginAdmin(){
         return (Admin)getSession("adminSession");
     }
 

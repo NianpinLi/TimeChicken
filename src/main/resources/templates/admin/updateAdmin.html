@@ -2,25 +2,26 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/common :: commonLoad"></head>
-<script th:src="@{/js/role/addRole.js}" charset="utf-8"></script>
+<script th:src="@{/js/admin/updateAdmin.js}" charset="utf-8"></script>
 
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-            <legend>角色信息</legend>
+            <legend>用户信息</legend>
         </fieldset>
         <form class="layui-form">
             <div class="layui-form-item">
-                <label class="layui-form-label">角色名称</label>
+                <label class="layui-form-label">用户账号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="roleName" lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input">
+                    <input type="hidden" name="adminId" th:value="${adminId}">
+                    <input type="text" name="adminName" lay-verify="required" placeholder="请输入用户账号" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">角色描述</label>
+                <label class="layui-form-label">用户姓名</label>
                 <div class="layui-input-inline">
-                    <textarea placeholder="请输入内容" class="layui-textarea" name="roleDescribe"></textarea>
+                    <input type="text" name="realName" th:value="${realName}" lay-verify="required" placeholder="请输入用户姓名" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">

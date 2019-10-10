@@ -3,6 +3,8 @@ package com.dandelion.controller;
 import com.dandelion.base.BaseController;
 import com.dandelion.base.CommonMessage;
 import com.dandelion.service.AdminService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,12 +45,23 @@ public class AdminController extends BaseController {
     }
 
     /**
+     * 获取登录配置
+     * @return Map
+     */
+    @RequestMapping(value = "getIndexConfig", method = RequestMethod.GET)
+    public @ResponseBody Map getIndexConfig() throws Exception{
+        Map result = adminService.getIndexConfig();
+        return result;
+    }
+
+    /**
      * 用户管理页面跳转
      * @return String
      * @throws Exception e
      */
-    @RequestMapping(value = "adminPage", method = RequestMethod.GET)
-    public String adminPage() throws Exception{
+    @RequiresPermissions(value = {"/admin/getAdmin"})
+    @RequestMapping(value = "getAdmin", method = RequestMethod.GET)
+    public String getAdmin() throws Exception{
         return this.disPlay();
     }
 
@@ -58,20 +71,33 @@ public class AdminController extends BaseController {
      * @return Map
      * @throws Exception e
      */
-    @RequestMapping(value = "selectAdminPageList", method = RequestMethod.GET)
-    public @ResponseBody Map selectAdminPageList(@RequestParam Map<String,String> paramsMap) throws Exception{
-        Map result = adminService.selectAdminPageList(paramsMap);
+    @RequiresPermissions(value = {"/admin/getAdminList"})
+    @RequestMapping(value = "getAdminList", method = RequestMethod.GET)
+    public @ResponseBody Map getAdminList(@RequestParam Map<String,String> paramsMap) throws Exception{
+        Map result = adminService.getAdminList(paramsMap);
         return result;
     }
 
     /**
-     * 获取登录配置
-     * @return Map
+     * 用户新增页面跳转
+     * @return String
+     * @throws Exception e
      */
-    @RequestMapping(value = "getIndexConfig", method = RequestMethod.GET)
-    public @ResponseBody Map getIndexConfig() throws Exception{
-        Map result = adminService.getIndexConfig();
-        return result;
+    @RequiresPermissions(value = {"/admin/addAdmin"})
+    @RequestMapping(value = "addAdmin", method = RequestMethod.GET)
+    public String addAdmin() throws Exception{
+        return this.disPlay();
+    }
+
+    /**
+     * 新增 / 修改 用户
+     * @return String
+     * @throws Exception e
+     */
+    @RequiresPermissions(value = {"/admin/addAdmin","/admin/updateAdmin"},logical= Logical.OR)
+    @RequestMapping(value = "saveAdmin", method = RequestMethod.POST)
+    public @ResponseBody Map saveAdmin(@RequestParam Map<String, String> paramsMap) throws Exception{
+        return adminService.saveAdmin(paramsMap);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.dandelion.service;
 
+import com.alibaba.fastjson.JSON;
 import com.dandelion.base.BaseService;
 import com.dandelion.base.CommonMessage;
 import com.dandelion.bean.Admin;
@@ -8,6 +9,7 @@ import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
 import com.dandelion.dao.generator.AdminMapper;
 import com.dandelion.dao.self.AdminSelfMapper;
+import com.dandelion.utils.DateUtil;
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.RedisUtil;
 import com.github.pagehelper.PageInfo;
@@ -111,26 +113,6 @@ public class AdminService extends BaseService<Admin, Integer>{
         return adminList.get(0);
     }
 
-
-    /**
-     * 查看所有用户
-     * @param paramsMap Map
-     * @return Map
-     * @throws Exception Exception
-     */
-    public Map selectAdminPageList(Map<String,String> paramsMap) throws Exception{
-        AdminExample example = new AdminExample();
-        AdminExample.Criteria criteria = example.createCriteria();
-        //查询条件
-        this.getSearchExample(paramsMap, criteria,"Admin");
-        //分页
-        startPage(paramsMap);
-        List<Admin> adminList = adminMapper.selectByExample(example);
-        PageInfo<Admin> pageInfo = new PageInfo<>(adminList);
-        long total = pageInfo.getTotal();
-        return pageResult(adminList, total);
-    }
-
     /**
      * 查询登录人信息
      * @return Map
@@ -173,7 +155,15 @@ public class AdminService extends BaseService<Admin, Integer>{
         HashMap<Integer, Map> authorityMap = Maps.newHashMap();
         HashMap<Integer, Map> authorityMenuMap = Maps.newHashMap();
         for (Authority authority : AuthorityList) {
-            Map map = getAuthorityMap(authority);
+            Map map  = Maps.newHashMap();
+            map.put("title",authority.getAuthorityName());
+            map.put("icon",authority.getAuthorityIcon());
+            if (authority.getAuthorityUrl() != null && !"#".equals(authority.getAuthorityUrl())){
+                map.put("href",authority.getAuthorityUrl());
+                map.put("target","_self");
+            }else {
+                map.put("child",Lists.newArrayList());
+            }
             Integer parentId = authority.getParentAuthorityId();
             Integer authorityId = authority.getAuthorityId();
             authorityMap.put(authorityId, map);
@@ -191,16 +181,45 @@ public class AdminService extends BaseService<Admin, Integer>{
         return authorityMenuMap;
     }
 
-    private Map getAuthorityMap(Authority authority){
-        Map authorityMap = Maps.newHashMap();
-        authorityMap.put("title",authority.getAuthorityName());
-        authorityMap.put("icon",authority.getAuthorityIcon());
-        if (authority.getAuthorityUrl() != null && !"#".equals(authority.getAuthorityUrl())){
-            authorityMap.put("href",authority.getAuthorityUrl());
-            authorityMap.put("target","_self");
-        }else {
-            authorityMap.put("child",Lists.newArrayList());
+
+    /**
+     * 查看所有用户
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception Exception
+     */
+    public Map getAdminList(Map<String,String> paramsMap) throws Exception{
+        AdminExample example = new AdminExample();
+        AdminExample.Criteria criteria = example.createCriteria();
+        //查询条件
+        this.getSearchExample(paramsMap, criteria,"Admin");
+        //分页
+        startPage(paramsMap);
+        List<Admin> adminList = adminMapper.selectByExample(example);
+        PageInfo<Admin> pageInfo = new PageInfo<>(adminList);
+        long total = pageInfo.getTotal();
+        return pageResult(adminList, total);
+    }
+
+    /**
+     * 新增 / 修改用户
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
+    public Map saveAdmin(Map<String, String> paramsMap) throws Exception{
+        Admin admin = JSON.parseObject(JSON.toJSONString(paramsMap), Admin.class);
+        if(ObjectUtil.isNull(admin.getAdminId())){
+            //存入添加信息
+            admin.setCreateName(this.getLoginAdmin().getRealName());
+            admin.setCreateId(this.getLoginAdmin().getAdminId());
+            admin.setCreateTime(DateUtil.getNowDate_EN());
+            //判断是否存在角色ID 不存在新增
+            adminMapper.insertSelective(admin);
+        }else{
+            //存在修改
+            adminMapper.updateByPrimaryKeySelective(admin);
         }
-        return authorityMap;
+        return this.successResult(true);
     }
 }

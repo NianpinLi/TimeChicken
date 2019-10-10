@@ -68,7 +68,7 @@ public class AuthorityController extends BaseController {
      */
     @RequiresPermissions("/authority/updateAuthority")
     @RequestMapping(value = "updateAuthority", method = RequestMethod.GET)
-    public String updateAuthority(@RequestParam Map<String, String> paramsMap){
+    public String updateAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
         //查询权限数据并存入作用域
         authorityService.getAuthorityById(paramsMap);
         return this.disPlay();

@@ -10,16 +10,16 @@ layui.use(['table', 'table','form'], function () {
         layer.load(2);
         table.render({
             elem: '#currentTable',
-            url: '/role/getRoleList',
+            url: '/admin/getAdminList',
             initSort: sort,
             cols: [
                 [
                     {type: "checkbox", width: 50, fixed: "left"},
-                    {field: 'roleId', width: 80, title: 'ID', sort: true},
-                    {field: 'roleName', title: '角色名称'},
-                    {field: 'roleDescribe', title: '角色描述'},
-                    {field: 'roleStatus', title: '角色状态', sort: true, templet:function (d) {
-                        if(d.roleStatus == 1){
+                    {field: 'adminId', width: 80, title: 'ID', sort: true},
+                    {field: 'adminName', title: '用户账号'},
+                    {field: 'realName', title: '用户姓名'},
+                    {field: 'adminStatus', title: '用户状态', sort: true, templet:function (d) {
+                        if(d.adminStatus == 1){
                             return '启用';
                         }else{
                             return '停用';
@@ -51,7 +51,7 @@ layui.use(['table', 'table','form'], function () {
     form.on('submit(data-search-btn)', function (data) {
         formDate = data.field;
         //执行搜索重载
-        currentTable(formDate);
+        currentTable();
         return false;
     });
 
@@ -67,11 +67,11 @@ layui.use(['table', 'table','form'], function () {
         //新增角色弹窗
         layer.open({
             type: 2,
-            title: '新增角色',
+            title: '新增用户',
             shadeClose: true,
             shade: 0,
             area: ['380px', '420px'],
-            content: ['/role/addRole','no'],
+            content: ['/admin/addAdmin','no'],
             end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
                 currentTable();　//layer.open关闭刷新
             }
@@ -127,7 +127,7 @@ layui.use(['table', 'table','form'], function () {
                 title: '修改角色',
                 shadeClose: true,
                 shade: 0,
-                area: ['380px', '420px'],
+                area: ['380px', '390px'],
                 content: [url ,'no'],
                 end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
                     currentTable();　//layer.open关闭刷新

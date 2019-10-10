@@ -3,27 +3,33 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head th:replace="common/common :: commonLoad"></head>
-<script th:src="@{/js/role/getRole.js}" charset="utf-8"></script>
+<script th:src="@{/js/admin/getAdmin.js}" charset="utf-8"></script>
 
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <shiro:hasPermission name="/role/getRoleList">
+        <shiro:hasPermission name="/admin/getAdminList">
             <fieldset class="layui-elem-field layuimini-search" >
                 <legend>搜索信息</legend>
                 <div style="margin: 10px 10px 10px 10px">
                     <form class="layui-form layui-form-pane" id="searchForm" action="">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label">角色名称</label>
+                                <label class="layui-form-label">用户账号</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="likeRoleName" autocomplete="off" class="layui-input">
+                                    <input type="text" name="likeAdminName" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">角色状态</label>
+                                <label class="layui-form-label">用户姓名</label>
                                 <div class="layui-input-inline">
-                                    <select name="equalToRoleStatus" lay-filter="roleStatus">
+                                    <input type="text" name="likeRealName" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">用户状态</label>
+                                <div class="layui-input-inline">
+                                    <select name="equalToAdminStatus" lay-filter="roleStatus">
                                         <option value="">请选择</option>
                                         <option value="0">停用</option>
                                         <option value="1">启用</option>
@@ -41,13 +47,13 @@
         </shiro:hasPermission>
         <div>
             <div class="layui-btn-group">
-                <shiro:hasPermission name="/role/addRole">
-                    <button class="layui-btn" id="btn-add">添加角色</button>
+                <shiro:hasPermission name="/admin/addAdmin">
+                    <button class="layui-btn" id="btn-add">添加用户</button>
                 </shiro:hasPermission>
-                <shiro:hasPermission name="/role/changeRoleStatus">
+                <shiro:hasPermission name="/admin/changeAdminStatus">
                     <button class="layui-btn" id="btn-change">启用/停用</button>
                 </shiro:hasPermission>
-                <shiro:hasPermission name="/role/deleteRole">
+                <shiro:hasPermission name="/admin/deleteAdmin">
                     <button class="layui-btn layui-btn-danger" id="btn-delete">批量删除</button>
                 </shiro:hasPermission>
             </div>
@@ -57,14 +63,14 @@
 </div>
 <!-- 操作列 -->
 <script type="text/html" id="currentTableBar">
-    <shiro:hasPermission name="/role/empowermentAuthority">
-        <a class="layui-btn layui-btn-primary data-count-edit layui-btn-xs" lay-event="empowerment">分配权限</a>
+    <shiro:hasPermission name="/admin/empowermentRole">
+        <a class="layui-btn data-count-edit layui-btn-xs" lay-event="empowerment">分配角色</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/role/updateRole">
-        <a class="layui-btn layui-btn-primary data-count-edit layui-btn-xs" lay-event="edit">修改</a>
+    <shiro:hasPermission name="/admin/updateAdmin">
+        <a class="layui-btn data-count-edit layui-btn-xs " lay-event="edit">修改</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/role/deleteRole">
-        <a class="layui-btn layui-btn-danger data-count-delete layui-btn-xs" lay-event="del">删除</a>
+    <shiro:hasPermission name="/admin/deleteAdmin">
+        <a class="layui-btn data-count-delete layui-btn-danger layui-btn-xs " lay-event="del">删除</a>
     </shiro:hasPermission>
 </script>
 </body>

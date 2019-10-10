@@ -49,17 +49,17 @@ public class RoleService extends BaseService<Role, Integer>{
         return pageResult(roleList, total);
     }
 
-    public void getRoleById(Map<String, String> paramsMap) {
+    public void getRoleById(Map<String, String> paramsMap) throws Exception {
         Role role = roleMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("roleId")));
         this.setAttribute("role",role);
     }
 
-    public Map saveRole(Map<String, String> paramsMap) {
+    public Map saveRole(Map<String, String> paramsMap) throws Exception {
         Role role = JSON.parseObject(JSON.toJSONString(paramsMap), Role.class);
         if(ObjectUtil.isNull(role.getRoleId())){
             //存入添加信息
-            role.setCreateName(this.getAdmin().getRealName());
-            role.setCreateId(this.getAdmin().getAdminId());
+            role.setCreateName(this.getLoginAdmin().getRealName());
+            role.setCreateId(this.getLoginAdmin().getAdminId());
             role.setCreateTime(DateUtil.getNowDate_EN());
             //判断是否存在角色ID 不存在新增
             roleMapper.insertSelective(role);
@@ -70,7 +70,7 @@ public class RoleService extends BaseService<Role, Integer>{
         return this.successResult(true);
     }
 
-    public Map deleteRole(Map<String, String> paramsMap) {
+    public Map deleteRole(Map<String, String> paramsMap) throws Exception {
         String roleIds = paramsMap.get("inRoleId");
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
@@ -89,19 +89,22 @@ public class RoleService extends BaseService<Role, Integer>{
         return this.successResult(false);
     }
 
-    public Map empowermentAuthority(Map<String, String> paramsMap) {
+    public Map empowermentAuthority(Map<String, String> paramsMap) throws Exception {
         //查询当前角色拥有的权限
         List<Integer> authorityList = roleSelfMapper.selectAuthorityIdByRoleId(paramsMap);
 
-        if(this.getAdmin().getAdminId() != 1){
+        if(this.getLoginAdmin().getAdminId() != 1){
             //非顶级登录人,查询当前登录角色拥有的权限
-            paramsMap.put("adminId",String.valueOf(this.getAdmin().getAdminId()));
+            paramsMap.put("adminId",String.valueOf(this.getLoginAdmin().getAdminId()));
         }
         List<Authority> allAuthorityList = roleSelfMapper.selectAuthorityByAdminId(paramsMap);
         List zTreeNode = Lists.newArrayList();
         HashMap<Integer, Map> authorityMap = Maps.newHashMap();
         allAuthorityList.forEach(authority -> {
-            Map<String, Object> map = getAuthorityNode(authority);
+            Map<String, Object> map = Maps.newHashMap();
+            map.put("value",authority.getAuthorityId());
+            map.put("title",authority.getAuthorityName());
+            map.put("data",Lists.newArrayList());
             Integer parentId = authority.getParentAuthorityId();
             Integer authorityId = authority.getAuthorityId();
             authorityMap.put(authorityId,map);
@@ -122,7 +125,7 @@ public class RoleService extends BaseService<Role, Integer>{
         return this.successResult(zTreeNode,false);
     }
 
-    public Map saveEmpowermentAuthority(Map<String, Object> paramsMap) {
+    public Map saveEmpowermentAuthority(Map<String, Object> paramsMap) throws Exception {
         //删除角色所拥有的所有权限
         Integer roleId = Integer.parseInt(String.valueOf(paramsMap.get("roleId")));
         roleSelfMapper.deleteAuthorityByRoleId(roleId);
@@ -141,13 +144,5 @@ public class RoleService extends BaseService<Role, Integer>{
             }
         }
         return successResult(true);
-    }
-
-    private Map<String,Object> getAuthorityNode(Authority authority){
-        Map<String,Object> map = Maps.newHashMap();
-        map.put("value",authority.getAuthorityId());
-        map.put("title",authority.getAuthorityName());
-        map.put("data",Lists.newArrayList());
-        return map;
     }
 }

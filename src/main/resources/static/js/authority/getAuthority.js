@@ -4,10 +4,9 @@ layui.use(['table', 'treetable','form'], function () {
     var treeTable = layui.treetable;
     var form = layui.form;
 
-    // 监听搜索操作
-    form.on('submit(data-search-btn)', function (data) {
-        var result = data.field;
-        //执行搜索重载
+    var formData;
+
+    var currentTable = function(result){
         // 渲染表格
         layer.load(2);
         treeTable.render({
@@ -48,6 +47,13 @@ layui.use(['table', 'treetable','form'], function () {
                 layer.closeAll('loading');
             }
         });
+    };
+
+    // 监听搜索操作
+    form.on('submit(data-search-btn)', function (data) {
+        formData = data.field;
+        //执行搜索重载
+        currentTable(formData);
         return false;
     });
 
@@ -68,7 +74,7 @@ layui.use(['table', 'treetable','form'], function () {
             area: ['550px', '550px'],
             content: ['/authority/addAuthority','no'],
             end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                window.location.reload();　　//layer.open关闭刷新
+                currentTable(formData);
             }
         });
     });
@@ -87,23 +93,23 @@ layui.use(['table', 'treetable','form'], function () {
                     {"equalToAuthorityId":data.id},
                     function (obj) {
                         responseObj(obj);
-                        window.location.reload();
+                        currentTable(formData);
                     },
                     "JSON"
                 );
             });
         } else if (layEvent === 'edit') {
             var url = '/authority/updateAuthority?authorityId='+data.id;
-            //新增权限弹窗
+            //修改权限弹窗
             layer.open({
                 type: 2,
                 title: '修改权限',
                 shadeClose: true,
                 shade: 0,
-                area: ['550px', '550px'],
+                area: ['550px', '490px'],
                 content: [url ,'no'],
                 end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                    window.location.reload();　　//layer.open关闭刷新
+                    currentTable(formData);
                 }
             });
 

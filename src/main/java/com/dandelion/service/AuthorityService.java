@@ -54,7 +54,7 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         return pageResult(authorityList, total);
     }
 
-    public Map saveAuthority(Map<String, String> paramsMap) {
+    public Map saveAuthority(Map<String, String> paramsMap) throws Exception{
         //将Map 转化成 entity
         Authority authority = JSON.parseObject(JSON.toJSONString(paramsMap),Authority.class);
         String authorityIcon = authority.getAuthorityIcon();
@@ -69,8 +69,8 @@ public class AuthorityService extends BaseService<Authority,Integer>{
 
         if(ObjectUtil.isNull(paramsMap.get("authorityId"))){
             //不存在权限Id 新增
-            authority.setCreateName(this.getAdmin().getRealName());
-            authority.setCreateId(this.getAdmin().getAdminId());
+            authority.setCreateName(this.getLoginAdmin().getRealName());
+            authority.setCreateId(this.getLoginAdmin().getAdminId());
             authority.setCreateTime(DateUtil.getNowDate_EN());
             if(ObjectUtil.isNull(authority.getParentAuthorityId())) {
                 //无上级权限
@@ -91,7 +91,7 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         return this.successResult(false);
     }
 
-    public void getAuthorityById(Map<String, String> paramsMap) {
+    public void getAuthorityById(Map<String, String> paramsMap)  throws Exception{
         Authority authority = authorityMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("authorityId")));
         this.setAttribute("authority",authority);
     }

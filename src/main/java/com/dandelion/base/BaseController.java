@@ -53,8 +53,8 @@ public class BaseController {
         return "common/welcome";
     }
 
-    public Admin getAdmin(){
-        return (Admin)getSession().getAttribute("ADMIN");
+    public Admin getLoginAdmin(){
+        return (Admin)getSession().getAttribute("adminSession");
     }
 
     /**

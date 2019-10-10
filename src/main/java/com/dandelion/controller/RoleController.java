@@ -53,7 +53,7 @@ public class RoleController extends BaseController{
      */
     @RequiresPermissions("/role/addRole")
     @RequestMapping(value = "addRole", method = RequestMethod.GET)
-    public String addRolePage() throws Exception{
+    public String addRole() throws Exception{
         return this.disPlay();
     }
 
@@ -63,7 +63,7 @@ public class RoleController extends BaseController{
      */
     @RequiresPermissions("/role/updateRole")
     @RequestMapping(value = "updateRole", method = RequestMethod.GET)
-    public String updateRolePage(@RequestParam Map<String, String> paramsMap){
+    public String updateRole(@RequestParam Map<String, String> paramsMap) throws Exception{
         //查询权限数据并存入作用域
         roleService.getRoleById(paramsMap);
         return this.disPlay();
