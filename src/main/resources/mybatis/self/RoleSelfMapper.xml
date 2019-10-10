@@ -66,4 +66,19 @@
         </where>
         ORDER BY au.authority_level ASC,au.authority_id ASC
     </select>
+
+    <delete id="deleteAuthorityByRoleId" parameterType="java.lang.Integer">
+        DELETE FROM role_authority WHERE role_id = #{roleId}
+    </delete>
+
+    <insert id="insertAuthorityByRoleId" parameterType="java.util.Map">
+        INSERT INTO role_authority(role_id, authority_id)
+        VALUES
+        <foreach collection="authorityIdList" separator="," item="item" >
+            (
+              #{roleId},
+              #{item}
+            )
+        </foreach>
+    </insert>
 </mapper>

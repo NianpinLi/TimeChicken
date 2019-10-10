@@ -1,8 +1,9 @@
 layui.use(['tree','form'], function () {
     var $ = layui.jquery;
-    var tree = layui.tree;
+    // var tree = layui.tree;
     var form = layui.form;
 
+    var xTree = null;
 
     //获取权限树
     $.post(
@@ -11,13 +12,35 @@ layui.use(['tree','form'], function () {
         function (obj) {
             // responseObj(obj);
             var data = obj['data'];
-            new layuiXtree({
+            xTree = new layuiXtree({
                 elem:"tree"
                 , form: form
                 , data:data
                 , ckall: true
+                , isopen: false
             });
         },
         "JSON"
     );
+
+    //监听提交
+    form.on('submit(submit)', function (data) {
+        var field = data.field;
+        var checkedNode = xTree.GetChecked();
+        var checkedValue = "";
+        for(var i in checkedNode){
+            checkedValue += ","+checkedNode[i].value;
+        }
+        field['authorityIds']=checkedValue;
+        $.post(
+            "/role/saveEmpowermentAuthority",
+            field,
+            function(obj){
+                //回调函数
+                responseObj(obj);
+            },
+            "JSON"
+        );
+        return false;
+    });
 });

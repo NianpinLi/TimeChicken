@@ -16,4 +16,8 @@ public interface RoleSelfMapper {
     List<Authority> selectAuthorityByAdminId(Map<String,String> authorityParams);
 
     List<Integer> selectAuthorityIdByRoleId(Map<String,String> authorityParams);
+
+    void deleteAuthorityByRoleId(Integer roleId);
+
+    void insertAuthorityByRoleId(Map<String, Object> paramsMap);
 }

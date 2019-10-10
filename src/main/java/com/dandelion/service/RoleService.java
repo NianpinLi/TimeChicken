@@ -122,6 +122,27 @@ public class RoleService extends BaseService<Role, Integer>{
         return this.successResult(zTreeNode,false);
     }
 
+    public Map saveEmpowermentAuthority(Map<String, Object> paramsMap) {
+        //删除角色所拥有的所有权限
+        Integer roleId = Integer.parseInt(String.valueOf(paramsMap.get("roleId")));
+        roleSelfMapper.deleteAuthorityByRoleId(roleId);
+        //添加新的权限
+        String authorityIds = String.valueOf(paramsMap.get("authorityIds"));
+        if (!ObjectUtil.isNull(authorityIds)){
+            List authorityIdList = Lists.newArrayList();
+            for (String authorityId : authorityIds.split(",")) {
+                if (!ObjectUtil.isNull(authorityId)){
+                    authorityIdList.add(authorityId);
+                }
+            }
+            if (authorityIdList.size() > 0){
+                paramsMap.put("authorityIdList",authorityIdList);
+                roleSelfMapper.insertAuthorityByRoleId(paramsMap);
+            }
+        }
+        return successResult(true);
+    }
+
     private Map<String,Object> getAuthorityNode(Authority authority){
         Map<String,Object> map = Maps.newHashMap();
         map.put("value",authority.getAuthorityId());

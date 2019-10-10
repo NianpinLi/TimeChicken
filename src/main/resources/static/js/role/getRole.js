@@ -150,8 +150,8 @@ layui.use(['table', 'table','form'], function () {
                 title: '分配权限',
                 shadeClose: true,
                 shade: 0,
-                area: ['400px', '650px'],
-                content: [url ,'no'],
+                area: ['500px', '75%'],
+                content: [url ,'yes'],
                 end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
                     table.reload("currentTable");//layer.open关闭刷新
                 }

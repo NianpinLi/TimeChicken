@@ -94,8 +94,9 @@ public class RoleController extends BaseController{
     public String empowermentAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
         this.setAttribute("roleId", paramsMap.get("roleId"));
         return this.disPlay();
-    }/**
-     * 跳转角色分配权限页面
+    }
+    /**
+     * 角色拥有权限回显
      */
     @RequiresPermissions(value = {"/role/empowermentAuthority"})
     @RequestMapping(value = "getRoleAuthorityTree", method = RequestMethod.POST)
@@ -103,5 +104,13 @@ public class RoleController extends BaseController{
         //查询(现有权限,所有权限并组成树形结构)
         return roleService.empowermentAuthority(paramsMap);
     }
-
+    /**
+     * 角色分配权限
+     */
+    @RequiresPermissions(value = {"/role/empowermentAuthority"})
+    @RequestMapping(value = "saveEmpowermentAuthority", method = RequestMethod.POST)
+    public @ResponseBody Map saveEmpowermentAuthority(@RequestParam Map<String, Object> paramsMap) throws Exception{
+        //查询(现有权限,所有权限并组成树形结构)
+        return roleService.saveEmpowermentAuthority(paramsMap);
+    }
 }
