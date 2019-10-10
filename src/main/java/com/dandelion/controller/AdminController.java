@@ -90,6 +90,18 @@ public class AdminController extends BaseController {
     }
 
     /**
+     * 用户新增页面跳转
+     * @return String
+     * @throws Exception e
+     */
+    @RequiresPermissions(value = {"/admin/updateAdmin"})
+    @RequestMapping(value = "updateAdmin", method = RequestMethod.GET)
+    public String updateAdmin(@RequestParam Map<String, String> paramsMap) throws Exception{
+        adminService.getAdminById(paramsMap);
+        return this.disPlay();
+    }
+
+    /**
      * 新增 / 修改 用户
      * @return String
      * @throws Exception e

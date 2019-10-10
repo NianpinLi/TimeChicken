@@ -222,4 +222,9 @@ public class AdminService extends BaseService<Admin, Integer>{
         }
         return this.successResult(true);
     }
+
+    public void getAdminById(Map<String, String> paramsMap) {
+        Admin admin = adminMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("adminId")));
+        this.setAttribute("admin",admin);
+    }
 }

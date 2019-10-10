@@ -80,7 +80,7 @@ layui.use(['table', 'table','form'], function () {
 
     $('#btn-delete').click(function () {
         //获取批量选中的ID
-        var ids = getTableCheckBox(table,'currentTable','roleId');
+        var ids = getTableCheckBox(table,'currentTable','adminId');
         if (ids != ""){
             //批量删除
             layer.confirm('您确认要删除这些角色吗？', {
@@ -88,8 +88,8 @@ layui.use(['table', 'table','form'], function () {
             }, function(){
                 //删除角色
                 $.post(
-                    "/role/deleteRole",
-                    {"inRoleId":ids},
+                    "/admin/deleteAdmin",
+                    {"inAdminId":ids},
                     function (obj) {
                         responseObj(obj);
                         currentTable();
@@ -110,8 +110,8 @@ layui.use(['table', 'table','form'], function () {
             }, function(){
                 //删除角色
                 $.post(
-                    "/role/deleteRole",
-                    {"inRoleId":data.roleId},
+                    "/admin/deleteAdmin",
+                    {"inAdminId":data.adminId},
                     function (obj) {
                         responseObj(obj);
                         currentTable();
@@ -120,7 +120,7 @@ layui.use(['table', 'table','form'], function () {
                 );
             });
         } else if (layEvent === 'edit') {
-            var url = '/role/updateRole?roleId='+data.roleId;
+            var url = '/admin/updateAdmin?adminId='+data.adminId;
             //修改角色弹窗
             layer.open({
                 type: 2,
@@ -135,7 +135,7 @@ layui.use(['table', 'table','form'], function () {
             });
 
         } else if(layEvent === 'empowerment'){
-            var url = '/role/empowermentAuthority?roleId='+data.roleId;
+            var url = '/admin/empowermentRole?adminId='+data.adminId;
             //角色分配权限弹窗
             layer.open({
                 type: 2,
