@@ -1,46 +1,33 @@
-layui.use(['table', 'table','form'], function () {
+layui.use(['table', 'table','form', 'treetable'], function () {
     var $ = layui.jquery;
+    var treeTable = layui.treetable;
     var table = layui.table;
     var form = layui.form;
 
     var formDate;
-    var sort;
     var currentTable = function(){
         // 渲染表格
         layer.load(2);
-        table.render({
+        treeTable.render({
+            treeColIndex: 1,//树形图标显示在第几列
+            treeSpid: -1,//最上级的父级id
+            treeDefaultClose: false,//是否默认折叠
+            treeLinkage: true,//父级展开时是否自动展开所有子级
+            treeIdName: 'roleId',//id字段的名称
+            treePidName: 'parentRoleId',//pid字段的名称
+            where: formDate,
             elem: '#currentTable',
             url: '/role/getRoleList',
-            initSort: sort,
             cols: [
                 [
-                    {type: "checkbox", width: 50, fixed: "left"},
-                    {field: 'roleId', width: 80, title: 'ID', sort: true},
+                    {field: 'roleId', title: 'ID'},
                     {field: 'roleName', title: '角色名称'},
                     {field: 'roleDescribe', title: '角色描述'},
-                    {field: 'roleStatus', title: '角色状态', sort: true, templet:function (d) {
-                        if(d.roleStatus == 1){
-                            return '启用';
-                        }else{
-                            return '停用';
-                        }
-                    }},
                     {field: 'createName', title: '创建人'},
-                    {field: 'createTime', title: '创建时间', sort: true},
+                    {field: 'createTime', title: '创建时间'},
                     {title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
                 ]
             ],
-            limits: [10, 15, 20, 25, 50, 100],
-            limit: 15,
-            page: true,
-            where: formDate,
-            response: {
-                statusName: 'code' //数据状态的字段名称，默认：code
-                ,statusCode: 0 //成功的状态码，默认：0
-                ,msgName: 'msg' //状态信息的字段名称，默认：msg
-                ,countName: 'count' //数据总数的字段名称，默认：count
-                ,dataName: 'data' //数据列表的字段名称，默认：data
-            },
             done: function () {
                 layer.closeAll('loading');
             }
@@ -55,14 +42,6 @@ layui.use(['table', 'table','form'], function () {
         return false;
     });
 
-    //监听表格排序问题
-    table.on('sort(currentTable)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-        sort = obj;
-        formDate['field'] = obj.field;
-        formDate['order'] = obj.type;
-        currentTable();
-    });
-
     $('#btn-add').click(function () {
         //新增角色弹窗
         layer.open({
@@ -70,7 +49,7 @@ layui.use(['table', 'table','form'], function () {
             title: '新增角色',
             shadeClose: true,
             shade: 0,
-            area: ['380px', '420px'],
+            area: ['550px', '420px'],
             content: ['/role/addRole','no'],
             end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
                 currentTable();　//layer.open关闭刷新

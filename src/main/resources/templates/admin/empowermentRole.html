@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="common/common :: commonLoad"></head>
+<script th:src="@{/js/admin/empowermentRole.js}" charset="utf-8"></script>
+<script th:src="@{/layui/js/lay-module/layui-xTree/layui-xtree.js}" charset="utf-8"></script>
+<!--<script th:src="@{/zTree/jquery.ztree.all.min.js}" charset="utf-8"></script>-->
+<!--<link th:href="@{/zTree/css/zTreeStyle/zTreeStyle.css}" rel="stylesheet" media="all">-->
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <form class="layui-form" id="treeForm" >
+            <input type="hidden" id="adminId" name="adminId" th:value="${adminId}">
+            <div class="layui-form-item" style="height: 450px">
+                <div class="layui-input-block">
+                    <div id="tree" style="width:300px;border:0px solid black;padding: 10px 0 25px 5px;"></div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

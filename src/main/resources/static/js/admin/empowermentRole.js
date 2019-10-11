@@ -7,8 +7,8 @@ layui.use(['tree','form'], function () {
 
     //获取权限树
     $.get(
-        "/role/getRoleAuthorityTree",
-        {"roleId":$("#roleId").val()},
+        "/admin/getRoleTree",
+        {"admin":$("#adminId").val()},
         function (obj) {
             // responseObj(obj);
             var data = obj['data'];
@@ -31,9 +31,9 @@ layui.use(['tree','form'], function () {
         for(var i in checkedNode){
             checkedValue += ","+checkedNode[i].value;
         }
-        field['authorityIds']=checkedValue;
+        field['roleIds']=checkedValue;
         $.post(
-            "/role/saveEmpowermentAuthority",
+            "/admin/saveEmpowermentRole",
             field,
             function(obj){
                 //回调函数

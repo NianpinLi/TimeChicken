@@ -58,6 +58,16 @@ public class RoleController extends BaseController{
     }
 
     /**
+     * 查询角色列表
+     * @param map Map
+     * @return Map
+     */
+    @RequiresPermissions("/role/addRole")
+    @RequestMapping(value = "getRolePageList", method = RequestMethod.GET)
+    public @ResponseBody Map getRolePageList(@RequestParam Map map) throws Exception{
+        return roleService.getRolePageList(map);
+    }
+    /**
      * 跳转角色修改页面
      * @return String
      */
@@ -99,7 +109,7 @@ public class RoleController extends BaseController{
      * 角色拥有权限回显
      */
     @RequiresPermissions(value = {"/role/empowermentAuthority"})
-    @RequestMapping(value = "getRoleAuthorityTree", method = RequestMethod.POST)
+    @RequestMapping(value = "getRoleAuthorityTree", method = RequestMethod.GET)
     public @ResponseBody Map getRoleAuthorityTree(@RequestParam Map<String, String> paramsMap) throws Exception{
         //查询(现有权限,所有权限并组成树形结构)
         return roleService.empowermentAuthority(paramsMap);
@@ -110,7 +120,6 @@ public class RoleController extends BaseController{
     @RequiresPermissions(value = {"/role/empowermentAuthority"})
     @RequestMapping(value = "saveEmpowermentAuthority", method = RequestMethod.POST)
     public @ResponseBody Map saveEmpowermentAuthority(@RequestParam Map<String, Object> paramsMap) throws Exception{
-        //查询(现有权限,所有权限并组成树形结构)
         return roleService.saveEmpowermentAuthority(paramsMap);
     }
 }

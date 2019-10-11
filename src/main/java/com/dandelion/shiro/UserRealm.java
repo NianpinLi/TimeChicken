@@ -81,14 +81,14 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         if (principal instanceof Admin) {
             Admin admin = (Admin) principal;
-            Map<String,Integer> authorityParams = Maps.newHashMap();
-            authorityParams.put("adminId",admin.getAdminId());
+            Map<String,String> authorityParams = Maps.newHashMap();
+            authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
             List<Role> roleList = adminService.getRoleByAdminId(authorityParams);
             for (Role role : roleList) {
                 //存入角色名称
                 authorizationInfo.addRole(role.getRoleName());
             }
-            authorityParams.put("adminId",admin.getAdminId());
+            authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
             List<Authority> authorityList = adminService.getAuthorityByAdminId(authorityParams);
             for (Authority authority : authorityList) {
                 //存入权限

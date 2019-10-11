@@ -6,7 +6,7 @@ layui.use(['table', 'treetable','form'], function () {
 
     var formData;
 
-    var currentTable = function(result){
+    var currentTable = function(){
         // 渲染表格
         layer.load(2);
         treeTable.render({
@@ -16,7 +16,7 @@ layui.use(['table', 'treetable','form'], function () {
             treeLinkage: true,//父级展开时是否自动展开所有子级
             treeIdName: 'authorityId',//id字段的名称
             treePidName: 'parentAuthorityId',//pid字段的名称
-            where:result,//查询条件
+            where:formData,//查询条件
             elem: '#menu-table',
             url: '/authority/getAuthorityList',
             page: false,

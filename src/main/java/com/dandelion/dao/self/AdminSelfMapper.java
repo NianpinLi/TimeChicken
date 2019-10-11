@@ -14,7 +14,13 @@ import java.util.Map;
  */
 public interface AdminSelfMapper {
 
-    List<Authority> selectAuthorityByAdminId(Map<String,Integer> authorityParams);
+    List<Authority> selectAuthorityByAdminId(Map<String,String> authorityParams);
 
-    List<Role> selectRoleByAdminId(Map<String,Integer> authorityParams);
+    List<Role> selectRoleByAdminId(Map<String,String> authorityParams);
+
+    List<Integer> selectRoleIdByAdminId(Map<String, String> paramsMap);
+
+    void deleteRoleByAdminId(Integer adminId);
+
+    void insertRoleByAdminId(Map<String, Object> paramsMap);
 }

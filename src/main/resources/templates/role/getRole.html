@@ -15,24 +15,7 @@
                     <form class="layui-form layui-form-pane" id="searchForm" action="">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label">角色名称</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="likeRoleName" autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">角色状态</label>
-                                <div class="layui-input-inline">
-                                    <select name="equalToRoleStatus" lay-filter="roleStatus">
-                                        <option value="">请选择</option>
-                                        <option value="0">停用</option>
-                                        <option value="1">启用</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="layui-inline">
                                 <a class="layui-btn" lay-submit="" lay-filter="data-search-btn">查看</a>
-                                <button type="reset" class="layui-btn">重置</button>
                             </div>
                         </div>
                     </form>
@@ -43,12 +26,6 @@
             <div class="layui-btn-group">
                 <shiro:hasPermission name="/role/addRole">
                     <button class="layui-btn" id="btn-add">添加角色</button>
-                </shiro:hasPermission>
-                <shiro:hasPermission name="/role/changeRoleStatus">
-                    <button class="layui-btn" id="btn-change">启用/停用</button>
-                </shiro:hasPermission>
-                <shiro:hasPermission name="/role/deleteRole">
-                    <button class="layui-btn layui-btn-danger" id="btn-delete">批量删除</button>
                 </shiro:hasPermission>
             </div>
             <table id="currentTable" class="layui-table" lay-filter="currentTable"></table>

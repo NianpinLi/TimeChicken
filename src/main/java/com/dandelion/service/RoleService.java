@@ -39,6 +39,16 @@ public class RoleService extends BaseService<Role, Integer>{
         RoleExample.Criteria criteria = example.createCriteria();
         //查询条件
         this.getSearchExample(paramsMap, criteria, "Role");
+        List<Role> roleList = roleMapper.selectByExample(example);
+        int total = roleList.size();
+        return pageResult(roleList, total);
+    }
+
+    public Map getRolePageList(Map paramsMap) throws Exception{
+        RoleExample example = new RoleExample();
+        RoleExample.Criteria criteria = example.createCriteria();
+        //查询条件
+        this.getSearchExample(paramsMap, criteria, "Role");
         //排序字段
         this.setOrderByClause(paramsMap, example, "Role");
         //分页
@@ -111,9 +121,8 @@ public class RoleService extends BaseService<Role, Integer>{
             if (authorityList.contains(authorityId.intValue())){
                 map.put("checked",true);
             }
-            if (parentId != -1){
-                //非顶级菜单
-                Map parent = authorityMap.get(parentId);
+            Map parent = authorityMap.get(parentId);
+            if (parent != null){
                 if (parent != null){
                     ((List)parent.get("data")).add(map);
                 }
@@ -134,7 +143,7 @@ public class RoleService extends BaseService<Role, Integer>{
         if (!ObjectUtil.isNull(authorityIds)){
             List authorityIdList = Lists.newArrayList();
             for (String authorityId : authorityIds.split(",")) {
-                if (!ObjectUtil.isNull(authorityId)){
+                if (!ObjectUtil.isNull(authorityId) && !"on".equals(authorityId)){
                     authorityIdList.add(authorityId);
                 }
             }

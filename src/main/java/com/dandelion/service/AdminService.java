@@ -75,9 +75,9 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param authorityParams Map
      * @return List
      */
-    public List<Authority> getAuthorityByAdminId(Map<String,Integer> authorityParams){
+    public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams){
         //拥有所有权限
-        if(authorityParams.get("adminId") == 1){
+        if("1".equals(authorityParams.get("adminId"))){
             authorityParams.put("adminId",null);
         }
         return adminSelfMapper.selectAuthorityByAdminId(authorityParams);
@@ -88,9 +88,9 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param authorityParams Map
      * @return List
      */
-    public List<Role> getRoleByAdminId(Map<String,Integer> authorityParams){
+    public List<Role> getRoleByAdminId(Map<String,String> authorityParams){
         //拥有所有角色
-        if(authorityParams.get("adminId") == 1){
+        if("1".equals(authorityParams.get("adminId"))){
             authorityParams.put("adminId",null);
         }
         return adminSelfMapper.selectRoleByAdminId(authorityParams);
@@ -148,9 +148,9 @@ public class AdminService extends BaseService<Admin, Integer>{
         Subject subject = SecurityUtils.getSubject();
         Admin admin = subject.getPrincipals().oneByType(Admin.class);
         //查询页面权限
-        Map<String,Integer> authorityParams = Maps.newHashMap();
-        authorityParams.put("adminId",admin.getAdminId());
-        authorityParams.put("authorityType",1);
+        Map<String,String> authorityParams = Maps.newHashMap();
+        authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
+        authorityParams.put("authorityType","1");
         List<Authority> AuthorityList = this.getAuthorityByAdminId(authorityParams);
         HashMap<Integer, Map> authorityMap = Maps.newHashMap();
         HashMap<Integer, Map> authorityMenuMap = Maps.newHashMap();
@@ -223,8 +223,71 @@ public class AdminService extends BaseService<Admin, Integer>{
         return this.successResult(true);
     }
 
-    public void getAdminById(Map<String, String> paramsMap) {
+    /**
+     * 根据AdminId 查询Admin
+     * @param paramsMap Map
+     */
+    public void getAdminById(Map<String, String> paramsMap) throws Exception{
         Admin admin = adminMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("adminId")));
         this.setAttribute("admin",admin);
+    }
+
+    /**
+     * 查询分配权限 回显
+     * @param paramsMap Map
+     */
+    public Map empowermentRole(Map<String, String> paramsMap) {
+        //查询当前用户拥有的角色
+        List<Integer> roleList = adminSelfMapper.selectRoleIdByAdminId(paramsMap);
+
+        if(this.getLoginAdmin().getAdminId() != 1){
+            //非顶级登录人,查询当前登录人拥有的角色
+            paramsMap.put("adminId",String.valueOf(this.getLoginAdmin().getAdminId()));
+        }
+        List<Role> allRoleList = adminSelfMapper.selectRoleByAdminId(paramsMap);
+        List zTreeNode = Lists.newArrayList();
+        HashMap<Integer, Map> roleMap = Maps.newHashMap();
+        allRoleList.forEach(role -> {
+            Map<String, Object> map = Maps.newHashMap();
+            map.put("value",role.getRoleId());
+            map.put("title",role.getRoleName());
+            map.put("data",Lists.newArrayList());
+            Integer parentId = role.getParentRoleId();
+            Integer roleId = role.getRoleId();
+            roleMap.put(roleId,map);
+            if (roleList.contains(roleId.intValue())){
+                map.put("checked",true);
+            }
+            //非顶级菜单
+            Map parent = roleMap.get(parentId);
+            if (parent != null){
+                ((List)parent.get("data")).add(map);
+            }else{
+                zTreeNode.add(map);
+            }
+        });
+
+        return this.successResult(zTreeNode,false);
+    }
+
+    public Map saveEmpowermentRole(Map<String, Object> paramsMap) {
+        //删除用户所拥有所有角色
+        Integer adminId = Integer.parseInt(String.valueOf(paramsMap.get("adminId")));
+        adminSelfMapper.deleteRoleByAdminId(adminId);
+        //添加新的权限
+        String roleIds = String.valueOf(paramsMap.get("roleIds"));
+        if (!ObjectUtil.isNull(roleIds)){
+            List roleIdList = Lists.newArrayList();
+            for (String roleId : roleIds.split(",")) {
+                if (!ObjectUtil.isNull(roleId) && !"on".equals(roleId)){
+                    roleIdList.add(roleId);
+                }
+            }
+            if (roleIdList.size() > 0){
+                paramsMap.put("roleIdList",roleIdList);
+                adminSelfMapper.insertRoleByAdminId(paramsMap);
+            }
+        }
+        return successResult(true);
     }
 }

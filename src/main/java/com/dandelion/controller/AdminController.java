@@ -112,4 +112,35 @@ public class AdminController extends BaseController {
         return adminService.saveAdmin(paramsMap);
     }
 
+    /**
+     * 分配角色页面跳转
+     * @return String
+     * @throws Exception e
+     */
+    @RequiresPermissions(value = {"/admin/empowermentRole"})
+    @RequestMapping(value = "empowermentRole", method = RequestMethod.GET)
+    public String empowermentRole(@RequestParam Map<String, String> paramsMap) throws Exception{
+        this.setAttribute("adminId", paramsMap.get("adminId"));
+        return this.disPlay();
+    }
+
+    /**
+     * 分配角色页面跳转
+     * @return String
+     * @throws Exception e
+     */
+    @RequiresPermissions(value = {"/admin/empowermentRole"})
+    @RequestMapping(value = "getRoleTree", method = RequestMethod.GET)
+    public @ResponseBody Map getRoleTree(@RequestParam Map<String, String> paramsMap) throws Exception{
+        //查询(现有权限,所有权限并组成树形结构)
+        return adminService.empowermentRole(paramsMap);
+    }
+    /**
+     * 用户分配角色
+     */
+    @RequiresPermissions(value = {"/admin/empowermentRole"})
+    @RequestMapping(value = "saveEmpowermentRole", method = RequestMethod.POST)
+    public @ResponseBody Map saveEmpowermentRole(@RequestParam Map<String, Object> paramsMap) throws Exception{
+        return adminService.saveEmpowermentRole(paramsMap);
+    }
 }

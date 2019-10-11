@@ -11,7 +11,7 @@
         <result column="authority_name" jdbcType="VARCHAR" property="authorityName" />
         <result column="authority_url" jdbcType="VARCHAR" property="authorityUrl" />
         <result column="authority_icon" jdbcType="VARCHAR" property="authorityIcon" />
-        <result column="authority_identifier" jdbcType="VARCHAR" property="authorityIdentifier" />
+        <result column="authority_identifier" jdbcType="INTEGER" property="authorityIdentifier" />
         <result column="authority_level" jdbcType="INTEGER" property="authorityLevel" />
         <result column="parent_authority_id" jdbcType="INTEGER" property="parentAuthorityId" />
         <result column="authority_status" jdbcType="INTEGER" property="authorityStatus" />
@@ -29,6 +29,8 @@
         <id column="role_id" jdbcType="INTEGER" property="roleId" />
         <result column="role_name" jdbcType="VARCHAR" property="roleName" />
         <result column="role_status" jdbcType="INTEGER" property="roleStatus" />
+        <result column="role_describe" jdbcType="VARCHAR" property="roleDescribe" />
+        <result column="parent_role_id" jdbcType="INTEGER" property="parentRoleId" />
         <result column="create_id" jdbcType="INTEGER" property="createId" />
         <result column="create_name" jdbcType="VARCHAR" property="createName" />
         <result column="create_time" jdbcType="VARCHAR" property="createTime" />
@@ -61,5 +63,28 @@
                 AND ar.admin_id = #{adminId}
             </if>
         </where>
+        order by au.parent_role_id,au.role_id ASC
     </select>
+
+    <select id="selectRoleIdByAdminId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT
+        DISTINCT ar.role_id as roleId
+        FROM admin_role ar
+        WHERE ar.admin_id = #{adminId}
+    </select>
+
+    <delete id="deleteRoleByAdminId" parameterType="java.lang.Integer">
+        DELETE FROM admin_role WHERE admin_id = #{adminId}
+    </delete>
+
+    <insert id="insertRoleByAdminId" parameterType="java.util.Map">
+        INSERT INTO admin_role(admin_id, role_id)
+        VALUES
+        <foreach collection="roleIdList" separator="," item="item" >
+            (
+            #{adminId},
+            #{item}
+            )
+        </foreach>
+    </insert>
 </mapper>
