@@ -26,7 +26,7 @@ layui.use(['tree','form'], function () {
     //监听提交
     form.on('submit(submit)', function (data) {
         var field = data.field;
-        var checkedNode = xTree.GetAllCheckBox();
+        var checkedNode = xTree.GetAllChecked();
         var checkedValue = "";
         for(var i in checkedNode){
             checkedValue += ","+checkedNode[i].value;
