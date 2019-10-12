@@ -103,6 +103,7 @@ public class AdminService extends BaseService<Admin, Integer>{
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
         setExample("equalToAdminName",adminName,criteria,"Admin");
+        setExample("equalToAdminStatus","1",criteria,"Admin");
         List<Admin> adminList = adminMapper.selectByExample(example);
         if (ObjectUtil.isNull(adminList)){
             return null;
