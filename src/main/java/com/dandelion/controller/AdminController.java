@@ -50,8 +50,7 @@ public class AdminController extends BaseController {
      */
     @RequestMapping(value = "getIndexConfig", method = RequestMethod.GET)
     public @ResponseBody Map getIndexConfig() throws Exception{
-        Map result = adminService.getIndexConfig();
-        return result;
+        return adminService.getIndexConfig();
     }
 
     /**
@@ -142,5 +141,24 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "saveEmpowermentRole", method = RequestMethod.POST)
     public @ResponseBody Map saveEmpowermentRole(@RequestParam Map<String, Object> paramsMap) throws Exception{
         return adminService.saveEmpowermentRole(paramsMap);
+    }
+
+    /**
+     * 删除用户
+     */
+    @RequiresPermissions(value = {"/admin/deleteAdmin"})
+    @RequestMapping(value = "deleteAdmin", method = RequestMethod.POST)
+    public @ResponseBody Map deleteAdmin(@RequestParam Map<String, String> paramsMap) throws Exception{
+        return adminService.deleteAdmin(paramsMap);
+    }
+
+
+    /**
+     * 启用停用用户
+     */
+    @RequiresPermissions(value = {"/admin/changeAdminStatus"})
+    @RequestMapping(value = "changeAdminStatus", method = RequestMethod.POST)
+    public @ResponseBody Map changeAdminStatus(@RequestParam Map<String, String> paramsMap) throws Exception{
+        return adminService.changeAdminStatus(paramsMap);
     }
 }

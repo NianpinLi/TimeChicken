@@ -34,21 +34,33 @@ public class RoleService extends BaseService<Role, Integer>{
     @Resource
     private RoleSelfMapper roleSelfMapper;
 
+    /**
+     * 角色列表 不带分页
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
     public Map getRoleList(Map paramsMap) throws Exception{
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
         //查询条件
-        this.getSearchExample(paramsMap, criteria, "Role");
+        this.setExample(paramsMap, criteria, "Role");
         List<Role> roleList = roleMapper.selectByExample(example);
         int total = roleList.size();
         return pageResult(roleList, total);
     }
 
+    /**
+     * 角色列表 带分页
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
     public Map getRolePageList(Map paramsMap) throws Exception{
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
         //查询条件
-        this.getSearchExample(paramsMap, criteria, "Role");
+        this.setExample(paramsMap, criteria, "Role");
         //排序字段
         this.setOrderByClause(paramsMap, example, "Role");
         //分页
@@ -59,11 +71,22 @@ public class RoleService extends BaseService<Role, Integer>{
         return pageResult(roleList, total);
     }
 
+    /**
+     * 根据角色ID查询角色信息 存入Session中
+     * @param paramsMap Map
+     * @throws Exception e
+     */
     public void getRoleById(Map<String, String> paramsMap) throws Exception {
         Role role = roleMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("roleId")));
         this.setAttribute("role",role);
     }
 
+    /**
+     * 新增/修改 角色
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
     public Map saveRole(Map<String, String> paramsMap) throws Exception {
         Role role = JSON.parseObject(JSON.toJSONString(paramsMap), Role.class);
         if(ObjectUtil.isNull(role.getRoleId())){
@@ -80,25 +103,29 @@ public class RoleService extends BaseService<Role, Integer>{
         return this.successResult(true);
     }
 
+    /**
+     * 删除角色
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
     public Map deleteRole(Map<String, String> paramsMap) throws Exception {
         String roleIds = paramsMap.get("inRoleId");
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
-        //处理ID
-        List<Integer> inRoleList = Lists.newArrayList();
         if (!ObjectUtil.isNull(roleIds)){
-            for (String roleIdStr : roleIds.split(",")) {
-                inRoleList.add(Integer.parseInt(roleIdStr));
-            }
-            if (!ObjectUtil.isNull(inRoleList)){
-                //删除
-                criteria.andRoleIdIn(inRoleList);
-                roleMapper.deleteByExample(example);
-            }
+            setExample(paramsMap,criteria,"Role");
+            roleMapper.deleteByExample(example);
         }
         return this.successResult(false);
     }
 
+    /**
+     * 角色分配权限回显
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
     public Map empowermentAuthority(Map<String, String> paramsMap) throws Exception {
         //查询当前角色拥有的权限
         List<Integer> authorityList = roleSelfMapper.selectAuthorityIdByRoleId(paramsMap);
@@ -134,6 +161,12 @@ public class RoleService extends BaseService<Role, Integer>{
         return this.successResult(zTreeNode,false);
     }
 
+    /**
+     * 角色分配权限
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
     public Map saveEmpowermentAuthority(Map<String, Object> paramsMap) throws Exception {
         //删除角色所拥有的所有权限
         Integer roleId = Integer.parseInt(String.valueOf(paramsMap.get("roleId")));

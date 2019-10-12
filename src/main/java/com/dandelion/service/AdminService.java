@@ -3,10 +3,7 @@ package com.dandelion.service;
 import com.alibaba.fastjson.JSON;
 import com.dandelion.base.BaseService;
 import com.dandelion.base.CommonMessage;
-import com.dandelion.bean.Admin;
-import com.dandelion.bean.AdminExample;
-import com.dandelion.bean.Authority;
-import com.dandelion.bean.Role;
+import com.dandelion.bean.*;
 import com.dandelion.dao.generator.AdminMapper;
 import com.dandelion.dao.self.AdminSelfMapper;
 import com.dandelion.utils.DateUtil;
@@ -105,7 +102,7 @@ public class AdminService extends BaseService<Admin, Integer>{
     public Admin getAdminByAdminName(String adminName) throws Exception{
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
-        getSearchExample("equalToAdminName",adminName,criteria,"Admin");
+        setExample("equalToAdminName",adminName,criteria,"Admin");
         List<Admin> adminList = adminMapper.selectByExample(example);
         if (ObjectUtil.isNull(adminList)){
             return null;
@@ -192,7 +189,7 @@ public class AdminService extends BaseService<Admin, Integer>{
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
         //查询条件
-        this.getSearchExample(paramsMap, criteria,"Admin");
+        this.setExample(paramsMap, criteria,"Admin");
         //分页
         startPage(paramsMap);
         List<Admin> adminList = adminMapper.selectByExample(example);
@@ -270,6 +267,11 @@ public class AdminService extends BaseService<Admin, Integer>{
         return this.successResult(zTreeNode,false);
     }
 
+    /**
+     * 用户分配角色
+     * @param paramsMap Map
+     * @return Map
+     */
     public Map saveEmpowermentRole(Map<String, Object> paramsMap) {
         //删除用户所拥有所有角色
         Integer adminId = Integer.parseInt(String.valueOf(paramsMap.get("adminId")));
@@ -289,5 +291,40 @@ public class AdminService extends BaseService<Admin, Integer>{
             }
         }
         return successResult(true);
+    }
+
+    /**
+     * 用户启用/停用 修改用户状态
+     * @param paramsMap Map
+     * @return Map
+     */
+    public Map changeAdminStatus(Map<String, String> paramsMap) throws Exception{
+        String adminIds = paramsMap.get("inAdminId");
+        AdminExample adminExample = new AdminExample();
+        AdminExample.Criteria criteria = adminExample.createCriteria();
+        //处理ID
+        if (!ObjectUtil.isNull(adminIds)){
+            this.setExample(paramsMap, criteria,"Admin");
+            adminSelfMapper.updateStatusByExample(adminExample);
+//            adminMapper.updateByExample(adminExample);
+        }
+        return this.successResult(false);
+    }
+
+    /**
+     * 删除用户
+     * @param paramsMap Map
+     * @return Map
+     */
+    public Map deleteAdmin(Map<String, String> paramsMap) throws Exception{
+        String adminIds = paramsMap.get("inAdminId");
+        AdminExample adminExample = new AdminExample();
+        AdminExample.Criteria criteria = adminExample.createCriteria();
+        //处理ID
+        if (!ObjectUtil.isNull(adminIds)){
+            this.setExample(paramsMap, criteria,"Admin");
+            adminMapper.deleteByExample(adminExample);
+        }
+        return this.successResult(false);
     }
 }

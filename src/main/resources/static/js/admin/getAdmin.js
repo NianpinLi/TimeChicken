@@ -83,7 +83,7 @@ layui.use(['table', 'table','form'], function () {
         var ids = getTableCheckBox(table,'currentTable','adminId');
         if (ids != ""){
             //批量删除
-            layer.confirm('您确认要删除这些角色吗？', {
+            layer.confirm('您确认要删除这些用户吗？', {
                 btn: ['确认','取消'] //按钮
             }, function(){
                 //删除角色
@@ -100,12 +100,29 @@ layui.use(['table', 'table','form'], function () {
         }
     });
 
+    $('#btn-change').click(function () {
+        //获取批量选中的ID
+        var ids = getTableCheckBox(table,'currentTable','adminId');
+        if (ids != ""){
+            //批量修改用户状态
+            $.post(
+                "/admin/changeAdminStatus",
+                {"inAdminId":ids},
+                function (obj) {
+                    responseObj(obj);
+                    currentTable();
+                },
+                "JSON"
+            );
+        }
+    });
+
     //监听工具条
     table.on('tool(currentTable)', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
         if (layEvent === 'del') {
-            layer.confirm('确认删除当前角色吗？',{
+            layer.confirm('确认删除当前用户吗？',{
                 btn: ['确认','取消'] //按钮
             }, function(){
                 //删除角色
@@ -139,7 +156,7 @@ layui.use(['table', 'table','form'], function () {
             //角色分配权限弹窗
             layer.open({
                 type: 2,
-                title: '分配权限',
+                title: '分配角色',
                 shadeClose: true,
                 shade: 0,
                 area: ['500px', '75%'],

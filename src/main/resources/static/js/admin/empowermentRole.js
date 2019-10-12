@@ -8,7 +8,7 @@ layui.use(['tree','form'], function () {
     //获取权限树
     $.get(
         "/admin/getRoleTree",
-        {"admin":$("#adminId").val()},
+        {"adminId":$("#adminId").val()},
         function (obj) {
             // responseObj(obj);
             var data = obj['data'];

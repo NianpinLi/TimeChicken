@@ -1,7 +1,9 @@
 package com.dandelion.dao.self;
 
+import com.dandelion.bean.AdminExample;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -23,4 +25,6 @@ public interface AdminSelfMapper {
     void deleteRoleByAdminId(Integer adminId);
 
     void insertRoleByAdminId(Map<String, Object> paramsMap);
+
+    void updateStatusByExample(@Param("example") AdminExample example);
 }

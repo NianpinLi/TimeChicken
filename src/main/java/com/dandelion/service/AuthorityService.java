@@ -31,7 +31,7 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         AuthorityExample example = new AuthorityExample();
         AuthorityExample.Criteria criteria = example.createCriteria();
         //查询条件
-        this.getSearchExample(paramsMap, criteria,"Authority");
+        this.setExample(paramsMap, criteria,"Authority");
         List<Authority> authorityList = authorityMapper.selectByExample(example);
         int total = authorityList.size();
         return this.pageResult(authorityList, total);
@@ -44,7 +44,7 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         AuthorityExample example = new AuthorityExample();
         AuthorityExample.Criteria criteria = example.createCriteria();
         //查询条件
-        this.getSearchExample(paramsMap, criteria,"Authority");
+        this.setExample(paramsMap, criteria,"Authority");
         //example.setOrderByClause();
         //分页
         startPage(paramsMap);

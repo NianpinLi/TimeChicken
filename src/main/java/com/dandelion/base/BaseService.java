@@ -4,6 +4,7 @@ import com.dandelion.bean.Admin;
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.StringUtil;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -45,7 +46,7 @@ public class BaseService<T, PK extends Serializable> {
         }
     }
 
-    protected void getSearchExample(Map<String, String> paramsMap, Object object, String beanName) throws Exception{
+    protected void setExample(Map<String, String> paramsMap, Object object, String beanName) throws Exception{
         //获取实体BeanClass
         Class beanClass = Class.forName("com.dandelion.bean." + beanName);
         for (String key : paramsMap.keySet()) {
@@ -64,11 +65,11 @@ public class BaseService<T, PK extends Serializable> {
                 continue;
             }
             methodBuffer.append(methodArray[0]).append(methodArray[1]);
+            Class criteriaClass = object.getClass();
             //方法名
             String attribute = StringUtil.stringFirstLowCase(methodArray[0]);
             //获取属性类型Class
             Class attributeType = beanClass.getDeclaredField(attribute).getType();
-            Class criteriaClass = object.getClass();
             String value = String.valueOf(paramsMap.get(key));
             if(type == 2){
                 // isNull
@@ -76,17 +77,21 @@ public class BaseService<T, PK extends Serializable> {
                 method.invoke(object);
                 return;
             }
+            if (type == 3){
+                // in
+                Method method = criteriaClass.getMethod(methodBuffer.toString(), List.class);
+                invokeListMethod(method,attributeType,object,value);
+                return;
+            }
             Method method = criteriaClass.getMethod(methodBuffer.toString(), attributeType);
-            if(type == 1){
-                // like
-                method.invoke(object,"%"+value+"%");
-            }else {
-                invokeMethod(method,attributeType,object,value);
+            switch (type){
+                case 1:method.invoke(object,"%"+value+"%");break;
+                default:invokeMethod(method,attributeType,object,value);break;
             }
         }
     }
 
-    protected void getSearchExample(String params, String value, Object object, String beanName) throws Exception{
+    protected void setExample(String params, String value, Object object, String beanName) throws Exception{
         if (ObjectUtil.isNull(params)){
             return;
         }
@@ -115,14 +120,90 @@ public class BaseService<T, PK extends Serializable> {
             method.invoke(object);
             return;
         }
+        if (type == 3){
+            // in
+            Method method = criteriaClass.getMethod(methodBuffer.toString(), List.class);
+            invokeListMethod(method,attributeType,object,value);
+            return;
+        }
         Method method = criteriaClass.getMethod(methodBuffer.toString(), attributeType);
-        if(type == 1){
-            // like
-            method.invoke(object,"%"+value+"%");
-        }else {
-            invokeMethod(method,attributeType,object,value);
+        switch (type){
+            case 1:method.invoke(object,"%"+value+"%");break;
+            default:invokeMethod(method,attributeType,object,value);break;
         }
     }
+    private static void invokeListMethod(Method method,Class attributeType, Object object, String value) throws Exception{
+        String attributeTypeString = attributeType.getTypeName();
+        String[] valueStr = value.split(",");
+        if("java.lang.String".equals(attributeTypeString)){
+            List<String> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(values);
+            }
+            method.invoke(object, valueList);
+        }else if ("int".equals(attributeTypeString) || "java.lang.Integer".equals(attributeTypeString)){
+            List<Integer> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(Integer.parseInt(values));
+            }
+            method.invoke(object, valueList);
+        }else if ("float".equals(attributeTypeString) || "java.lang.Float".equals(attributeTypeString)){
+            List<Float> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(Float.parseFloat(values));
+            }
+            method.invoke(object, valueList);
+        }else if ("double".equals(attributeTypeString) || "java.lang.Double".equals(attributeTypeString)){
+            List<Double> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(Double.parseDouble(values));
+            }
+            method.invoke(object, valueList);
+        }else if ("long".equals(attributeTypeString) || "java.lang.Long".equals(attributeTypeString)){
+            List<Long> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(Long.parseLong(values));
+            }
+            method.invoke(object, valueList);
+        }else if ("char".equals(attributeTypeString) || "java.lang.Character".equals(attributeTypeString)){
+            List<Character> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(values.charAt(0));
+            }
+            method.invoke(object, valueList);
+        }else if ("short".equals(attributeTypeString) || "java.lang.Short".equals(attributeTypeString)){
+            List<Short> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(Short.parseShort(values));
+            }
+            method.invoke(object, valueList);
+        }else if ("byte".equals(attributeTypeString) || "java.lang.Byte".equals(attributeTypeString)){
+            List<Byte> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(Byte.parseByte(values));
+            }
+            method.invoke(object, valueList);
+        }else if ("boolean".equals(attributeTypeString) || "java.lang.Boolean".equals(attributeTypeString)){
+            List<Boolean> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(Boolean.parseBoolean(values));
+            }
+            method.invoke(object, valueList);
+        }else if ("java.math.BigDecimal".equals(attributeTypeString)){
+            List<BigDecimal> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(new BigDecimal(values));
+            }
+            method.invoke(object, valueList);
+        }else if ("java.math.BigInteger".equals(attributeTypeString)){
+            List<BigInteger> valueList = Lists.newArrayList();
+            for (String values : valueStr) {
+                valueList.add(new BigInteger(values));
+            }
+            method.invoke(object, valueList);
+        }
+    }
+
     private static void invokeMethod(Method method,Class attributeType, Object object, String value) throws Exception{
         String attributeTypeString = attributeType.getTypeName();
         //获取属性的get方法
