@@ -81,14 +81,18 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @return List
      */
     public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams){
+        ValueOperations<String, Object> redis = redisTemplate.opsForValue();
         String key = BaseRedisKey.ADMIN_AUTHORITY + authorityParams.get("adminId");
+        Object o = redis.get(key);
+        if (o != null){
+            return (List<Authority>)o;
+        }
         //拥有所有权限
         if("1".equals(authorityParams.get("adminId"))){
             authorityParams.put("adminId",null);
         }
         List<Authority> authorityList = adminSelfMapper.selectAuthorityByAdminId(authorityParams);
-//        ValueOperations<String, Object> redis = redisTemplate.opsForValue();
-//        redis.set(key,authorityList);
+        redis.set(key,authorityList);
         return authorityList;
     }
 
@@ -98,12 +102,19 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @return List
      */
     public List<Role> getRoleByAdminId(Map<String,String> authorityParams){
-
+        ValueOperations<String, Object> redis = redisTemplate.opsForValue();
+        String key = BaseRedisKey.ADMIN_ROLE + authorityParams.get("adminId");
+        Object o = redis.get(key);
+        if (o != null){
+            return (List<Role>)o;
+        }
         //拥有所有角色
         if("1".equals(authorityParams.get("adminId"))){
             authorityParams.put("adminId",null);
         }
-        return adminSelfMapper.selectRoleByAdminId(authorityParams);
+        List<Role> roleList = adminSelfMapper.selectRoleByAdminId(authorityParams);
+        redis.set(key,roleList);
+        return roleList;
     }
 
     /**
