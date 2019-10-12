@@ -121,6 +121,7 @@ layuiXtree.prototype.dataBind = function (d) {
             var xtree_isend = '';
             var xtree_ischecked = '';
             var xtree_isdisabled = d[i].disabled ? ' disabled="disabled" ' : '';
+            var xtree_parent = d[i].parent ? 'parent="true"' : 'parent="false"';
             _this._domStr += '<div class="layui-xtree-item">';
             d[i].data=d[i].data||[];
             if (d[i].data.length > 0)
@@ -130,8 +131,9 @@ layuiXtree.prototype.dataBind = function (d) {
                 xtree_isend = 'data-xend="1"';
                 xtree_ischecked = d[i].checked ? ' checked ' : '';
                 xtree_isdisabled = d[i].disabled ? ' disabled="disabled" ' : '';
+                xtree_parent = d[i].parent ? 'parent="true"' : 'parent="false"';
             }
-            _this._domStr += '<input type="checkbox" class="layui-xtree-checkbox" ' + xtree_isend + xtree_ischecked + xtree_isdisabled + ' value="' + d[i].value + '" title="' + d[i].title + '" lay-skin="primary" lay-filter="xtreeck' + _this._containerid + '">';
+            _this._domStr += '<input type="checkbox" class="layui-xtree-checkbox" ' + xtree_isend + xtree_ischecked + xtree_isdisabled +xtree_parent+ ' value="' + d[i].value + '" title="' + d[i].title + '" lay-skin="primary" lay-filter="xtreeck' + _this._containerid + '">';
             _this.dataBind(d[i].data);
             _this._domStr += '</div>';
         }
@@ -216,7 +218,11 @@ layuiXtree.prototype.Rendering = function () {
                 else _this.getChildByClassName(xtree_chis[i], 'layui-xtree-checkbox')[0].nextSibling.classList.remove('layui-form-checked');
             }
         }
-        _this.ParendCheck(da.elem);
+        if(da.elem.getAttribute('parent') == 'false'){
+            _this.ParendCheckOne(da.elem);
+        }else{
+            _this.ParendCheck(da.elem);
+        }
         _this._click(da);
     });
 
@@ -273,6 +279,31 @@ layuiXtree.prototype.ParendCheck = function (ckelem) {
             _this.getChildByClassName(xtree_p, 'layui-xtree-checkbox')[0].nextSibling.classList.add('layui-form-checked');
         }
         this.ParendCheck(_this.getChildByClassName(xtree_p, 'layui-xtree-checkbox')[0]);
+    }
+}
+
+//子节点选中改变，父节点更改自身状态
+layuiXtree.prototype.ParendCheckOne = function (ckelem) {
+    var _this = this;
+    var xtree_p = ckelem.parentNode.parentNode;
+    if (xtree_p.getAttribute('class') == 'layui-xtree-item') {
+        var xtree_all = _this.getChildByClassName(xtree_p, 'layui-xtree-item');
+        var xtree_count = 0;
+
+        for (var i = 0; i < xtree_all.length; i++) {
+            if (_this.getChildByClassName(xtree_all[i], 'layui-xtree-checkbox')[0].checked) {
+                xtree_count++;
+            }
+        }
+
+        if (xtree_count == xtree_all.length) {
+            _this.getChildByClassName(xtree_p, 'layui-xtree-checkbox')[0].checked = true;
+            _this.getChildByClassName(xtree_p, 'layui-xtree-checkbox')[0].nextSibling.classList.add('layui-form-checked');
+        } else {
+            _this.getChildByClassName(xtree_p, 'layui-xtree-checkbox')[0].checked = false;
+            _this.getChildByClassName(xtree_p, 'layui-xtree-checkbox')[0].nextSibling.classList.remove('layui-form-checked');
+        }
+        this.ParendCheckOne(_this.getChildByClassName(xtree_p, 'layui-xtree-checkbox')[0]);
     }
 }
 

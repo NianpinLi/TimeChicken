@@ -142,6 +142,7 @@ public class RoleService extends BaseService<Role, Integer>{
             map.put("value",authority.getAuthorityId());
             map.put("title",authority.getAuthorityName());
             map.put("data",Lists.newArrayList());
+            map.put("parent",true);
             Integer parentId = authority.getParentAuthorityId();
             Integer authorityId = authority.getAuthorityId();
             authorityMap.put(authorityId,map);

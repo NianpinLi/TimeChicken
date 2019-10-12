@@ -236,7 +236,7 @@ public class AdminService extends BaseService<Admin, Integer>{
     public Map empowermentRole(Map<String, String> paramsMap) {
         //查询当前用户拥有的角色
         List<Integer> roleList = adminSelfMapper.selectRoleIdByAdminId(paramsMap);
-
+        paramsMap.remove("adminId");
         if(this.getLoginAdmin().getAdminId() != 1){
             //非顶级登录人,查询当前登录人拥有的角色
             paramsMap.put("adminId",String.valueOf(this.getLoginAdmin().getAdminId()));
@@ -249,6 +249,7 @@ public class AdminService extends BaseService<Admin, Integer>{
             map.put("value",role.getRoleId());
             map.put("title",role.getRoleName());
             map.put("data",Lists.newArrayList());
+            map.put("parent",false);
             Integer parentId = role.getParentRoleId();
             Integer roleId = role.getRoleId();
             roleMap.put(roleId,map);
