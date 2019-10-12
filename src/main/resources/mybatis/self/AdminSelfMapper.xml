@@ -85,7 +85,7 @@
                 AND au.authority_type = #{authorityType}
             </if>
         </where>
-        ORDER BY au.authority_level ASC,au.authority_id ASC
+        ORDER BY au.authority_id ASC
     </select>
 
     <select id="selectRoleByAdminId" parameterType="java.util.Map" resultMap="RoleMap">

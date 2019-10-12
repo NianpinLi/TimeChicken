@@ -1,6 +1,7 @@
 package com.dandelion.service;
 
 import com.alibaba.fastjson.JSON;
+import com.dandelion.base.BaseRedisKey;
 import com.dandelion.base.BaseService;
 import com.dandelion.base.CommonMessage;
 import com.dandelion.bean.*;
@@ -18,6 +19,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,7 +44,7 @@ public class AdminService extends BaseService<Admin, Integer>{
     private AdminSelfMapper adminSelfMapper;
 
     @Resource
-    private RedisUtil redisUtil;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 用户登录
@@ -57,6 +60,11 @@ public class AdminService extends BaseService<Admin, Integer>{
         try {
             //登陆
             subject.login(token);
+            //将当前用户信息存入Redis
+//            Object principal = subject.getPrincipal();
+//            if (principal instanceof Admin){
+//
+//            }
         }catch (UnknownAccountException e){
             return errorResult(CommonMessage.PARAMS_ERROR,"账号不存在",false);
         }catch (IncorrectCredentialsException e){
@@ -73,11 +81,15 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @return List
      */
     public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams){
+        String key = BaseRedisKey.ADMIN_AUTHORITY + authorityParams.get("adminId");
         //拥有所有权限
         if("1".equals(authorityParams.get("adminId"))){
             authorityParams.put("adminId",null);
         }
-        return adminSelfMapper.selectAuthorityByAdminId(authorityParams);
+        List<Authority> authorityList = adminSelfMapper.selectAuthorityByAdminId(authorityParams);
+//        ValueOperations<String, Object> redis = redisTemplate.opsForValue();
+//        redis.set(key,authorityList);
+        return authorityList;
     }
 
     /**
@@ -86,6 +98,7 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @return List
      */
     public List<Role> getRoleByAdminId(Map<String,String> authorityParams){
+
         //拥有所有角色
         if("1".equals(authorityParams.get("adminId"))){
             authorityParams.put("adminId",null);
