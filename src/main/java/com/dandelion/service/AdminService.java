@@ -60,11 +60,6 @@ public class AdminService extends BaseService<Admin, Integer>{
         try {
             //登陆
             subject.login(token);
-            //将当前用户信息存入Redis
-//            Object principal = subject.getPrincipal();
-//            if (principal instanceof Admin){
-//
-//            }
         }catch (UnknownAccountException e){
             return errorResult(CommonMessage.PARAMS_ERROR,"账号不存在",false);
         }catch (IncorrectCredentialsException e){
@@ -80,9 +75,9 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param authorityParams Map
      * @return List
      */
-    public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams){
+    public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams,String page){
         ValueOperations<String, Object> redis = redisTemplate.opsForValue();
-        String key = BaseRedisKey.ADMIN_AUTHORITY + authorityParams.get("adminId");
+        String key = BaseRedisKey.ADMIN_AUTHORITY + authorityParams.get("adminId")+page;
         Object o = redis.get(key);
         if (o != null){
             return (List<Authority>)o;
@@ -173,7 +168,7 @@ public class AdminService extends BaseService<Admin, Integer>{
         Map<String,String> authorityParams = Maps.newHashMap();
         authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
         authorityParams.put("authorityType","1");
-        List<Authority> AuthorityList = this.getAuthorityByAdminId(authorityParams);
+        List<Authority> AuthorityList = this.getAuthorityByAdminId(authorityParams,"page");
         HashMap<Integer, Map> authorityMap = Maps.newHashMap();
         HashMap<Integer, Map> authorityMenuMap = Maps.newHashMap();
         for (Authority authority : AuthorityList) {

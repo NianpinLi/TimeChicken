@@ -89,7 +89,7 @@ public class UserRealm extends AuthorizingRealm {
                 authorizationInfo.addRole(role.getRoleName());
             }
             authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
-            List<Authority> authorityList = adminService.getAuthorityByAdminId(authorityParams);
+            List<Authority> authorityList = adminService.getAuthorityByAdminId(authorityParams,"all");
             for (Authority authority : authorityList) {
                 //存入权限
                 authorizationInfo.addStringPermission(authority.getAuthorityUrl());
