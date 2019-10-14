@@ -1,5 +1,6 @@
 package com.dandelion.base;
 
+import com.dandelion.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -31,7 +32,7 @@ public class BaseAop {
     @Around("controllerException()")
     public Object doAroundAdvice(ProceedingJoinPoint proceedingJoinPoint){
 //        logger.info("环绕通知的目标方法名："+proceedingJoinPoint.getSignature().getName());
-        log.info("进入方法："+proceedingJoinPoint.getSignature().getName());
+        log.info("进入方法："+proceedingJoinPoint.getSignature().getName()+" 时间："+ DateUtil.getNowTime_CN());
         try {
             //执行方法
             Object obj = proceedingJoinPoint.proceed();
