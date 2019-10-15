@@ -22,6 +22,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -224,6 +225,7 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @return Map
      * @throws Exception e
      */
+    @Transactional
     public Map saveAdmin(Map<String, String> paramsMap) throws Exception{
         Admin admin = JSON.parseObject(JSON.toJSONString(paramsMap), Admin.class);
         if(ObjectUtil.isNull(admin.getAdminId())){
@@ -293,6 +295,7 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param paramsMap Map
      * @return Map
      */
+    @Transactional
     public Map saveEmpowermentRole(Map<String, Object> paramsMap) {
         //删除用户所拥有所有角色
         Integer adminId = Integer.parseInt(String.valueOf(paramsMap.get("adminId")));
@@ -319,6 +322,7 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param paramsMap Map
      * @return Map
      */
+    @Transactional
     public Map changeAdminStatus(Map<String, String> paramsMap) throws Exception{
         String adminIds = paramsMap.get("inAdminId");
         AdminExample adminExample = new AdminExample();
@@ -337,6 +341,7 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param paramsMap Map
      * @return Map
      */
+    @Transactional
     public Map deleteAdmin(Map<String, String> paramsMap) throws Exception{
         String adminIds = paramsMap.get("inAdminId");
         AdminExample adminExample = new AdminExample();

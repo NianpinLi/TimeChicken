@@ -1,12 +1,19 @@
 package com.dandelion.base;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dandelion.utils.DateUtil;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.mvc.method.annotation.ExtendedServletRequestDataBinder;
+
+import javax.servlet.http.HttpServletResponseWrapper;
+import java.util.Map;
 
 /**
  * @ClassName BaseAop
@@ -31,8 +38,17 @@ public class BaseAop {
      */
     @Around("controllerException()")
     public Object doAroundAdvice(ProceedingJoinPoint proceedingJoinPoint){
-//        logger.info("环绕通知的目标方法名："+proceedingJoinPoint.getSignature().getName());
-        log.info("进入方法："+proceedingJoinPoint.getSignature().getName()+" 时间："+ DateUtil.getNowTime_CN());
+        Object[] args = proceedingJoinPoint.getArgs();
+        String[] argNames = ((MethodSignature) proceedingJoinPoint.getSignature()).getParameterNames(); // 参数名
+        Map<String, Object> paramMap = Maps.newHashMap();
+        for (int i = 0; i < args.length; i++) {
+            if (!(args[i] instanceof ExtendedServletRequestDataBinder) && !(args[i] instanceof HttpServletResponseWrapper)) {
+                paramMap.put(argNames[i], args[i]);
+            }
+        }
+        if (paramMap.size() > 0) {
+            log.info("\n[{}]\n方法:{};\n参数:{}", "时间："+ DateUtil.getNowTime_CN(), proceedingJoinPoint.getSignature(), JSONObject.toJSONString(paramMap));
+        }
         try {
             //执行方法
             Object obj = proceedingJoinPoint.proceed();

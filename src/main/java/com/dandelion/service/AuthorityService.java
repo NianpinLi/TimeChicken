@@ -9,6 +9,7 @@ import com.dandelion.utils.DateUtil;
 import com.dandelion.utils.ObjectUtil;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,6 +28,12 @@ public class AuthorityService extends BaseService<Authority,Integer>{
     private AuthorityMapper authorityMapper;
 
 
+    /**
+     * 获取权限列表 不分页
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
     public Map getAuthorityList(Map<String, String> paramsMap) throws Exception{
         AuthorityExample example = new AuthorityExample();
         AuthorityExample.Criteria criteria = example.createCriteria();
@@ -37,6 +44,12 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         return this.pageResult(authorityList, total);
     }
 
+    /**
+     * 获取权限列表 分页
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
     public Map getAuthorityPageList(Map<String,String> paramsMap) throws Exception{
         //查询页面权限
         paramsMap.put("equalsToAuthorityType","1");
@@ -54,6 +67,13 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         return pageResult(authorityList, total);
     }
 
+    /**
+     * 新增 / 修改 权限
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
+    @Transactional
     public Map saveAuthority(Map<String, String> paramsMap) throws Exception{
         //将Map 转化成 entity
         Authority authority = JSON.parseObject(JSON.toJSONString(paramsMap),Authority.class);
@@ -86,11 +106,23 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         return this.successResult(true);
     }
 
+    /**
+     * 删除权限
+     * @param paramsMap Map
+     * @return Map
+     * @throws Exception e
+     */
+    @Transactional
     public Map deleteAuthority(Map<String, String> paramsMap) throws Exception{
         authorityMapper.deleteByPrimaryKey(Integer.parseInt(paramsMap.get("equalToAuthorityId")));
         return this.successResult(false);
     }
 
+    /**
+     * 权限信息回显
+     * @param paramsMap Map
+     * @throws Exception e
+     */
     public void getAuthorityById(Map<String, String> paramsMap)  throws Exception{
         Authority authority = authorityMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("authorityId")));
         this.setAttribute("authority",authority);

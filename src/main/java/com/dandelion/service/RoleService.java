@@ -13,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -87,6 +88,7 @@ public class RoleService extends BaseService<Role, Integer>{
      * @return Map
      * @throws Exception e
      */
+    @Transactional
     public Map saveRole(Map<String, String> paramsMap) throws Exception {
         Role role = JSON.parseObject(JSON.toJSONString(paramsMap), Role.class);
         if(ObjectUtil.isNull(role.getRoleId())){
@@ -109,6 +111,7 @@ public class RoleService extends BaseService<Role, Integer>{
      * @return Map
      * @throws Exception e
      */
+    @Transactional
     public Map deleteRole(Map<String, String> paramsMap) throws Exception {
         String roleIds = paramsMap.get("inRoleId");
         RoleExample example = new RoleExample();
@@ -168,6 +171,7 @@ public class RoleService extends BaseService<Role, Integer>{
      * @return Map
      * @throws Exception e
      */
+    @Transactional
     public Map saveEmpowermentAuthority(Map<String, Object> paramsMap) throws Exception {
         //删除角色所拥有的所有权限
         Integer roleId = Integer.parseInt(String.valueOf(paramsMap.get("roleId")));
