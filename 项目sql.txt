@@ -54,7 +54,7 @@ CREATE TABLE `authority` (
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
 
 -- 初始化用户
-INSERT INTO `admin` VALUES (1, 'admin', '000000', 1, 'AdminManager', 1, 'AdminManager', '2019-09-30');
+INSERT INTO `admin` VALUES (1, 'admin', 'e744bd0c9a52d48c735e937a1e5eb6f9', 1, 'AdminManager', 1, 'AdminManager', '2019-09-30');
 
 -- 初始化权限
 INSERT INTO `authority` VALUES (1, '系统管理', '#', 'fa fa-apple', NULL, 0, -1, 1, 1, 1, '1', '2019-09-30');
