@@ -15,7 +15,7 @@
                 <label class="layui-form-label">用户账号</label>
                 <div class="layui-input-inline">
                     <input type="hidden" name="adminId" th:value="${admin.adminId}">
-                    <input type="text" name="adminName" th:value="${admin.adminName}" lay-verify="required" placeholder="请输入用户账号" autocomplete="off" class="layui-input">
+                    <input type="text" name="adminName" th:value="${admin.adminName}" disabled lay-verify="required" placeholder="请输入用户账号" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">

@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.dandelion.base.BaseRedisKey;
 import com.dandelion.base.BaseService;
 import com.dandelion.base.CommonMessage;
-import com.dandelion.bean.*;
+import com.dandelion.bean.Admin;
+import com.dandelion.bean.AdminExample;
+import com.dandelion.bean.Authority;
+import com.dandelion.bean.Role;
 import com.dandelion.dao.generator.AdminMapper;
 import com.dandelion.dao.self.AdminSelfMapper;
 import com.dandelion.utils.DateUtil;
+import com.dandelion.utils.EncryptionUtil;
 import com.dandelion.utils.ObjectUtil;
-import com.dandelion.utils.RedisUtil;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -19,6 +22,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -78,7 +82,7 @@ public class AdminService extends BaseService<Admin, Integer>{
      */
     public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams,String page){
         ValueOperations<String, Object> redis = redisTemplate.opsForValue();
-        String key = BaseRedisKey.ADMIN_AUTHORITY + authorityParams.get("adminId")+page;
+        String key = BaseRedisKey.ADMIN_AUTHORITY + page+ authorityParams.get("adminId");
         Object o = redis.get(key);
         if (o != null){
             return (List<Authority>)o;
@@ -163,13 +167,12 @@ public class AdminService extends BaseService<Admin, Integer>{
 
     //获取权限
     private Map getAuthority(){
-        Subject subject = SecurityUtils.getSubject();
-        Admin admin = subject.getPrincipals().oneByType(Admin.class);
+        Admin admin = (Admin) this.getSession("adminSession");
         //查询页面权限
         Map<String,String> authorityParams = Maps.newHashMap();
         authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
         authorityParams.put("authorityType","1");
-        List<Authority> AuthorityList = this.getAuthorityByAdminId(authorityParams,"page");
+        List<Authority> AuthorityList = this.getAuthorityByAdminId(authorityParams,"page_");
         HashMap<Integer, Map> authorityMap = Maps.newHashMap();
         HashMap<Integer, Map> authorityMenuMap = Maps.newHashMap();
         for (Authority authority : AuthorityList) {
@@ -233,6 +236,10 @@ public class AdminService extends BaseService<Admin, Integer>{
             admin.setCreateName(this.getLoginAdmin().getRealName());
             admin.setCreateId(this.getLoginAdmin().getAdminId());
             admin.setCreateTime(DateUtil.getNowDate_EN());
+            //对用户名进行加盐
+            ByteSource salt = ByteSource.Util.bytes(admin.getAdminName());
+            //密码加密
+            admin.setAdminPassword(EncryptionUtil.encryptPassword("MD5", admin.getAdminPassword(), salt,3));
             //判断是否存在角色ID 不存在新增
             adminMapper.insertSelective(admin);
         }else{

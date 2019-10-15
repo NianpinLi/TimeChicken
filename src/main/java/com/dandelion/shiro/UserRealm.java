@@ -41,10 +41,9 @@ public class UserRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String adminName = token.getUsername();
         String adminPassword = String.valueOf(token.getPassword());
-        Admin user = new Admin();
-        user.setAdminName(adminName);
-        user.setAdminPassword(adminPassword);
-        ByteSource salt = ByteSource.Util.bytes(user.getAdminName());//对用户名进行加盐
+        Admin reqAdmin = new Admin();
+        reqAdmin.setAdminName(adminName);
+        reqAdmin.setAdminPassword(adminPassword);
         // 从数据库获取对应用户名密码的用户
         Admin admin = null;
         try {
@@ -56,15 +55,11 @@ public class UserRealm extends AuthorizingRealm {
             throw new UnknownAccountException();
         }
         // 存入用户信息
-        List<Object> principals = Lists.newArrayList();
-        principals.add(adminName);
-        principals.add(admin);
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-            principals,
-            admin.getAdminPassword(),//密码
-            salt,//加盐
-            getName()  //realm name
-        );
+        Object principal = adminName;
+        //对用户名进行加盐
+        ByteSource salt = ByteSource.Util.bytes(adminName);
+        //验证密码
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(principal, admin.getAdminPassword(), salt, getName());
         //当验证都通过后，把用户信息放在session里
         Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute("adminSession", admin);
@@ -89,7 +84,7 @@ public class UserRealm extends AuthorizingRealm {
                 authorizationInfo.addRole(role.getRoleName());
             }
             authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
-            List<Authority> authorityList = adminService.getAuthorityByAdminId(authorityParams,"all");
+            List<Authority> authorityList = adminService.getAuthorityByAdminId(authorityParams,"all_");
             for (Authority authority : authorityList) {
                 //存入权限
                 authorizationInfo.addStringPermission(authority.getAuthorityUrl());
