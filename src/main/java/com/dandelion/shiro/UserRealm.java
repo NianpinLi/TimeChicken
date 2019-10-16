@@ -55,11 +55,13 @@ public class UserRealm extends AuthorizingRealm {
             throw new UnknownAccountException();
         }
         // 存入用户信息
-        Object principal = adminName;
+        List<Object> principals = Lists.newArrayList();
+        principals.add(adminName);
+        principals.add(admin);
         //对用户名进行加盐
         ByteSource salt = ByteSource.Util.bytes(adminName);
         //验证密码
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(principal, admin.getAdminPassword(), salt, getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(principals, admin.getAdminPassword(), salt, getName());
         //当验证都通过后，把用户信息放在session里
         Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute("adminSession", admin);
