@@ -9,6 +9,12 @@
     <classPathEntry location="C:\Users\jh\.m2\repository\mysql\mysql-connector-java\8.0.17\mysql-connector-java-8.0.17.jar" />
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8" />
+
+        <!-- 格式化java代码 -->
+        <!--<property name="javaFormatter" value="com.dandelion.utils.DefaultJavaFormatter" />-->
+
 
         <!-- 配置生成pojo的序列化的插件，mybatis支持很多插件，这些插件都在 org.mybatis.generator.plugins包下  -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
@@ -16,6 +22,14 @@
         <!-- 配置生成pojo的toString()方法的插件，mybatis支持很多插件，这些插件都在 org.mybatis.generator.plugins包下 -->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 
+        <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+        <!--<commentGenerator>-->
+            <!--<property name="suppressAllComments" value="false"/>-->
+            <!--&lt;!&ndash;生成的注释包含时间戳&ndash;&gt;-->
+            <!--<property name="suppressDate" value="true"/>-->
+        <!--</commentGenerator>-->
+        <!-- 这里的type里写的是你的实现类的类全路径 -->
+        <commentGenerator type="com.dandelion.utils.MyCommonGenerator"></commentGenerator>
 
         <!-- 配置数据源 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"

@@ -15,10 +15,10 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 /**
- * ClassName: AdminController
- * date:      2019/8/13 10:26
- * author:    puyiliang
- * description: 用户管理Controller
+ * @ClassName: AdminController
+ * @date:      2019/8/13 10:26
+ * @author:    puyiliang
+ * @description: 用户管理Controller
  */
 @Controller
 @RequestMapping("admin")
@@ -36,7 +36,8 @@ public class AdminController extends BaseController {
     @RequestMapping("login")
     public String loginAdmin(@RequestParam Map<String,String> paramsMap) throws Exception{
         Map map = adminService.loginAdmin(paramsMap);
-        if (CommonMessage.SUCCESS.equals(map.get("code"))){
+        String code = String.valueOf(map.get("code"));
+        if (CommonMessage.SUCCESS.equals(code)){
             return "index/index";
         }else{
             setAttribute("error",map.get("message"));

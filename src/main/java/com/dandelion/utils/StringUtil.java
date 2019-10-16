@@ -10,12 +10,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * ClassName: StringUtil
- * date:      2019/8/14 15:44
- * author:    puyiliang
- * description: 字符串操作工具类
+ * @ClassName: StringUtil
+ * @date:      2019/8/14 15:44
+ * @author:    puyiliang
+ * @description: 字符串操作工具类
  */
 public class StringUtil {
+
+    private static Pattern underLine = Pattern.compile("_(\\w)");
+
+    private static Pattern upCase = Pattern.compile("[A-Z]");
 
     /**
      * 下划线转驼峰
@@ -24,8 +28,7 @@ public class StringUtil {
      */
     public static String camel(String str) {
         //利用正则删除下划线，把下划线后一位改成大写
-        Pattern pattern = Pattern.compile("_(\\w)");
-        Matcher matcher = pattern.matcher(str);
+        Matcher matcher = underLine.matcher(str);
         StringBuffer sb = new StringBuffer(str);
         if (matcher.find()) {
             sb = new StringBuffer();
@@ -46,8 +49,8 @@ public class StringUtil {
      * @return String
      */
     public static String underline(String str) {
-        Pattern pattern = Pattern.compile("[A-Z]");
-        Matcher matcher = pattern.matcher(str);
+
+        Matcher matcher = upCase.matcher(str);
         StringBuffer sb = new StringBuffer(str);
         if(matcher.find()) {
             sb = new StringBuffer();

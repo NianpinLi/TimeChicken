@@ -34,10 +34,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ClassName: AdminService
- * date:      2019/8/13 10:54
- * author:    puyiliang
- * description: AdminService
+ * @ClassName: AdminService
+ * @date:      2019/8/13 10:54
+ * @author:    puyiliang
+ * @description: AdminService
  */
 @Service
 public class AdminService extends BaseService<Admin, Integer>{
@@ -50,6 +50,9 @@ public class AdminService extends BaseService<Admin, Integer>{
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+
+    private String managerId = "1";
+    private String fieldName = "adminId";
 
     /**
      * 用户登录
@@ -88,7 +91,7 @@ public class AdminService extends BaseService<Admin, Integer>{
             return (List<Authority>)o;
         }
         //拥有所有权限
-        if("1".equals(authorityParams.get("adminId"))){
+        if(managerId.equals(authorityParams.get(fieldName))){
             authorityParams.put("adminId",null);
         }
         List<Authority> authorityList = adminSelfMapper.selectAuthorityByAdminId(authorityParams);
@@ -109,7 +112,7 @@ public class AdminService extends BaseService<Admin, Integer>{
             return (List<Role>)o;
         }
         //拥有所有角色
-        if("1".equals(authorityParams.get("adminId"))){
+        if(managerId.equals(authorityParams.get(fieldName))){
             authorityParams.put("adminId",null);
         }
         List<Role> roleList = adminSelfMapper.selectRoleByAdminId(authorityParams);
@@ -165,17 +168,17 @@ public class AdminService extends BaseService<Admin, Integer>{
         return indexConfig;
     }
 
-    //获取权限
+    /** 获取权限*/
     private Map getAuthority(){
         Admin admin = (Admin) this.getSession("adminSession");
         //查询页面权限
         Map<String,String> authorityParams = Maps.newHashMap();
         authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
         authorityParams.put("authorityType","1");
-        List<Authority> AuthorityList = this.getAuthorityByAdminId(authorityParams,"page_");
+        List<Authority> authorityList = this.getAuthorityByAdminId(authorityParams,"page_");
         HashMap<Integer, Map> authorityMap = Maps.newHashMap();
         HashMap<Integer, Map> authorityMenuMap = Maps.newHashMap();
-        for (Authority authority : AuthorityList) {
+        for (Authority authority : authorityList) {
             Map map  = Maps.newHashMap();
             map.put("title",authority.getAuthorityName());
             map.put("icon",authority.getAuthorityIcon());
@@ -228,14 +231,14 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @return Map
      * @throws Exception e
      */
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map saveAdmin(Map<String, String> paramsMap) throws Exception{
         Admin admin = JSON.parseObject(JSON.toJSONString(paramsMap), Admin.class);
         if(ObjectUtil.isNull(admin.getAdminId())){
             //存入添加信息
             admin.setCreateName(this.getLoginAdmin().getRealName());
             admin.setCreateId(this.getLoginAdmin().getAdminId());
-            admin.setCreateTime(DateUtil.getNowDate_EN());
+            admin.setCreateTime(DateUtil.getNowDateEn());
             //对用户名进行加盐
             ByteSource salt = ByteSource.Util.bytes(admin.getAdminName());
             //密码加密
@@ -302,7 +305,7 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param paramsMap Map
      * @return Map
      */
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map saveEmpowermentRole(Map<String, Object> paramsMap) {
         //删除用户所拥有所有角色
         Integer adminId = Integer.parseInt(String.valueOf(paramsMap.get("adminId")));
@@ -311,7 +314,8 @@ public class AdminService extends BaseService<Admin, Integer>{
         String roleIds = String.valueOf(paramsMap.get("roleIds"));
         if (!ObjectUtil.isNull(roleIds)){
             List roleIdList = Lists.newArrayList();
-            for (String roleId : roleIds.split(",")) {
+            String splitRegex = ",";
+            for (String roleId : roleIds.split(splitRegex)) {
                 if (!ObjectUtil.isNull(roleId) && !"on".equals(roleId)){
                     roleIdList.add(roleId);
                 }
@@ -329,7 +333,7 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param paramsMap Map
      * @return Map
      */
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map changeAdminStatus(Map<String, String> paramsMap) throws Exception{
         String adminIds = paramsMap.get("inAdminId");
         AdminExample adminExample = new AdminExample();
@@ -338,7 +342,6 @@ public class AdminService extends BaseService<Admin, Integer>{
         if (!ObjectUtil.isNull(adminIds)){
             this.setExample(paramsMap, criteria,"Admin");
             adminSelfMapper.updateStatusByExample(adminExample);
-//            adminMapper.updateByExample(adminExample);
         }
         return this.successResult(false);
     }
@@ -348,7 +351,7 @@ public class AdminService extends BaseService<Admin, Integer>{
      * @param paramsMap Map
      * @return Map
      */
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map deleteAdmin(Map<String, String> paramsMap) throws Exception{
         String adminIds = paramsMap.get("inAdminId");
         AdminExample adminExample = new AdminExample();

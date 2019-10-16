@@ -14,10 +14,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * ClassName: ShiroConfig
- * date:      2019/8/21 18:00
- * author:    puyiliang
- * description: Shiro 配置文件类
+ * @ClassName: ShiroConfig
+ * @date:      2019/8/21 18:00
+ * @author:    puyiliang
+ * @description: Shiro 配置文件类
  */
 
 @Configuration
@@ -31,7 +31,7 @@ public class ShiroConfig {
         // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射
         shiroFilterFactoryBean.setLoginUrl("/common/login");
         // 设置无权限时跳转的 url;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/error/500"); //我使用AOP对无权限异常进行拦截，所以注释
+        shiroFilterFactoryBean.setUnauthorizedUrl("/error/500");
         // 设置拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断，因为前端模板采用了thymeleaf，这里不能直接使用 ("/static/**", "anon")来配置匿名访问，必须配置到每个静态目录
@@ -68,8 +68,10 @@ public class ShiroConfig {
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        hashedCredentialsMatcher.setHashAlgorithmName("MD5");//散列算法:MD2、MD5、SHA-1、SHA-256、SHA-384、SHA-512等。
-        hashedCredentialsMatcher.setHashIterations(3);//散列的次数，默认1次， 设置两次相当于 md5(md5(""));
+        //散列算法:MD2、MD5、SHA-1、SHA-256、SHA-384、SHA-512等。
+        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
+        //散列的次数，默认1次， 设置两次相当于 md5(md5(""));
+        hashedCredentialsMatcher.setHashIterations(3);
         return hashedCredentialsMatcher;
     }
 
@@ -91,9 +93,9 @@ public class ShiroConfig {
      */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
-        AuthorizationAttributeSourceAdvisor aASA = new AuthorizationAttributeSourceAdvisor();
-        aASA.setSecurityManager(securityManager());
-        return aASA;
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
+        return authorizationAttributeSourceAdvisor;
     }
     /**
      * 页面上使用shiro标签

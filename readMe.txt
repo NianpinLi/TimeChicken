@@ -18,4 +18,4 @@
 项目编码风格，编码规范
 1.项目编码请严格遵守阿里编码守则
 2.项目编码使用 Alibaba Java Coding Guidelines 做代码检查
-3.增删改需在Service方法上添加 @Transactional 注解做事务控制
+3.增删改需在Service方法上添加 @Transactional(rollbackFor=Exception.class) 注解做事务控制

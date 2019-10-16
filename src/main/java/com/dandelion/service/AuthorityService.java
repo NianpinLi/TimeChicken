@@ -16,11 +16,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ClassName: AuthorityService
- * date:      2019/8/19 16:04
- * author:    puyiliang
- * description: 权限Service
+ * @ClassName: AuthorityService
+ * @date:      2019/8/19 16:04
+ * @author:    puyiliang
+ * @description: 权限Service
  */
+@SuppressWarnings({"ALL", "AlibabaTransactionMustHaveRollback"})
 @Service
 public class AuthorityService extends BaseService<Authority,Integer>{
 
@@ -58,7 +59,6 @@ public class AuthorityService extends BaseService<Authority,Integer>{
         AuthorityExample.Criteria criteria = example.createCriteria();
         //查询条件
         this.setExample(paramsMap, criteria,"Authority");
-        //example.setOrderByClause();
         //分页
         startPage(paramsMap);
         List<Authority> authorityList = authorityMapper.selectByExample(example);
@@ -73,35 +73,41 @@ public class AuthorityService extends BaseService<Authority,Integer>{
      * @return Map
      * @throws Exception e
      */
-    @Transactional
-    public Map saveAuthority(Map<String, String> paramsMap) throws Exception{
-        //将Map 转化成 entity
-        Authority authority = JSON.parseObject(JSON.toJSONString(paramsMap),Authority.class);
-        String authorityIcon = authority.getAuthorityIcon();
-        //权限图标存储
-        if (!ObjectUtil.isNull(authorityIcon) && authorityIcon.startsWith("fa-")){
-            authority.setAuthorityIcon("fa "+authorityIcon);
-        }
-        //页面权限没有标识
-        if (authority.getAuthorityType() == 1){
-            authority.setAuthorityIdentifier(null);
+    @Transactional(rollbackFor=Exception.class)
+    public Map saveAuthority(Map<String, String> paramsMap){
+        try {
+            //将Map 转化成 entity
+            Authority authority = JSON.parseObject(JSON.toJSONString(paramsMap),Authority.class);
+            String authorityIcon = authority.getAuthorityIcon();
+            //权限图标存储
+            String iconStartsWith = "fa-";
+            if (!ObjectUtil.isNull(authorityIcon) && authorityIcon.startsWith(iconStartsWith)){
+                authority.setAuthorityIcon("fa "+authorityIcon);
+            }
+            //页面权限没有标识
+            if (authority.getAuthorityType() == 1){
+                authority.setAuthorityIdentifier(null);
+            }
+            String fieldName = "authorityId";
+            if(ObjectUtil.isNull(paramsMap.get(fieldName))){
+                //不存在权限Id 新增
+                authority.setCreateName(this.getLoginAdmin().getRealName());
+                authority.setCreateId(this.getLoginAdmin().getAdminId());
+                authority.setCreateTime(DateUtil.getNowDateEn());
+                if(ObjectUtil.isNull(authority.getParentAuthorityId())) {
+                    //无上级权限
+                    authority.setParentAuthorityId(-1);
+                }
+                //新增权限
+                authorityMapper.insertSelective(authority);
+            }else{
+                //存在权限Id 修改
+                authorityMapper.updateByPrimaryKeySelective(authority);
+            }
+        }catch (Exception e){
+
         }
 
-        if(ObjectUtil.isNull(paramsMap.get("authorityId"))){
-            //不存在权限Id 新增
-            authority.setCreateName(this.getLoginAdmin().getRealName());
-            authority.setCreateId(this.getLoginAdmin().getAdminId());
-            authority.setCreateTime(DateUtil.getNowDate_EN());
-            if(ObjectUtil.isNull(authority.getParentAuthorityId())) {
-                //无上级权限
-                authority.setParentAuthorityId(-1);
-            }
-            //新增权限
-            authorityMapper.insertSelective(authority);
-        }else{
-            //存在权限Id 修改
-            authorityMapper.updateByPrimaryKeySelective(authority);
-        }
 
         return this.successResult(true);
     }
@@ -112,7 +118,7 @@ public class AuthorityService extends BaseService<Authority,Integer>{
      * @return Map
      * @throws Exception e
      */
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map deleteAuthority(Map<String, String> paramsMap) throws Exception{
         authorityMapper.deleteByPrimaryKey(Integer.parseInt(paramsMap.get("equalToAuthorityId")));
         return this.successResult(false);

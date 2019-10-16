@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
- * ClassName: XssHttpServletRequestWrapper
- * date:      2019/10/15 14:28
- * author:    puyiliang
- * description:Xss请求过滤
+ * @ClassName: XssHttpServletRequestWrapper
+ * @date:      2019/10/15 14:28
+ * @author:    puyiliang
+ * @description:Xss请求过滤
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper{
 

@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ClassName: AdminController
- * date:      2019/8/13 10:26
- * author:    puyiliang
- * description: 角色管理Service
+ * @ClassName: AdminController
+ * @date:      2019/8/13 10:26
+ * @author:    puyiliang
+ * @description: 角色管理Service
  */
 @Service
 public class RoleService extends BaseService<Role, Integer>{
@@ -88,14 +88,14 @@ public class RoleService extends BaseService<Role, Integer>{
      * @return Map
      * @throws Exception e
      */
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map saveRole(Map<String, String> paramsMap) throws Exception {
         Role role = JSON.parseObject(JSON.toJSONString(paramsMap), Role.class);
         if(ObjectUtil.isNull(role.getRoleId())){
             //存入添加信息
             role.setCreateName(this.getLoginAdmin().getRealName());
             role.setCreateId(this.getLoginAdmin().getAdminId());
-            role.setCreateTime(DateUtil.getNowDate_EN());
+            role.setCreateTime(DateUtil.getNowDateEn());
             //判断是否存在角色ID 不存在新增
             roleMapper.insertSelective(role);
         }else{
@@ -111,7 +111,7 @@ public class RoleService extends BaseService<Role, Integer>{
      * @return Map
      * @throws Exception e
      */
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map deleteRole(Map<String, String> paramsMap) throws Exception {
         String roleIds = paramsMap.get("inRoleId");
         RoleExample example = new RoleExample();
@@ -171,7 +171,7 @@ public class RoleService extends BaseService<Role, Integer>{
      * @return Map
      * @throws Exception e
      */
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map saveEmpowermentAuthority(Map<String, Object> paramsMap) throws Exception {
         //删除角色所拥有的所有权限
         Integer roleId = Integer.parseInt(String.valueOf(paramsMap.get("roleId")));
@@ -180,7 +180,8 @@ public class RoleService extends BaseService<Role, Integer>{
         String authorityIds = String.valueOf(paramsMap.get("authorityIds"));
         if (!ObjectUtil.isNull(authorityIds)){
             List authorityIdList = Lists.newArrayList();
-            for (String authorityId : authorityIds.split(",")) {
+            String splitRegex = ",";
+            for (String authorityId : authorityIds.split(splitRegex)) {
                 if (!ObjectUtil.isNull(authorityId) && !"on".equals(authorityId)){
                     authorityIdList.add(authorityId);
                 }

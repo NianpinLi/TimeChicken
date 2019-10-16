@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * ClassName: BaseController
- * date:      2019/8/13 10:28
- * author:    puyiliang
- * description: 公共Controller
+ * @ClassName: BaseController
+ * @date:      2019/8/13 10:28
+ * @author:    puyiliang
+ * @description: 公共Controller
  */
 @Controller
 public class BaseController {
@@ -102,9 +102,9 @@ public class BaseController {
     }
 
     public String disPlay(){
-        String[] class_str = this.getClass().getName().split("\\.");
+        String[] classStr = this.getClass().getName().split("\\.");
         //方法名称
-        String action = class_str[class_str.length - 1].replace("Controller", "");
+        String action = classStr[classStr.length - 1].replace("Controller", "");
         String method = new Exception().getStackTrace()[1].getMethodName();
         return action + "/" + method;
     }

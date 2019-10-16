@@ -39,7 +39,8 @@ public class BaseAop {
     @Around("controllerException()")
     public Object doAroundAdvice(ProceedingJoinPoint proceedingJoinPoint){
         Object[] args = proceedingJoinPoint.getArgs();
-        String[] argNames = ((MethodSignature) proceedingJoinPoint.getSignature()).getParameterNames(); // 参数名
+        // 参数名
+        String[] argNames = ((MethodSignature) proceedingJoinPoint.getSignature()).getParameterNames();
         Map<String, Object> paramMap = Maps.newHashMap();
         for (int i = 0; i < args.length; i++) {
             if (!(args[i] instanceof ExtendedServletRequestDataBinder) && !(args[i] instanceof HttpServletResponseWrapper)) {
@@ -47,7 +48,7 @@ public class BaseAop {
             }
         }
         if (paramMap.size() > 0) {
-            log.info("\n[{}]\n方法:{};\n参数:{}", "时间："+ DateUtil.getNowTime_CN(), proceedingJoinPoint.getSignature(), JSONObject.toJSONString(paramMap));
+            log.info("\n[{}]\n方法:{};\n参数:{}", "时间："+ DateUtil.getNowTimeCn(), proceedingJoinPoint.getSignature(), JSONObject.toJSONString(paramMap));
         }
         try {
             //执行方法

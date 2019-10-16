@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ClassName: GeneratorUtil
- * date:      2019/8/13 9:32
- * author:    puyiliang
- * description: mybatis Generator 自动生成文件
+ * @ClassName: GeneratorUtil
+ * @date:      2019/8/13 9:32
+ * @author:    puyiliang
+ * @description: mybatis Generator 自动生成文件
  */
 public class GeneratorUtil {
     public static void main(String[] args) throws Exception{

@@ -13,10 +13,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * ClassName: XssFilter
- * date:      2019/10/15 14:21
- * author:    puyiliang
- * description: Xss 攻击过滤器
+ * @ClassName: XssFilter
+ * @date:      2019/10/15 14:21
+ * @author:    puyiliang
+ * @description: Xss 攻击过滤器
  */
 @Slf4j
 public class XssFilter implements Filter{
@@ -31,7 +31,7 @@ public class XssFilter implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException,ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        if(handleExcludeURL(req, resp)){
+        if(handleExcludeUrl(req, resp)){
             filterChain.doFilter(request, response);
             return;
         }
@@ -40,7 +40,7 @@ public class XssFilter implements Filter{
         filterChain.doFilter(xssRequest, response);
     }
 
-    private boolean handleExcludeURL(HttpServletRequest request, HttpServletResponse response) {
+    private boolean handleExcludeUrl(HttpServletRequest request, HttpServletResponse response) {
 
         if (excludes == null || excludes.isEmpty()) {
             return false;

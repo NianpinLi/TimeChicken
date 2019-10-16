@@ -14,10 +14,10 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 /**
- * ClassName: AuthorityController
- * date:      2019/9/20 17:17
- * author:    puyiliang
- * description: 权限控制管理模块
+ * @ClassName: AuthorityController
+ * @date:      2019/9/20 17:17
+ * @author:    puyiliang
+ * @description: 权限控制管理模块
  */
 @RequestMapping("/authority")
 @Controller

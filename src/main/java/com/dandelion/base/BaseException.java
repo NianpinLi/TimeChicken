@@ -45,7 +45,7 @@ public class BaseException {
      * @return String
      */
     @ExceptionHandler(AuthorizationException.class)
-    public String AuthorizationException(HttpServletRequest request, HttpServletResponse response,Exception e) {
+    public String authorizationException(HttpServletRequest request, HttpServletResponse response,Exception e) {
         //如果是Ajax请求
         if(isAjax(request)){
             HashMap resultMap = Maps.newHashMap();

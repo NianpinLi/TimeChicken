@@ -20,17 +20,59 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ClassName: BaseService
- * date:      2019/8/13 10:32
- * author:    puyiliang
- * description: 公共service
+ * @ClassName: BaseService
+ * @date:      2019/8/13 10:32
+ * @author:    puyiliang
+ * @description: 公共service
  */
 public class BaseService<T, PK extends Serializable> {
 
+    private String fieldSort = "field";
+    private String orderSort = "order";
+    private int isNullType = 2;
+    private int inType = 3;
+    private int simpleType = 1;
+    private String stringClass = "java.lang.String";
+    private String intClass = "java.lang.Integer";
+    private String intName = "int";
+    private String floatClass = "java.lang.Float";
+    private String floatName = "float";
+    private String doubleClass = "java.lang.Double";
+    private String doubleName = "double";
+    private String longClass = "java.lang.Long";
+    private String longName = "long";
+    private String charClass = "java.lang.Character";
+    private String charName = "char";
+    private String shortClass = "java.lang.Short";
+    private String shortName = "short";
+    private String byteClass = "java.lang.Byte";
+    private String byteName = "byte";
+    private String booleanClass = "java.lang.Boolean";
+    private String booleanName = "boolean";
+    private String bigDecimalClass = "java.math.BigDecimal";
+    private String bigIntegerClass = "java.math.BigInteger";
+
+    private String equalTo= "equalTo";
+    private String notEqualTo= "notEqualTo";
+    private String greaterThanOrEqualTo= "greaterThanOrEqualTo";
+    private String greaterThan= "greaterThan";
+    private String lessThanOrEqualTo= "lessThanOrEqualTo";
+    private String lessThan= "lessThan";
+    private String between= "between";
+    private String notBetween= "notBetween";
+    private String in= "in";
+    private String notIn= "notIn";
+    private String isNull= "isNull";
+    private String isNotNull= "isNotNull";
+    private String like= "like";
+    private String notLike= "notLike";
+
+
+
     protected void setOrderByClause(Map<String, String> paramsMap, Object example, String beanName) throws Exception{
-        if(!ObjectUtil.isNull(paramsMap.get("field")) && !ObjectUtil.isNull(paramsMap.get("order"))){
-            String field = paramsMap.get("field");
-            String order = paramsMap.get("order");
+        if(!ObjectUtil.isNull(paramsMap.get(fieldSort)) && !ObjectUtil.isNull(paramsMap.get(orderSort))){
+            String field = paramsMap.get(fieldSort);
+            String order = paramsMap.get(orderSort);
             //获取实体BeanClass
             Class beanClass = Class.forName("com.dandelion.bean." + beanName);
             for (Field fieldName : beanClass.getDeclaredFields()) {
@@ -114,13 +156,13 @@ public class BaseService<T, PK extends Serializable> {
         //获取属性类型Class
         Class attributeType = beanClass.getDeclaredField(attribute).getType();
         Class criteriaClass = object.getClass();
-        if(type == 2){
+        if(type == isNullType){
             // isNull
             Method method = criteriaClass.getMethod(methodBuffer.toString());
             method.invoke(object);
             return;
         }
-        if (type == 3){
+        if (type == inType){
             // in
             Method method = criteriaClass.getMethod(methodBuffer.toString(), List.class);
             invokeListMethod(method,attributeType,object,value);
@@ -132,70 +174,70 @@ public class BaseService<T, PK extends Serializable> {
             default:invokeMethod(method,attributeType,object,value);break;
         }
     }
-    private static void invokeListMethod(Method method,Class attributeType, Object object, String value) throws Exception{
+    private void invokeListMethod(Method method,Class attributeType, Object object, String value) throws Exception{
         String attributeTypeString = attributeType.getTypeName();
         String[] valueStr = value.split(",");
-        if("java.lang.String".equals(attributeTypeString)){
+        if(stringClass.equals(attributeTypeString)){
             List<String> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(values);
             }
             method.invoke(object, valueList);
-        }else if ("int".equals(attributeTypeString) || "java.lang.Integer".equals(attributeTypeString)){
+        }else if (intName.equals(attributeTypeString) || intClass.equals(attributeTypeString)){
             List<Integer> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(Integer.parseInt(values));
             }
             method.invoke(object, valueList);
-        }else if ("float".equals(attributeTypeString) || "java.lang.Float".equals(attributeTypeString)){
+        }else if (floatName.equals(attributeTypeString) || floatClass.equals(attributeTypeString)){
             List<Float> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(Float.parseFloat(values));
             }
             method.invoke(object, valueList);
-        }else if ("double".equals(attributeTypeString) || "java.lang.Double".equals(attributeTypeString)){
+        }else if (doubleName.equals(attributeTypeString) || doubleClass.equals(attributeTypeString)){
             List<Double> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(Double.parseDouble(values));
             }
             method.invoke(object, valueList);
-        }else if ("long".equals(attributeTypeString) || "java.lang.Long".equals(attributeTypeString)){
+        }else if (longName.equals(attributeTypeString) || longClass.equals(attributeTypeString)){
             List<Long> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(Long.parseLong(values));
             }
             method.invoke(object, valueList);
-        }else if ("char".equals(attributeTypeString) || "java.lang.Character".equals(attributeTypeString)){
+        }else if (charName.equals(attributeTypeString) || charClass.equals(attributeTypeString)){
             List<Character> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(values.charAt(0));
             }
             method.invoke(object, valueList);
-        }else if ("short".equals(attributeTypeString) || "java.lang.Short".equals(attributeTypeString)){
+        }else if (shortName.equals(attributeTypeString) || shortClass.equals(attributeTypeString)){
             List<Short> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(Short.parseShort(values));
             }
             method.invoke(object, valueList);
-        }else if ("byte".equals(attributeTypeString) || "java.lang.Byte".equals(attributeTypeString)){
+        }else if (byteName.equals(attributeTypeString) || byteClass.equals(attributeTypeString)){
             List<Byte> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(Byte.parseByte(values));
             }
             method.invoke(object, valueList);
-        }else if ("boolean".equals(attributeTypeString) || "java.lang.Boolean".equals(attributeTypeString)){
+        }else if (booleanName.equals(attributeTypeString) || booleanClass.equals(attributeTypeString)){
             List<Boolean> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(Boolean.parseBoolean(values));
             }
             method.invoke(object, valueList);
-        }else if ("java.math.BigDecimal".equals(attributeTypeString)){
+        }else if (bigDecimalClass.equals(attributeTypeString)){
             List<BigDecimal> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(new BigDecimal(values));
             }
             method.invoke(object, valueList);
-        }else if ("java.math.BigInteger".equals(attributeTypeString)){
+        }else if (bigIntegerClass.equals(attributeTypeString)){
             List<BigInteger> valueList = Lists.newArrayList();
             for (String values : valueStr) {
                 valueList.add(new BigInteger(values));
@@ -204,84 +246,84 @@ public class BaseService<T, PK extends Serializable> {
         }
     }
 
-    private static void invokeMethod(Method method,Class attributeType, Object object, String value) throws Exception{
+    private void invokeMethod(Method method,Class attributeType, Object object, String value) throws Exception{
         String attributeTypeString = attributeType.getTypeName();
         //获取属性的get方法
-        if("java.lang.String".equals(attributeTypeString)){
+        if(stringClass.equals(attributeTypeString)){
             method.invoke(object, value);
-        }else if ("int".equals(attributeTypeString) || "java.lang.Integer".equals(attributeTypeString)){
+        }else if (intName.equals(attributeTypeString) || intClass.equals(attributeTypeString)){
             method.invoke(object, Integer.parseInt(value));
-        }else if ("float".equals(attributeTypeString) || "java.lang.Float".equals(attributeTypeString)){
+        }else if (floatName.equals(attributeTypeString) || floatClass.equals(attributeTypeString)){
             method.invoke(object, Float.parseFloat(value));
-        }else if ("double".equals(attributeTypeString) || "java.lang.Double".equals(attributeTypeString)){
+        }else if (doubleName.equals(attributeTypeString) || doubleClass.equals(attributeTypeString)){
             method.invoke(object, Double.parseDouble(value));
-        }else if ("long".equals(attributeTypeString) || "java.lang.Long".equals(attributeTypeString)){
+        }else if (longName.equals(attributeTypeString) || longClass.equals(attributeTypeString)){
             method.invoke(object, Long.parseLong(value));
-        }else if ("char".equals(attributeTypeString) || "java.lang.Character".equals(attributeTypeString)){
+        }else if (charName.equals(attributeTypeString) || charClass.equals(attributeTypeString)){
             method.invoke(object, value.charAt(0));
-        }else if ("short".equals(attributeTypeString) || "java.lang.Short".equals(attributeTypeString)){
+        }else if (shortName.equals(attributeTypeString) || shortClass.equals(attributeTypeString)){
             method.invoke(object, Short.parseShort(value));
-        }else if ("byte".equals(attributeTypeString) || "java.lang.Byte".equals(attributeTypeString)){
+        }else if (byteName.equals(attributeTypeString) || byteClass.equals(attributeTypeString)){
             method.invoke(object, Byte.parseByte(value));
-        }else if ("boolean".equals(attributeTypeString) || "java.lang.Boolean".equals(attributeTypeString)){
+        }else if (booleanName.equals(attributeTypeString) || booleanClass.equals(attributeTypeString)){
             method.invoke(object, Boolean.parseBoolean(value));
-        }else if ("java.math.BigDecimal".equals(attributeTypeString)){
+        }else if (bigDecimalClass.equals(attributeTypeString)){
             method.invoke(object, new BigDecimal(value));
-        }else if ("java.math.BigInteger".equals(attributeTypeString)){
+        }else if (bigIntegerClass.equals(attributeTypeString)){
             method.invoke(object, new BigInteger(value));
         }
     }
 
-    private static Map getMethodMap(String key){
+    private Map getMethodMap(String key){
         int type = 0;
         String[] methodArray = new String[2];
-        if (key.startsWith("equalTo")){
+        if (key.startsWith(equalTo)){
             methodArray[0] = key.substring(7,key.length());
             methodArray[1] = "EqualTo";
-        }else if (key.startsWith("notEqualTo")){
+        }else if (key.startsWith(notEqualTo)){
             methodArray[0] = key.substring(10,key.length());
             methodArray[1] = "NotEqualTo";
-        }else if (key.startsWith("greaterThanOrEqualTo")){
+        }else if (key.startsWith(greaterThanOrEqualTo)){
             methodArray[0] = key.substring(20,key.length());
             methodArray[1] = "GreaterThanOrEqualTo";
-        }else if (key.startsWith("greaterThan")){
+        }else if (key.startsWith(greaterThan)){
             methodArray[0] = key.substring(11,key.length());
             methodArray[1] = "GreaterThan";
-        }else if (key.startsWith("lessThanOrEqualTo")){
+        }else if (key.startsWith(lessThanOrEqualTo)){
             methodArray[0] = key.substring(17,key.length());
             methodArray[1] = "LessThanOrEqualTo";
-        }else if (key.startsWith("lessThan")){
+        }else if (key.startsWith(lessThan)){
             methodArray[0] = key.substring(8,key.length());
             methodArray[1] = "LessThan";
-        }else if (key.startsWith("between")){
+        }else if (key.startsWith(between)){
             methodArray[0] = key.substring(7,key.length());
             methodArray[1] = "Between";
             type = 4;
-        }else if (key.startsWith("notBetween")){
+        }else if (key.startsWith(notBetween)){
             methodArray[0] = key.substring(10,key.length());
             methodArray[1] = "NotBetween";
             type = 4;
-        }else if (key.startsWith("in")){
+        }else if (key.startsWith(in)){
             methodArray[0] = key.substring(2,key.length());
             methodArray[1] = "In";
             type = 3;
-        }else if (key.startsWith("notIn")){
+        }else if (key.startsWith(notIn)){
             methodArray[0] = key.substring(5,key.length());
             methodArray[1] = "NotIn";
             type = 3;
-        }else if (key.startsWith("isNull")){
+        }else if (key.startsWith(isNull)){
             methodArray[0] = key.substring(6,key.length());
             methodArray[1] = "IsNull";
             type = 2;
-        }else if (key.startsWith("isNotNull")){
+        }else if (key.startsWith(isNotNull)){
             methodArray[0] = key.substring(9,key.length());
             methodArray[1] = "IsNotNull";
             type = 2;
-        }else if (key.startsWith("like")){
+        }else if (key.startsWith(like)){
             methodArray[0] = key.substring(4,key.length());
             methodArray[1] = "Like";
             type = 1;
-        }else if (key.startsWith("notLike")){
+        }else if (key.startsWith(notLike)){
             methodArray[0] = key.substring(7,key.length());
             methodArray[1] = "NotLike";
             type = 1;

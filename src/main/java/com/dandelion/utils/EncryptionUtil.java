@@ -4,10 +4,10 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
 /**
- * ClassName: EncryptionUtil
- * date:      2019/10/15 10:49
- * author:    puyiliang
- * description:加密解密 工具类
+ * @ClassName: EncryptionUtil
+ * @date:      2019/10/15 10:49
+ * @author:    puyiliang
+ * @description:加密解密 工具类
  */
 public class EncryptionUtil {
     /**

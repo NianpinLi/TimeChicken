@@ -1,13 +1,11 @@
 package com.dandelion.base;
 
 /**
- * ClassName: BaseExceptionHandler
- * date:      2019/8/22 9:43
- * author:    puyiliang
- * description: 全局异常处理类
+ * @ClassName: BaseExceptionHandler
+ * @date:      2019/8/22 9:43
+ * @author:    puyiliang
+ * @description: 全局异常处理类
  */
-//@ControllerAdvice
-//@Slf4j
 public class BaseExceptionHandler {
 //    //拦截未授权页面
 //    @ResponseStatus(value = HttpStatus.FORBIDDEN)
