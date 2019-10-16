@@ -15,10 +15,10 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 /**
- * @ClassName: AdminController
- * @date:      2019/8/13 10:26
- * @author:    puyiliang
- * @description: 用户管理Controller
+ * AdminController
+ * @date      2019/8/13 10:26
+ * @author    puyiliang
+ *  用户管理Controller
  */
 @Controller
 @RequestMapping("admin")

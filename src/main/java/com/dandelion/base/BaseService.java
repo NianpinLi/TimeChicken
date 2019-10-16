@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName: BaseService
- * @date:      2019/8/13 10:32
- * @author:    puyiliang
- * @description: 公共service
+ * BaseService
+ * @date      2019/8/13 10:32
+ * @author    puyiliang
+ *  公共service
  */
 public class BaseService<T, PK extends Serializable> {
 

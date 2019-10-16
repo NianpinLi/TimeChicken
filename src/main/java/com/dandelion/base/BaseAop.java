@@ -16,10 +16,9 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import java.util.Map;
 
 /**
- * @ClassName BaseAop
- * @Date      2019/9/23 17:43
- * @Author    puyiliang
- * @Description: Spring AOP 异常拦截
+ * BaseAop Spring AOP 异常拦截
+ * @date      2019/9/23 17:43
+ * @author    puyiliang
  */
 @Aspect
 @Component
@@ -52,10 +51,7 @@ public class BaseAop {
         }
         try {
             //执行方法
-            Object obj = proceedingJoinPoint.proceed();
-            return obj;
-        } catch (Exception e){
-            e.printStackTrace();
+            return proceedingJoinPoint.proceed();
         } catch (Throwable throwable) {
             //异常拦截
             throwable.printStackTrace();

@@ -14,10 +14,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @ClassName: ShiroConfig
- * @date:      2019/8/21 18:00
- * @author:    puyiliang
- * @description: Shiro 配置文件类
+ * ShiroConfig
+ * @date      2019/8/21 18:00
+ * @author    puyiliang
+ *  Shiro 配置文件类
  */
 
 @Configuration

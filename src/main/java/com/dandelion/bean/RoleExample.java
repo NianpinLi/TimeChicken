@@ -1,6 +1,6 @@
 /**
- *@author: generator
- *@date: 2019-10-16
+ *@author generator
+ *@date 2019-10-16
  */
 package com.dandelion.bean;
 

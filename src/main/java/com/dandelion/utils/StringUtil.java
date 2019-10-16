@@ -10,10 +10,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @ClassName: StringUtil
- * @date:      2019/8/14 15:44
- * @author:    puyiliang
- * @description: 字符串操作工具类
+ * StringUtil
+ * @date      2019/8/14 15:44
+ * @author    puyiliang
+ *  字符串操作工具类
  */
 public class StringUtil {
 

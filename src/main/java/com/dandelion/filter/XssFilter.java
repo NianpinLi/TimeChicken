@@ -13,10 +13,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @ClassName: XssFilter
- * @date:      2019/10/15 14:21
- * @author:    puyiliang
- * @description: Xss 攻击过滤器
+ * XssFilter
+ * @date      2019/10/15 14:21
+ * @author    puyiliang
+ *  Xss 攻击过滤器
  */
 @Slf4j
 public class XssFilter implements Filter{

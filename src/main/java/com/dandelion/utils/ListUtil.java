@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName: ListUtil
- * @date:      2019/10/11 17:14
- * @author:    puyiliang
- * @description:操作List 的工具类
+ * ListUtil
+ * @date      2019/10/11 17:14
+ * @author    puyiliang
+ * 操作List 的工具类
  */
 @Slf4j
 public class ListUtil {

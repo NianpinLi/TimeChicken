@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName: AdminSelfMapper
- * @date:      2019/8/21 14:31
- * @author:    puyiliang
- * @description: 自定义用户Mapper
+ * AdminSelfMapper
+ * @date      2019/8/21 14:31
+ * @author    puyiliang
+ *  自定义用户Mapper
  */
 public interface AdminSelfMapper {
 

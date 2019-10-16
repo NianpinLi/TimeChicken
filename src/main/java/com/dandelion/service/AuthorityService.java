@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName: AuthorityService
- * @date:      2019/8/19 16:04
- * @author:    puyiliang
- * @description: 权限Service
+ * AuthorityService
+ * @date      2019/8/19 16:04
+ * @author    puyiliang
+ *  权限Service
  */
 @SuppressWarnings({"ALL", "AlibabaTransactionMustHaveRollback"})
 @Service

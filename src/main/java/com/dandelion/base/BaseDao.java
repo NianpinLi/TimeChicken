@@ -1,10 +1,9 @@
 package com.dandelion.base;
 
 /**
- * @ClassName: BaseDao
- * @date:      2019/8/13 10:32
- * @author:    puyiliang
- * @description: 公共dao
+ * BaseDao 公共dao
+ * @date     2019/8/13 10:32
+ * @author   puyiliang
  */
 public class BaseDao {
 

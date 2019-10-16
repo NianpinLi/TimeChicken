@@ -16,10 +16,10 @@ import java.util.Set;
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
 /**
- * @ClassName: MyCommonGenerator
- * @date:      2019/10/16 14:32
- * @author:    puyiliang
- * @description: 实现代码自动生存注释
+ * MyCommonGenerator
+ * @date      2019/10/16 14:32
+ * @author    puyiliang
+ *  实现代码自动生存注释
  */
 public class MyCommonGenerator implements CommentGenerator {
     private Properties properties;
@@ -41,8 +41,8 @@ public class MyCommonGenerator implements CommentGenerator {
     public void addJavaFileComment(CompilationUnit compilationUnit) {
         // add no file level comments by default
         compilationUnit.addFileCommentLine("/**");
-        compilationUnit.addFileCommentLine(" *@author: generator");
-        compilationUnit.addFileCommentLine(" *@date: "+getDateString());
+        compilationUnit.addFileCommentLine(" *@author generator");
+        compilationUnit.addFileCommentLine(" *@date "+getDateString());
         compilationUnit.addFileCommentLine(" */");
     }
 
@@ -270,10 +270,8 @@ public class MyCommonGenerator implements CommentGenerator {
         sb.append(" * ");
         sb.append(introspectedTable.getFullyQualifiedTable());
         innerClass.addJavaDocLine(sb.toString());
-
         sb.setLength(0);
-        sb.append(" * @author ");
-        sb.append(systemPro.getProperty("user.name"));
+        sb.append(" * @author generator");
         sb.append(" ");
         sb.append(currentDateStr);
         //addJavadocTag(innerClass, markAsDoNotDelete);

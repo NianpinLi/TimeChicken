@@ -14,10 +14,10 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 
 /**
- * @ClassName: BaseException
- * @Date      2019/9/23 18:07
- * @Author    puyiliang
- * @description: 异常拦截类
+ * BaseException 异常拦截类
+ * @date      2019/9/23 18:07
+ * @author    puyiliang
+ *
  */
 @ControllerAdvice
 public class BaseException {

@@ -6,10 +6,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 /**
- * @ClassName: DateUtil
- * @date:      2019/9/29 14:50
- * @author:    puyiliang
- * @description:时间操作工具类
+ * DateUtil
+ * @date      2019/9/29 14:50
+ * @author    puyiliang
+ * 时间操作工具类
  */
 public class DateUtil {
 

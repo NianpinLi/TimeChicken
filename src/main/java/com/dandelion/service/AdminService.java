@@ -34,10 +34,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName: AdminService
- * @date:      2019/8/13 10:54
- * @author:    puyiliang
- * @description: AdminService
+ * AdminService
+ * @date      2019/8/13 10:54
+ * @author    puyiliang
+ *  AdminService
  */
 @Service
 public class AdminService extends BaseService<Admin, Integer>{

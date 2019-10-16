@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Map;
 
 /**
- * @ClassName: XssConfig
- * @date:      2019/10/15 14:14
- * @author:    puyiliang
- * @description:Xss 攻击防御配置
+ * XssConfig
+ * @date      2019/10/15 14:14
+ * @author    puyiliang
+ * Xss 攻击防御配置
  */
 @Configuration
 public class XssConfig {

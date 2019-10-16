@@ -1,32 +1,23 @@
 package com.dandelion.base;
 
 import com.dandelion.bean.Admin;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * @ClassName: BaseController
- * @date:      2019/8/13 10:28
- * @author:    puyiliang
- * @description: 公共Controller
+ * BaseController  公共Controller
+ * @date      2019/8/13 10:28
+ * @author   puyiliang
  */
 @Controller
 public class BaseController {
-
-    @Resource
-    private RedisTemplate<String,String> redisTemplate;
-
-    protected HttpServletRequest request;
-    protected HttpServletResponse response;
 
     /**
      * 返回当前调用方法的类名与方法名，做为VIEW的地址
@@ -79,16 +70,15 @@ public class BaseController {
      * 获取请求作用域
      * @return HttpServletRequest
      */
-    public HttpServletRequest getRequest() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        return request;
+    protected HttpServletRequest getRequest() {
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     }
 
     /**
      * 获取响应作用域
      * @return HttpServletResponse
      */
-    public HttpServletResponse getResponse() {
+    protected HttpServletResponse getResponse() {
         ServletWebRequest servletContainer = (ServletWebRequest) RequestContextHolder.getRequestAttributes();
         return servletContainer.getResponse();
     }

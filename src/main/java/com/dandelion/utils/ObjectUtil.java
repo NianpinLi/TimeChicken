@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @ClassName: ObjectUtil
- * @date:      2019/8/14 15:34
- * @author:    puyiliang
- * @description: 对象工具类
+ * ObjectUtil
+ * @date      2019/8/14 15:34
+ * @author    puyiliang
+ *  对象工具类
  */
 public class ObjectUtil {
 

@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * @ClassName: RedisUtil
- * @date:      2019/8/19 16:12
- * @author:    puyiliang
- * @description: redis操作工具类
+ * RedisUtil
+ * @date      2019/8/19 16:12
+ * @author    puyiliang
+ *  redis操作工具类
  */
 @Service
 public class RedisUtil {

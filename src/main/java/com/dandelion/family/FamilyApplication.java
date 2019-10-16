@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @ClassName: FamilyApplication
- * @date:      2019/8/14 15:34
- * @author:    puyiliang
- * @description: 项目启动类
+ * FamilyApplication
+ * @date      2019/8/14 15:34
+ * @author    puyiliang
+ *  项目启动类
  */
 @SpringBootApplication
 @MapperScan("com.dandelion.dao")

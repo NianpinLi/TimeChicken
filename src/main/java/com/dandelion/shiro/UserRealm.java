@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName: UserRealm
- * @date:      2019/8/21 18:07
- * @author:    puyiliang
- * @description: Shiro 自定义Realm
+ * UserRealm
+ * @date      2019/8/21 18:07
+ * @author    puyiliang
+ *  Shiro 自定义Realm
  */
 @Slf4j
 public class UserRealm extends AuthorizingRealm {
