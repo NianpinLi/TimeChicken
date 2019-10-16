@@ -36,7 +36,7 @@ public class AdminController extends BaseController {
     @RequestMapping("login")
     public String loginAdmin(@RequestParam Map<String,String> paramsMap) throws Exception{
         Map map = adminService.loginAdmin(paramsMap);
-        String code = String.valueOf(map.get("code"));
+        Object code = map.get("code");
         if (CommonMessage.SUCCESS.equals(code)){
             return "index/index";
         }else{
