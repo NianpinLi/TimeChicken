@@ -74,8 +74,7 @@ public class AdminController extends BaseController {
     @RequiresPermissions(value = {"/admin/getAdminList"})
     @RequestMapping(value = "getAdminList", method = RequestMethod.GET)
     public @ResponseBody Map getAdminList(@RequestParam Map<String,String> paramsMap) throws Exception{
-        Map result = adminService.getAdminList(paramsMap);
-        return result;
+        return adminService.getAdminList(paramsMap);
     }
 
     /**

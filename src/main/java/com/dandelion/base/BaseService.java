@@ -31,7 +31,7 @@ public class BaseService<T, PK extends Serializable> {
     private String orderSort = "order";
     private int isNullType = 2;
     private int inType = 3;
-    private int simpleType = 1;
+    private int likeType = 1;
     private String stringClass = "java.lang.String";
     private String intClass = "java.lang.Integer";
     private String intName = "int";
@@ -322,11 +322,11 @@ public class BaseService<T, PK extends Serializable> {
         }else if (key.startsWith(like)){
             methodArray[0] = key.substring(4,key.length());
             methodArray[1] = "Like";
-            type = 1;
+            type = likeType;
         }else if (key.startsWith(notLike)){
             methodArray[0] = key.substring(7,key.length());
             methodArray[1] = "NotLike";
-            type = 1;
+            type = likeType;
         }else{
             type = -1;
         }

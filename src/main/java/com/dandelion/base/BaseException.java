@@ -31,7 +31,7 @@ public class BaseException {
     public String handleException(HttpServletRequest request, HttpServletResponse response, Exception e) {
         //如果是Ajax请求
         if(isAjax(request)){
-            HashMap resultMap = Maps.newHashMap();
+            HashMap<String, Object> resultMap = Maps.newHashMap();
             resultMap.put("code", CommonMessage.PERMISSION_ERROR);
             resultMap.put("close", false);
             resultMap.put("msg", CommonMessage.MESSAGE.get(CommonMessage.PERMISSION_ERROR));
@@ -48,7 +48,7 @@ public class BaseException {
     public String authorizationException(HttpServletRequest request, HttpServletResponse response,Exception e) {
         //如果是Ajax请求
         if(isAjax(request)){
-            HashMap resultMap = Maps.newHashMap();
+            HashMap<String, Object> resultMap = Maps.newHashMap();
             resultMap.put("msg", CommonMessage.MESSAGE.get(CommonMessage.PERMISSION_ERROR));
             resultMap.put("code", CommonMessage.PERMISSION_ERROR);
             resultMap.put("close", false);
@@ -62,11 +62,12 @@ public class BaseException {
      * @param request HttpServletRequest
      * @return boolean
      */
-    public boolean isAjax(HttpServletRequest request) {
-        return (request.getHeader("X-Requested-With") != null && "XMLHttpRequest".equals(request.getHeader("X-Requested-With").toString()));
+    private boolean isAjax(HttpServletRequest request) {
+        return (request.getHeader("X-Requested-With") != null &&
+                "XMLHttpRequest".equals(request.getHeader("X-Requested-With")));
     }
 
-    public void returnJson(HttpServletResponse response, Object object){
+    private void returnJson(HttpServletResponse response, Object object){
         PrintWriter out = null;
         try {
             response.setCharacterEncoding("UTF-8");
