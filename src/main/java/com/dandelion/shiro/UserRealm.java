@@ -3,7 +3,7 @@ package com.dandelion.shiro;
 import com.dandelion.bean.Admin;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
-import com.dandelion.service.AdminService;
+import com.dandelion.service.impl.AdminServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ import java.util.Map;
 public class UserRealm extends AuthorizingRealm {
 
     @Resource
-    private AdminService adminService;
+    private AdminServiceImpl adminService;
 
     /**
      * 认证信息.(身份验证) : Authentication 是用来验证用户身份
