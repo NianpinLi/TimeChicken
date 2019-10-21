@@ -25,9 +25,11 @@ public interface AdminService {
     /**
      * 通过用户Id 获取权限列表
      * @param authorityParams Map
+     * @param type String
      * @return List
+     * @throws Exception Exception
      */
-    List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams, String page) throws Exception;
+    List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams, String type) throws Exception;
 
     /**
      * 通过用户登录姓名 获取用户对象
@@ -41,11 +43,13 @@ public interface AdminService {
      * 通过用户Id 获取角色列表
      * @param authorityParams Map
      * @return List
+     * @throws Exception Exception
      */
     List<Role> getRoleByAdminId(Map<String,String> authorityParams) throws Exception;
     /**
      * 查询登录人信息
      * @return Map
+     * @throws Exception Exception
      */
     Map getIndexConfig() throws Exception;
     /**
@@ -58,6 +62,7 @@ public interface AdminService {
     /**
      * 查询分配权限 回显
      * @param paramsMap Map
+     * @throws Exception Exception
      */
     void getAdminById(Map<String, String> paramsMap) throws Exception;
     /**
@@ -70,24 +75,29 @@ public interface AdminService {
     /**
      * 查询分配权限 回显
      * @param paramsMap Map
+     * @return Map
+     * @throws Exception Exception
      */
     Map empowermentRole(Map<String, String> paramsMap) throws Exception;
     /**
      * 用户分配角色
      * @param paramsMap Map
      * @return Map
+     * @throws Exception Exception
      */
     Map saveEmpowermentRole(Map<String, Object> paramsMap) throws Exception;
     /**
      * 删除用户
      * @param paramsMap Map
      * @return Map
+     * @throws Exception Exception
      */
     Map deleteAdmin(Map<String, String> paramsMap) throws Exception;
     /**
      * 用户启用/停用 修改用户状态
      * @param paramsMap Map
      * @return Map
+     * @throws Exception Exception
      */
     Map changeAdminStatus(Map<String, String> paramsMap) throws Exception;
 }
