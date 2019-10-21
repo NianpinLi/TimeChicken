@@ -10,6 +10,7 @@
 9.项目是由Druid连接池,并配置Druid监控。
 10.项目实现多数据源配置以实现读写分离。（默认操作主库，若想使用从库需在Service方法中添加@ReadOnlyConnection）配置
 11.项目实现线程池配置，如果想使用多线程只需要在异步方法上添加注解 @Async("asyncServiceExecutor")
+12.项目实现Schedule定时任务,并添加定时任务线程配置
 
 
 项目搭建

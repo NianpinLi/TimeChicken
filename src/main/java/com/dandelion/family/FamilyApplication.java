@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * FamilyApplication
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @MapperScan("com.dandelion.dao")
 @ComponentScan("com.dandelion")
 @EnableAsync
+@EnableScheduling
 public class FamilyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FamilyApplication.class, args);

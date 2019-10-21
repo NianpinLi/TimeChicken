@@ -14,7 +14,14 @@ public class DataSourceContextHolder {
      * SLAVE 从
      */
     public enum DataSourceType{
-        MASTER,SLAVE
+        /**
+         * 主
+         */
+        MASTER,
+        /**
+         * 从
+         */
+        SLAVE
     }
 
     private static final ThreadLocal<DataSourceType> CONTEXT_HOLDER = new ThreadLocal<>();
