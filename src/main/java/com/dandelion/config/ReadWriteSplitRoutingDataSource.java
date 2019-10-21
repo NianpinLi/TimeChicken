@@ -5,7 +5,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
  * className ReadWriteSplitRoutingDataSource
- * description 根据标识获取不同数据源
+ * description 根据标识获取不同数据源（读写分离配置）
  *
  * @author puyiliang
  * @date 2019/10/21 16:40

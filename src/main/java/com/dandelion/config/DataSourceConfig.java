@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 /**
  * className DataSourceConfig
- * description 数据源配置
+ * description 数据源配置 （读写分离配置）
  *
  * @author puyiliang
  * @date 2019/10/21 15:54

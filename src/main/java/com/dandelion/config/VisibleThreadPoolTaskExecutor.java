@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * className VisibleThreadPoolTaskExecutor
- * description 线程信息展示
+ * description 线程信息展示（线程池配置）
  *
  * @author puyiliang
  * @date 2019/10/18 17:31

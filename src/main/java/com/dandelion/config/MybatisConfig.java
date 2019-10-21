@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * className MybatisConfig
- * description Mybatis配置选择数据源
+ * description Mybatis配置选择数据源 （读写分离配置）
  * @author puyiliang
  * @date 2019/10/21 15:56
  */
