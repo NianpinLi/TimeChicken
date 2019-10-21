@@ -1,5 +1,10 @@
 package com.dandelion.service;
 
+import com.dandelion.bean.Admin;
+import com.dandelion.bean.Authority;
+import com.dandelion.bean.Role;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,6 +21,28 @@ public interface AdminService {
      * @throws Exception Exception
      */
     Map loginAdmin(Map<String, String> paramsMap) throws Exception;
+
+    /**
+     * 通过用户Id 获取权限列表
+     * @param authorityParams Map
+     * @return List
+     */
+    List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams, String page) throws Exception;
+
+    /**
+     * 通过用户登录姓名 获取用户对象
+     * @param adminName String
+     * @return Admin
+     * @throws Exception e
+     */
+    Admin getAdminByAdminName(String adminName) throws Exception;
+
+    /**
+     * 通过用户Id 获取角色列表
+     * @param authorityParams Map
+     * @return List
+     */
+    List<Role> getRoleByAdminId(Map<String,String> authorityParams) throws Exception;
     /**
      * 查询登录人信息
      * @return Map

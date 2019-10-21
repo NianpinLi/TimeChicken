@@ -49,7 +49,11 @@ public class ExcelUtil {
     /**
      * 存储样式
      */
-    private static final HashMap<String, CellStyle> cellStyleMap = Maps.newHashMap();
+    private static final HashMap<String, CellStyle> CELL_STYLE_MAP = Maps.newHashMap();
+
+    private static String symbol = "@";
+
+    private static String general = "General";
 
 
     /**
@@ -77,7 +81,7 @@ public class ExcelUtil {
                 throw new IllegalArgumentException("Invalid excel version");
             }
             // 开始读取数据
-            List<Map<String, Object>> sheetPOs = Lists.newArrayList();
+            List<Map<String, Object>> sheetPos = Lists.newArrayList();
             // 解析sheet
             for (int i = 0; i < wb.getNumberOfSheets(); i++) {
                 Sheet sheet = wb.getSheetAt(i);
@@ -114,9 +118,9 @@ public class ExcelUtil {
                     }
                     dataList.add(rowValue);
                 }
-                sheetPOs.add(sheetMap);
+                sheetPos.add(sheetMap);
             }
-            return sheetPOs;
+            return sheetPos;
         }catch (Exception e){
             throw e;
         }finally {
@@ -167,27 +171,27 @@ public class ExcelUtil {
     private static Workbook createWorkBook(String version, List<Map<String,Object>> excelSheets) {
         Workbook wb = createWorkbook(version);
         for (int i = 0; i < excelSheets.size(); i++) {
-            Map<String, Object> excelSheetPO = excelSheets.get(i);
-            if (ObjectUtil.isNull(excelSheetPO.get("sheetName"))) {
-                excelSheetPO.put("sheetName","sheet" + i);
+            Map<String, Object> excelSheetPo = excelSheets.get(i);
+            if (ObjectUtil.isNull(excelSheetPo.get("sheetName"))) {
+                excelSheetPo.put("sheetName","sheet" + i);
             }
             // 过滤特殊字符
-            Sheet tempSheet = wb.createSheet(WorkbookUtil.createSafeSheetName(String.valueOf(excelSheetPO.get("sheetName"))));
-            buildSheetData(wb, tempSheet, excelSheetPO);
+            Sheet tempSheet = wb.createSheet(WorkbookUtil.createSafeSheetName(String.valueOf(excelSheetPo.get("sheetName"))));
+            buildSheetData(wb, tempSheet, excelSheetPo);
         }
         return wb;
     }
 
-    private static void buildSheetData(Workbook wb, Sheet sheet, Map<String, Object> excelSheetPO) {
+    private static void buildSheetData(Workbook wb, Sheet sheet, Map<String, Object> excelSheetPo) {
         sheet.setDefaultRowHeight((short) 400);
         sheet.setDefaultColumnWidth((short) 10);
         int rowCounter = 0;
-        rowCounter = createHeader(sheet, excelSheetPO, wb, rowCounter);
-        createBody(sheet, excelSheetPO, wb, rowCounter);
+        rowCounter = createHeader(sheet, excelSheetPo, wb, rowCounter);
+        createBody(sheet, excelSheetPo, wb, rowCounter);
     }
 
-    private static void createBody(Sheet sheet, Map<String, Object> excelSheetPO, Workbook wb, int rowCounter) {
-        List<List<Object>> dataList = (List<List<Object>>)excelSheetPO.get("dataList");
+    private static void createBody(Sheet sheet, Map<String, Object> excelSheetPo, Workbook wb, int rowCounter) {
+        List<List<Object>> dataList = (List<List<Object>>)excelSheetPo.get("dataList");
         for (int i = 0; i < dataList.size(); i++) {
             List<Object> values = dataList.get(i);
             Row row = sheet.createRow(rowCounter + i);
@@ -200,8 +204,8 @@ public class ExcelUtil {
 
     }
 
-    private static int createHeader(Sheet sheet, Map<String, Object> excelSheetPO, Workbook wb, int rowCounter) {
-        String[] headers = (String[])excelSheetPO.get("head");
+    private static int createHeader(Sheet sheet, Map<String, Object> excelSheetPo, Workbook wb, int rowCounter) {
+        String[] headers = (String[])excelSheetPo.get("head");
         Row row = sheet.createRow(rowCounter);
         for (int i = 0; i < headers.length; i++) {
             Cell cellHeader = row.createCell(i);
@@ -214,8 +218,8 @@ public class ExcelUtil {
 
     private static CellStyle getStyle(String type, Workbook wb) {
 
-        if (cellStyleMap.containsKey(type)) {
-            return cellStyleMap.get(type);
+        if (CELL_STYLE_MAP.containsKey(type)) {
+            return CELL_STYLE_MAP.get(type);
         }
         // 生成一个样式
         CellStyle style = wb.createCellStyle();
@@ -235,36 +239,37 @@ public class ExcelUtil {
             font.setFontHeightInPoints((short) 12);
             style.setFont(font);
         }
-        cellStyleMap.put(type, style);
+        CELL_STYLE_MAP.put(type, style);
         return style;
     }
 
     private static Workbook createWorkbook(String version) {
         switch (version) {
-            case V2003:
-                return new HSSFWorkbook();
-            case V2007:
-                return new XSSFWorkbook();
+            case V2003:return new HSSFWorkbook();
+            case V2007:return new XSSFWorkbook();
+            default:return null;
         }
-        return null;
     }
 
     private static Object getCellValue(Workbook wb, Cell cell) {
         Object columnValue = null;
         if (cell != null) {
-            DecimalFormat df = new DecimalFormat("0");// 格式化 number
+            // 格式化 number
+            DecimalFormat df = new DecimalFormat("0");
             // String
             // 字符
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 格式化日期字符串
-            DecimalFormat nf = new DecimalFormat("0.00");// 格式化数字
+            // 格式化日期字符串
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            // 格式化数字
+            DecimalFormat nf = new DecimalFormat("0.00");
             switch (cell.getCellType()) {
                 case STRING:
                     columnValue = cell.getStringCellValue();
                     break;
                 case NUMERIC:
-                    if ("@".equals(cell.getCellStyle().getDataFormatString())) {
+                    if (symbol.equals(cell.getCellStyle().getDataFormatString())) {
                         columnValue = df.format(cell.getNumericCellValue());
-                    } else if ("General".equals(cell.getCellStyle().getDataFormatString())) {
+                    } else if (general.equals(cell.getCellStyle().getDataFormatString())) {
                         columnValue = nf.format(cell.getNumericCellValue());
                     } else {
                         columnValue = sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue()));

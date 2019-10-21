@@ -61,6 +61,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @return Map
      * @throws Exception Exception
      */
+    @Override
     public Map loginAdmin(Map<String, String> paramsMap) throws Exception{
         String adminName = paramsMap.get("adminName");
         String adminPassword = paramsMap.get("adminPassword");
@@ -84,7 +85,8 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @param authorityParams Map
      * @return List
      */
-    public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams,String page){
+    @Override
+    public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams,String page) throws Exception{
         ValueOperations<String, Object> redis = redisTemplate.opsForValue();
         String key = BaseRedisKey.ADMIN_AUTHORITY + page+ authorityParams.get("adminId");
         Object o = redis.get(key);
@@ -105,7 +107,8 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @param authorityParams Map
      * @return List
      */
-    public List<Role> getRoleByAdminId(Map<String,String> authorityParams){
+    @Override
+    public List<Role> getRoleByAdminId(Map<String,String> authorityParams) throws Exception{
         ValueOperations<String, Object> redis = redisTemplate.opsForValue();
         String key = BaseRedisKey.ADMIN_ROLE + authorityParams.get("adminId");
         Object o = redis.get(key);
@@ -127,6 +130,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @return Admin
      * @throws Exception e
      */
+    @Override
     public Admin getAdminByAdminName(String adminName) throws Exception{
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
@@ -143,6 +147,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * 查询登录人信息
      * @return Map
      */
+    @Override
     public Map getIndexConfig() throws Exception{
         Map indexConfig = Maps.newHashMap();
 
@@ -169,8 +174,12 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
         return indexConfig;
     }
 
-    /** 获取权限*/
-    private Map getAuthority(){
+    /**
+     * 获取当前登录用户的权限
+     * @return Map
+     * @throws Exception e
+     */
+    private Map getAuthority() throws Exception{
         Admin admin = (Admin) this.getSession("adminSession");
         //查询页面权限
         Map<String,String> authorityParams = Maps.newHashMap();
@@ -213,6 +222,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @return Map
      * @throws Exception Exception
      */
+    @Override
     public Map getAdminList(Map<String,String> paramsMap) throws Exception{
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
@@ -233,6 +243,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @throws Exception e
      */
     @Transactional(rollbackFor=Exception.class)
+    @Override
     public Map saveAdmin(Map<String, String> paramsMap) throws Exception{
         Admin admin = JSON.parseObject(JSON.toJSONString(paramsMap), Admin.class);
         if(ObjectUtil.isNull(admin.getAdminId())){
@@ -257,6 +268,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * 根据AdminId 查询Admin
      * @param paramsMap Map
      */
+    @Override
     public void getAdminById(Map<String, String> paramsMap) throws Exception{
         Admin admin = adminMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("adminId")));
         this.setAttribute("admin",admin);
@@ -266,6 +278,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * 查询分配权限 回显
      * @param paramsMap Map
      */
+    @Override
     public Map empowermentRole(Map<String, String> paramsMap) {
         //查询当前用户拥有的角色
         List<Integer> roleList = adminSelfMapper.selectRoleIdByAdminId(paramsMap);
@@ -306,6 +319,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @param paramsMap Map
      * @return Map
      */
+    @Override
     @Transactional(rollbackFor=Exception.class)
     public Map saveEmpowermentRole(Map<String, Object> paramsMap) {
         //删除用户所拥有所有角色
@@ -334,6 +348,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @param paramsMap Map
      * @return Map
      */
+    @Override
     @Transactional(rollbackFor=Exception.class)
     public Map changeAdminStatus(Map<String, String> paramsMap) throws Exception{
         String adminIds = paramsMap.get("inAdminId");
@@ -352,6 +367,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @param paramsMap Map
      * @return Map
      */
+    @Override
     @Transactional(rollbackFor=Exception.class)
     public Map deleteAdmin(Map<String, String> paramsMap) throws Exception{
         String adminIds = paramsMap.get("inAdminId");

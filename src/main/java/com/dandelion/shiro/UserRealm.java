@@ -3,7 +3,7 @@ package com.dandelion.shiro;
 import com.dandelion.bean.Admin;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
-import com.dandelion.service.impl.AdminServiceImpl;
+import com.dandelion.service.AdminService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ import java.util.Map;
 public class UserRealm extends AuthorizingRealm {
 
     @Resource
-    private AdminServiceImpl adminService;
+    private AdminService adminService;
 
     /**
      * 认证信息.(身份验证) : Authentication 是用来验证用户身份
@@ -73,26 +73,31 @@ public class UserRealm extends AuthorizingRealm {
      * 授权
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        Object principal = principals.oneByType(Admin.class);
-        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        if (principal instanceof Admin) {
-            Admin admin = (Admin) principal;
-            Map<String,String> authorityParams = Maps.newHashMap();
-            authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
-            List<Role> roleList = adminService.getRoleByAdminId(authorityParams);
-            for (Role role : roleList) {
-                //存入角色名称
-                authorizationInfo.addRole(role.getRoleName());
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals){
+        try {
+            Object principal = principals.oneByType(Admin.class);
+            SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+            if (principal instanceof Admin) {
+                Admin admin = (Admin) principal;
+                Map<String,String> authorityParams = Maps.newHashMap();
+                authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
+                List<Role> roleList = adminService.getRoleByAdminId(authorityParams);
+                for (Role role : roleList) {
+                    //存入角色名称
+                    authorizationInfo.addRole(role.getRoleName());
+                }
+                authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
+                List<Authority> authorityList = adminService.getAuthorityByAdminId(authorityParams,"all_");
+                for (Authority authority : authorityList) {
+                    //存入权限
+                    authorizationInfo.addStringPermission(authority.getAuthorityUrl());
+                }
             }
-            authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
-            List<Authority> authorityList = adminService.getAuthorityByAdminId(authorityParams,"all_");
-            for (Authority authority : authorityList) {
-                //存入权限
-                authorizationInfo.addStringPermission(authority.getAuthorityUrl());
-            }
+            return authorizationInfo;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return authorizationInfo;
+        return null;
     }
 
 }

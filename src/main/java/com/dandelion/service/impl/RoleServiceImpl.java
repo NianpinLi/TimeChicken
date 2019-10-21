@@ -42,6 +42,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @return Map
      * @throws Exception e
      */
+    @Override
     public Map getRoleList(Map paramsMap) throws Exception{
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
@@ -58,6 +59,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @return Map
      * @throws Exception e
      */
+    @Override
     public Map getRolePageList(Map paramsMap) throws Exception{
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
@@ -78,6 +80,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @param paramsMap Map
      * @throws Exception e
      */
+    @Override
     public void getRoleById(Map<String, String> paramsMap) throws Exception {
         Role role = roleMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("roleId")));
         this.setAttribute("role",role);
@@ -89,6 +92,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @return Map
      * @throws Exception e
      */
+    @Override
     @Transactional(rollbackFor=Exception.class)
     public Map saveRole(Map<String, String> paramsMap) throws Exception {
         Role role = JSON.parseObject(JSON.toJSONString(paramsMap), Role.class);
@@ -112,6 +116,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @return Map
      * @throws Exception e
      */
+    @Override
     @Transactional(rollbackFor=Exception.class)
     public Map deleteRole(Map<String, String> paramsMap) throws Exception {
         String roleIds = paramsMap.get("inRoleId");
@@ -130,6 +135,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @return Map
      * @throws Exception e
      */
+    @Override
     public Map empowermentAuthority(Map<String, String> paramsMap) throws Exception {
         //查询当前角色拥有的权限
         List<Integer> authorityList = roleSelfMapper.selectAuthorityIdByRoleId(paramsMap);
@@ -172,6 +178,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @return Map
      * @throws Exception e
      */
+    @Override
     @Transactional(rollbackFor=Exception.class)
     public Map saveEmpowermentAuthority(Map<String, Object> paramsMap) throws Exception {
         //删除角色所拥有的所有权限

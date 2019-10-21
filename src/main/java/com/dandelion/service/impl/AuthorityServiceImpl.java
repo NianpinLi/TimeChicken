@@ -35,6 +35,7 @@ public class AuthorityServiceImpl extends BaseService<Authority,Integer> impleme
      * @return Map
      * @throws Exception e
      */
+    @Override
     public Map getAuthorityList(Map<String, String> paramsMap) throws Exception{
         AuthorityExample example = new AuthorityExample();
         AuthorityExample.Criteria criteria = example.createCriteria();
@@ -51,6 +52,7 @@ public class AuthorityServiceImpl extends BaseService<Authority,Integer> impleme
      * @return Map
      * @throws Exception e
      */
+    @Override
     public Map getAuthorityPageList(Map<String,String> paramsMap) throws Exception{
         //查询页面权限
         paramsMap.put("equalsToAuthorityType","1");
@@ -73,6 +75,7 @@ public class AuthorityServiceImpl extends BaseService<Authority,Integer> impleme
      * @return Map
      * @throws Exception e
      */
+    @Override
     @Transactional(rollbackFor=Exception.class)
     public Map saveAuthority(Map<String, String> paramsMap){
         try {
@@ -118,6 +121,7 @@ public class AuthorityServiceImpl extends BaseService<Authority,Integer> impleme
      * @return Map
      * @throws Exception e
      */
+    @Override
     @Transactional(rollbackFor=Exception.class)
     public Map deleteAuthority(Map<String, String> paramsMap) throws Exception{
         authorityMapper.deleteByPrimaryKey(Integer.parseInt(paramsMap.get("equalToAuthorityId")));
@@ -129,6 +133,7 @@ public class AuthorityServiceImpl extends BaseService<Authority,Integer> impleme
      * @param paramsMap Map
      * @throws Exception e
      */
+    @Override
     public void getAuthorityById(Map<String, String> paramsMap)  throws Exception{
         Authority authority = authorityMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("authorityId")));
         this.setAttribute("authority",authority);
