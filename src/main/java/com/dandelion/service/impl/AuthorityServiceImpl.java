@@ -22,7 +22,6 @@ import java.util.Map;
  * @author    puyiliang
  *  权限Service
  */
-@SuppressWarnings({"ALL", "AlibabaTransactionMustHaveRollback"})
 @Service
 public class AuthorityServiceImpl extends BaseService<Authority,Integer> implements AuthorityService{
 
