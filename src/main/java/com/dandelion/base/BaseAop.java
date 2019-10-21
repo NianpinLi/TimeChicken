@@ -1,6 +1,8 @@
 package com.dandelion.base;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dandelion.annotation.ReadOnlyConnection;
+import com.dandelion.dao.DataSourceContextHolder;
 import com.dandelion.utils.DateUtil;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,9 @@ public class BaseAop {
      * Controller方法切点
      */
     @Pointcut("execution(* com.dandelion.controller..*.*(..))")
+
     public void controllerException() {}
+
 
     /**
      * 环绕通知：
@@ -60,5 +64,24 @@ public class BaseAop {
         return null;
     }
 
+    /**
+     * 从库方法AOP 如果Service方法中添加注解 @ReadOnlyConnection 查询走从库
+     * @param proceedingJoinPoint ProceedingJoinPoint
+     * @param readOnlyConnection ReadOnlyConnection
+     * @return Object
+     * @throws Throwable e
+     */
+    @Around("@annotation(readOnlyConnection)")
+    public Object proceed(ProceedingJoinPoint proceedingJoinPoint,ReadOnlyConnection readOnlyConnection) throws Throwable {
+        try {
+            log.info("从库查询，查询方法{}",proceedingJoinPoint.getSignature());
+            DataSourceContextHolder.setDataSourceType(DataSourceContextHolder.DataSourceType.SLAVE);
+            Object result = proceedingJoinPoint.proceed();
+            return result;
+        }finally {
+            DataSourceContextHolder.clearDataSourceType();
+            log.info("断开从库查询");
+        }
+    }
 
 }

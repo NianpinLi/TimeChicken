@@ -1,6 +1,7 @@
 package com.dandelion.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseService;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.AuthorityExample;
@@ -36,6 +37,7 @@ public class AuthorityServiceImpl extends BaseService<Authority,Integer> impleme
      * @throws Exception e
      */
     @Override
+    @ReadOnlyConnection
     public Map getAuthorityList(Map<String, String> paramsMap) throws Exception{
         AuthorityExample example = new AuthorityExample();
         AuthorityExample.Criteria criteria = example.createCriteria();
@@ -53,6 +55,7 @@ public class AuthorityServiceImpl extends BaseService<Authority,Integer> impleme
      * @throws Exception e
      */
     @Override
+    @ReadOnlyConnection
     public Map getAuthorityPageList(Map<String,String> paramsMap) throws Exception{
         //查询页面权限
         paramsMap.put("equalsToAuthorityType","1");

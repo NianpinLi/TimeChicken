@@ -1,6 +1,7 @@
 package com.dandelion.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseRedisKey;
 import com.dandelion.base.BaseService;
 import com.dandelion.base.CommonMessage;
@@ -108,6 +109,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @return List
      */
     @Override
+    @ReadOnlyConnection
     public List<Role> getRoleByAdminId(Map<String,String> authorityParams) throws Exception{
         ValueOperations<String, Object> redis = redisTemplate.opsForValue();
         String key = BaseRedisKey.ADMIN_ROLE + authorityParams.get("adminId");
@@ -131,6 +133,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @throws Exception e
      */
     @Override
+    @ReadOnlyConnection
     public Admin getAdminByAdminName(String adminName) throws Exception{
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
@@ -148,6 +151,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @return Map
      */
     @Override
+    @ReadOnlyConnection
     public Map getIndexConfig() throws Exception{
         Map indexConfig = Maps.newHashMap();
 
@@ -223,6 +227,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @throws Exception Exception
      */
     @Override
+    @ReadOnlyConnection
     public Map getAdminList(Map<String,String> paramsMap) throws Exception{
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
@@ -269,6 +274,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @param paramsMap Map
      */
     @Override
+    @ReadOnlyConnection
     public void getAdminById(Map<String, String> paramsMap) throws Exception{
         Admin admin = adminMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("adminId")));
         this.setAttribute("admin",admin);
@@ -279,6 +285,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @param paramsMap Map
      */
     @Override
+    @ReadOnlyConnection
     public Map empowermentRole(Map<String, String> paramsMap) {
         //查询当前用户拥有的角色
         List<Integer> roleList = adminSelfMapper.selectRoleIdByAdminId(paramsMap);

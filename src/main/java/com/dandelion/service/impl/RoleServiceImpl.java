@@ -1,6 +1,7 @@
 package com.dandelion.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseService;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
@@ -43,6 +44,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @throws Exception e
      */
     @Override
+    @ReadOnlyConnection
     public Map getRoleList(Map paramsMap) throws Exception{
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
@@ -60,6 +62,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @throws Exception e
      */
     @Override
+    @ReadOnlyConnection
     public Map getRolePageList(Map paramsMap) throws Exception{
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
@@ -81,6 +84,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @throws Exception e
      */
     @Override
+    @ReadOnlyConnection
     public void getRoleById(Map<String, String> paramsMap) throws Exception {
         Role role = roleMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("roleId")));
         this.setAttribute("role",role);
@@ -136,6 +140,7 @@ public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleS
      * @throws Exception e
      */
     @Override
+    @ReadOnlyConnection
     public Map empowermentAuthority(Map<String, String> paramsMap) throws Exception {
         //查询当前角色拥有的权限
         List<Integer> authorityList = roleSelfMapper.selectAuthorityIdByRoleId(paramsMap);
