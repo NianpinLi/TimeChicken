@@ -6,8 +6,9 @@ package com.dandelion.dao.generator;
 
 import com.dandelion.bean.Role;
 import com.dandelion.bean.RoleExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RoleMapper {
     /**

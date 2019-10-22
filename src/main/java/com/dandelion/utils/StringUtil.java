@@ -2,10 +2,7 @@ package com.dandelion.utils;
 
 
 import com.alibaba.fastjson.JSON;
-import org.apache.commons.codec.binary.Hex;
 
-import java.security.MessageDigest;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
