@@ -20,8 +20,8 @@ public class BaseScheduled {
     @Scheduled(fixedDelay = 1000)
     public void printOne(){
         try{
-            //睡眠5秒
-            Thread.sleep(5000);
+            //睡眠半小时
+            Thread.sleep(60000 * 30);
             //打印当前线程名字
             log.info("定时任务1"+Thread.currentThread().getName());
 
@@ -36,8 +36,8 @@ public class BaseScheduled {
     @Scheduled(fixedDelay = 1000)
     public void printTwo(){
         try{
-            //睡眠5秒
-            Thread.sleep(5000);
+            //睡眠半小时
+            Thread.sleep(60000 * 30);
             //打印当前线程名字
             log.info("定时任务2"+Thread.currentThread().getName());
 

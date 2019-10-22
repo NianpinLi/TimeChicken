@@ -4,68 +4,60 @@
  */
 package com.dandelion.dao.generator;
 
-import com.dandelion.bean.Role;
-import com.dandelion.bean.RoleExample;
+import com.dandelion.bean.WorkOrderType;
+import com.dandelion.bean.WorkOrderTypeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface RoleMapper {
+public interface WorkOrderTypeMapper {
     /**
      *自动生成方法
      *@param example generator
      *@return long
      */
-    long countByExample(RoleExample example);
+    long countByExample(WorkOrderTypeExample example);
 
     /**
      *自动生成方法
      *@param example generator
      *@return int
      */
-    int deleteByExample(RoleExample example);
+    int deleteByExample(WorkOrderTypeExample example);
 
     /**
      *自动生成方法
-     *@param roleId generator
+     *@param typeId generator
      *@return int
      */
-    int deleteByPrimaryKey(Integer roleId);
-
-    /**
-     *自动生成方法
-     *@param record generator
-     *@return int
-     */
-    int insert(Role record);
+    int deleteByPrimaryKey(Integer typeId);
 
     /**
      *自动生成方法
      *@param record generator
      *@return int
      */
-    int insertSelective(Role record);
+    int insert(WorkOrderType record);
+
+    /**
+     *自动生成方法
+     *@param record generator
+     *@return int
+     */
+    int insertSelective(WorkOrderType record);
 
     /**
      *自动生成方法
      *@param example generator
-     *@return java.util.List<com.dandelion.bean.Role>
+     *@return java.util.List<com.dandelion.bean.WorkOrderType>
      */
-    List<Role> selectByExample(RoleExample example);
+    List<WorkOrderType> selectByExample(WorkOrderTypeExample example);
 
     /**
      *自动生成方法
-     *@param roleId generator
-     *@return com.dandelion.bean.Role
+     *@param typeId generator
+     *@return com.dandelion.bean.WorkOrderType
      */
-    Role selectByPrimaryKey(Integer roleId);
-
-    /**
-     *自动生成方法
-     *@param record generator
-     *@param example generator
-     *@return int
-     */
-    int updateByExampleSelective(@Param("record") Role record, @Param("example") RoleExample example);
+    WorkOrderType selectByPrimaryKey(Integer typeId);
 
     /**
      *自动生成方法
@@ -73,19 +65,27 @@ public interface RoleMapper {
      *@param example generator
      *@return int
      */
-    int updateByExample(@Param("record") Role record, @Param("example") RoleExample example);
+    int updateByExampleSelective(@Param("record") WorkOrderType record, @Param("example") WorkOrderTypeExample example);
+
+    /**
+     *自动生成方法
+     *@param record generator
+     *@param example generator
+     *@return int
+     */
+    int updateByExample(@Param("record") WorkOrderType record, @Param("example") WorkOrderTypeExample example);
 
     /**
      *自动生成方法
      *@param record generator
      *@return int
      */
-    int updateByPrimaryKeySelective(Role record);
+    int updateByPrimaryKeySelective(WorkOrderType record);
 
     /**
      *自动生成方法
      *@param record generator
      *@return int
      */
-    int updateByPrimaryKey(Role record);
+    int updateByPrimaryKey(WorkOrderType record);
 }

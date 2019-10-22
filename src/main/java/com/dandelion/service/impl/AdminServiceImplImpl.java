@@ -3,7 +3,7 @@ package com.dandelion.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseRedisKey;
-import com.dandelion.base.BaseService;
+import com.dandelion.base.BaseServiceImpl;
 import com.dandelion.base.CommonMessage;
 import com.dandelion.bean.Admin;
 import com.dandelion.bean.AdminExample;
@@ -42,7 +42,7 @@ import java.util.Map;
  *  AdminService
  */
 @Service
-public class AdminServiceImpl extends BaseService<Admin, Integer> implements AdminService{
+public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implements AdminService{
 
     @Resource
     private AdminMapper adminMapper;
@@ -87,6 +87,7 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @return List
      */
     @Override
+    @ReadOnlyConnection
     public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams,String page) throws Exception{
         ValueOperations<String, Object> redis = redisTemplate.opsForValue();
         String key = BaseRedisKey.ADMIN_AUTHORITY + page+ authorityParams.get("adminId");
@@ -151,7 +152,6 @@ public class AdminServiceImpl extends BaseService<Admin, Integer> implements Adm
      * @return Map
      */
     @Override
-    @ReadOnlyConnection
     public Map getIndexConfig() throws Exception{
         Map indexConfig = Maps.newHashMap();
 

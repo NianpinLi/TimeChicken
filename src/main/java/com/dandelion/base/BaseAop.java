@@ -7,6 +7,7 @@ import com.dandelion.utils.DateUtil;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.ExtendedServletRequestDataBinder;
 
 import javax.servlet.http.HttpServletResponseWrapper;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -74,13 +76,15 @@ public class BaseAop {
     @Around("@annotation(readOnlyConnection)")
     public Object proceed(ProceedingJoinPoint proceedingJoinPoint,ReadOnlyConnection readOnlyConnection) throws Throwable {
         try {
-            log.info("从库查询，查询方法{}",proceedingJoinPoint.getSignature());
+            Signature signature = proceedingJoinPoint.getSignature();
+            String[] noLogMethod = {"getRoleByAdminId","getAuthorityByAdminId"};
+            if (!Arrays.asList(noLogMethod).contains(signature.getName())){
+                log.info("从库查询，查询方法:{}",signature);
+            }
             DataSourceContextHolder.setDataSourceType(DataSourceContextHolder.DataSourceType.SLAVE);
-            Object result = proceedingJoinPoint.proceed();
-            return result;
+            return proceedingJoinPoint.proceed();
         }finally {
             DataSourceContextHolder.clearDataSourceType();
-            log.info("断开从库查询");
         }
     }
 

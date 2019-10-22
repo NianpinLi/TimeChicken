@@ -25,7 +25,7 @@ import java.util.Map;
  * @author    puyiliang
  *  公共service
  */
-public class BaseService<T, PK extends Serializable> {
+public class BaseServiceImpl<T, PK extends Serializable> {
 
     private String fieldSort = "field";
     private String orderSort = "order";

@@ -2,7 +2,7 @@ package com.dandelion.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.dandelion.annotation.ReadOnlyConnection;
-import com.dandelion.base.BaseService;
+import com.dandelion.base.BaseServiceImpl;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
 import com.dandelion.bean.RoleExample;
@@ -29,7 +29,7 @@ import java.util.Map;
  *  角色管理Service
  */
 @Service
-public class RoleServiceImpl extends BaseService<Role, Integer> implements RoleService{
+public class RoleServiceImplImpl extends BaseServiceImpl<Role, Integer> implements RoleService{
 
     @Resource
     private RoleMapper roleMapper;

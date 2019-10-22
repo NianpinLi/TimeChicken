@@ -2,7 +2,7 @@ package com.dandelion.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.dandelion.annotation.ReadOnlyConnection;
-import com.dandelion.base.BaseService;
+import com.dandelion.base.BaseServiceImpl;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.AuthorityExample;
 import com.dandelion.dao.generator.AuthorityMapper;
@@ -24,7 +24,7 @@ import java.util.Map;
  *  权限Service
  */
 @Service
-public class AuthorityServiceImpl extends BaseService<Authority,Integer> implements AuthorityService{
+public class AuthorityServiceImplImpl extends BaseServiceImpl<Authority,Integer> implements AuthorityService{
 
     @Resource
     private AuthorityMapper authorityMapper;

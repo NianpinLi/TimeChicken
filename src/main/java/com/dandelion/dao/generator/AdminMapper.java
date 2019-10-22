@@ -1,14 +1,13 @@
 /**
  *@author generator
- *@date 2019-10-16
+ *@date 2019-10-22
  */
 package com.dandelion.dao.generator;
 
 import com.dandelion.bean.Admin;
 import com.dandelion.bean.AdminExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface AdminMapper {
     /**

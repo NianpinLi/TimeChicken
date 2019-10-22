@@ -1,6 +1,6 @@
 /**
  *@author generator
- *@date 2019-10-16
+ *@date 2019-10-22
  */
 package com.dandelion.bean;
 
@@ -119,7 +119,7 @@ public class RoleExample {
     }
 
     /**
-     * role 2019-10-16
+     * role 2019-10-22
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -694,7 +694,7 @@ public class RoleExample {
     }
 
     /**
-     * role 2019-10-16
+     * role 2019-10-22
      */
     public static class Criterion {
         private String condition;
