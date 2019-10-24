@@ -19,7 +19,7 @@ public class GeneratorUtil {
     public static void main(String[] args) throws Exception{
         List<String> warnings = new ArrayList<>();
         boolean overwrite = true;
-        String filepath=System.getProperty("user.dir")+"/src/main/resources/mybatis-generator.xml";
+        String filepath=System.getProperty("user.dir")+"/src/main/resources/generatorConfig.xml";
         File configFile = new File(filepath);
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);

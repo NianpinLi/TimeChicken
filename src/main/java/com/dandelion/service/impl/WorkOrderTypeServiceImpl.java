@@ -1,7 +1,7 @@
 package com.dandelion.service.impl;
 
+import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseServiceImpl;
-import com.dandelion.bean.Admin;
 import com.dandelion.bean.WorkOrderType;
 import com.dandelion.bean.WorkOrderTypeExample;
 import com.dandelion.dao.generator.WorkOrderTypeMapper;
@@ -26,7 +26,14 @@ public class WorkOrderTypeServiceImpl extends BaseServiceImpl<WorkOrderType,Inte
     @Resource
     private WorkOrderTypeMapper workOrderTypeMapper;
 
+    /**
+     * 查询工单类型列表
+     * @param params Map
+     * @return Map
+     * @throws Exception e
+     */
     @Override
+    @ReadOnlyConnection
     public Map getTypeList(Map<String, String> params) throws Exception {
         WorkOrderTypeExample example = new WorkOrderTypeExample();
         WorkOrderTypeExample.Criteria criteria = example.createCriteria();
@@ -39,4 +46,21 @@ public class WorkOrderTypeServiceImpl extends BaseServiceImpl<WorkOrderType,Inte
         long total = pageInfo.getTotal();
         return pageResult(list, total);
     }
+
+    /**
+     * 新增/修改工单
+     * @param typeName String
+     * @param procedureName String[]
+     * @param procedureType String[]
+     * @param procedureRoleId String[]
+     * @return Map
+     * @throws Exception e
+     */
+    @Override
+    public Map saveType(String typeName, String[] procedureName, String[] procedureType, String[] procedureRoleId) throws Exception {
+        System.out.println(procedureName);
+        System.out.println(typeName);
+        return null;
+    }
+
 }

@@ -15,4 +15,15 @@ public interface WorkOrderTypeService {
      * @throws Exception e
      */
     Map getTypeList(Map<String, String> params) throws Exception;
+
+    /**
+     * 新增/修改工单
+     * @param typeName String
+     * @param procedureName String[]
+     * @param procedureType String[]
+     * @param procedureRoleId String[]
+     * @return Map
+     * @throws Exception e
+     */
+    Map saveType(String typeName, String[] procedureName, String[] procedureType, String[] procedureRoleId) throws Exception;
 }

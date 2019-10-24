@@ -62,7 +62,7 @@ public class RoleController extends BaseController{
      * @param map Map
      * @return Map
      */
-    @RequiresPermissions("/role/addRole")
+    @RequiresPermissions(value = {"/role/addRole","/workOrder/addType","/workOrder/updateType"}, logical = Logical.OR)
     @RequestMapping(value = "getRolePageList", method = RequestMethod.GET)
     public @ResponseBody Map getRolePageList(@RequestParam Map map) throws Exception{
         return roleService.getRolePageList(map);

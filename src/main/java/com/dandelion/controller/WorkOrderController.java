@@ -70,7 +70,8 @@ public class WorkOrderController extends BaseController{
     @RequiresPermissions(value = {"/workOrder/addType","/workOrder/updateType"},logical= Logical.OR)
     @RequestMapping(value = "saveType", method = RequestMethod.POST)
     @ResponseBody
-    public Map saveType(@RequestParam Map<String,String> params) throws Exception{
-        return workOrderTypeService.getTypeList(params);
+    public Map saveType(@RequestParam String typeName,@RequestParam String[] procedureName,
+                        @RequestParam String[] procedureType, @RequestParam String[] procedureRoleId) throws Exception{
+        return workOrderTypeService.saveType(typeName,procedureName,procedureType,procedureRoleId);
     }
 }

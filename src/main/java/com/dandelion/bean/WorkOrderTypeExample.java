@@ -1,6 +1,6 @@
 /**
  *@author generator
- *@date 2019-10-22
+ *@date 2019-10-24
  */
 package com.dandelion.bean;
 
@@ -119,7 +119,7 @@ public class WorkOrderTypeExample {
     }
 
     /**
-     * work_order_type 2019-10-22
+     * work_order_type 2019-10-24
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -634,7 +634,7 @@ public class WorkOrderTypeExample {
     }
 
     /**
-     * work_order_type 2019-10-22
+     * work_order_type 2019-10-24
      */
     public static class Criterion {
         private String condition;
