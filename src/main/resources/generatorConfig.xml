@@ -21,6 +21,14 @@
         <!-- 配置生成pojo的toString()方法的插件，mybatis支持很多插件，这些插件都在 org.mybatis.generator.plugins包下 -->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 
+        <plugin type="com.dandelion.plugins.SelectOneByExamplePlugin" />
+        <plugin type="com.dandelion.plugins.ExampleEnhancedPlugin" />
+        <plugin type="com.dandelion.plugins.ExampleTargetPlugin" />
+        <plugin type="com.dandelion.plugins.LogicalDeletePlugin" />
+        <plugin type="com.dandelion.plugins.ModelBuilderPlugin" />
+        <plugin type="com.dandelion.plugins.ModelColumnPlugin" />
+        <plugin type="com.dandelion.plugins.UpsertPlugin" />
+
         <!-- 重命名生成的 Example和其中的 Criteria-->
         <!--<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin" >-->
             <!--<property name="searchString" value="Example$" />-->
@@ -35,7 +43,7 @@
             <!--<property name="suppressDate" value="true"/>-->
         <!--</commentGenerator>-->
         <!-- 自定义注释类 这里的type里写的是你的实现类的类全路径 -->
-        <commentGenerator type="com.dandelion.utils.MyCommonGenerator"></commentGenerator>
+        <!--<commentGenerator type="com.dandelion.utils.MyCommonGenerator"></commentGenerator>-->
 
         <!-- 配置数据源 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
