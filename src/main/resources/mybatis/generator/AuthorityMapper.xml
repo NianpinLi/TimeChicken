@@ -78,7 +78,7 @@
     authority_level, parent_authority_id, authority_status, authority_type, create_id, 
     create_name, create_time
   </sql>
-  <select id="selectByExample" parameterType="com.dandelion.bean.AuthorityExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.dandelion.bean.example.AuthorityExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -102,7 +102,7 @@
     delete from authority
     where authority_id = #{authorityId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dandelion.bean.AuthorityExample">
+  <delete id="deleteByExample" parameterType="com.dandelion.bean.example.AuthorityExample">
     delete from authority
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -199,7 +199,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dandelion.bean.AuthorityExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.dandelion.bean.example.AuthorityExample" resultType="java.lang.Long">
     select count(*) from authority
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -321,4 +321,21 @@
       create_time = #{createTime,jdbcType=VARCHAR}
     where authority_id = #{authorityId,jdbcType=INTEGER}
   </update>
+  <select id="selectOneByExample" parameterType="com.dandelion.bean.example.AuthorityExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+      这个节点为代码生成工具生成，请不要修改!
+      @author generator
+    -->
+    select
+    <include refid="Base_Column_List" />
+    from authority
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    limit 1
+  </select>
 </mapper>

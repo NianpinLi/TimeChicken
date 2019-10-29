@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseServiceImpl;
 import com.dandelion.bean.Authority;
-import com.dandelion.bean.AuthorityExample;
+import com.dandelion.bean.example.AuthorityExample;
 import com.dandelion.dao.generator.AuthorityMapper;
 import com.dandelion.service.AuthorityService;
 import com.dandelion.utils.DateUtil;

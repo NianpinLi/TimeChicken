@@ -1,8 +1,8 @@
 /**
  *@author generator
- *@date 2019-10-22
+ *@date 2019-10-29
  */
-package com.dandelion.bean;
+package com.dandelion.bean.example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +105,7 @@ public class AuthorityExample {
      *@return Criteria
      */
     protected Criteria createCriteriaInternal() {
-        Criteria criteria = new Criteria();
+        Criteria criteria = new Criteria(this);
         return criteria;
     }
 
@@ -119,7 +119,38 @@ public class AuthorityExample {
     }
 
     /**
-     * authority 2019-10-22
+     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+     * This method corresponds to the database table authority
+     *
+     * @mbg.generated
+     * @author generator
+     */
+    public AuthorityExample orderBy(String orderByClause) {
+        this.setOrderByClause(orderByClause);
+        return this;
+    }
+
+    /**
+     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+     * This method corresponds to the database table authority
+     *
+     * @mbg.generated
+     * @author generator
+     */
+    public AuthorityExample orderBy(String ... orderByClauses) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < orderByClauses.length; i++) {
+            sb.append(orderByClauses[i]);
+            if (i < orderByClauses.length - 1) {
+                sb.append(" , ");
+            }
+        }
+        this.setOrderByClause(sb.toString());
+        return this;
+    }
+
+    /**
+     * authority 2019-10-29
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -937,14 +968,59 @@ public class AuthorityExample {
      * authority
      */
     public static class Criteria extends GeneratedCriteria {
+        private AuthorityExample example;
 
-        protected Criteria() {
+        protected Criteria(AuthorityExample example) {
             super();
+            this.example = example;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public AuthorityExample example() {
+            return this.example;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Criteria andIf(boolean ifAdd, ICriteriaAdd add) {
+            if (ifAdd) {
+                add.add(this);
+            }
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的接口(请勿删除).
+         * This class corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public interface ICriteriaAdd {
+            /**
+             * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+             * This method corresponds to the database table authority
+             *
+             * @mbg.generated
+             * @author generator
+             */
+            Criteria add(Criteria add);
         }
     }
 
     /**
-     * authority 2019-10-22
+     * authority 2019-10-29
      */
     public static class Criterion {
         private String condition;

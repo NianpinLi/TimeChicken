@@ -1,11 +1,11 @@
 /**
  *@author generator
- *@date 2019-10-22
+ *@date 2019-10-29
  */
 package com.dandelion.dao.generator;
 
 import com.dandelion.bean.Admin;
-import com.dandelion.bean.AdminExample;
+import com.dandelion.bean.example.AdminExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -88,4 +88,13 @@ public interface AdminMapper {
      *@return int
      */
     int updateByPrimaryKey(Admin record);
+
+    /**
+     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+     * This method corresponds to the database table admin
+     *
+     * @mbg.generated
+     * @author generator
+     */
+    Admin selectOneByExample(AdminExample example);
 }

@@ -5,7 +5,7 @@ import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseServiceImpl;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
-import com.dandelion.bean.RoleExample;
+import com.dandelion.bean.example.RoleExample;
 import com.dandelion.dao.generator.RoleMapper;
 import com.dandelion.dao.self.RoleSelfMapper;
 import com.dandelion.service.RoleService;

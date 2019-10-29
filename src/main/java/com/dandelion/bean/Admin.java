@@ -1,6 +1,6 @@
 /**
  *@author generator
- *@date 2019-10-22
+ *@date 2019-10-29
  */
 package com.dandelion.bean;
 
@@ -201,5 +201,223 @@ public class Admin implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * 这是Mybatis Generator拓展插件生成的类(请勿删除).
+     * This class corresponds to the database table admin
+     *
+     * @mbg.generated
+     * @author generator
+     */
+    public static class Builder {
+        /**
+         * 这是Mybatis Generator拓展插件生成的属性(请勿删除).
+         * This field corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        private Admin obj;
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder() {
+            this.obj = new Admin();
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder adminId(Integer adminId) {
+            obj.adminId = adminId;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder adminName(String adminName) {
+            obj.adminName = adminName;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder adminPassword(String adminPassword) {
+            obj.adminPassword = adminPassword;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder adminStatus(Byte adminStatus) {
+            obj.adminStatus = adminStatus;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder realName(String realName) {
+            obj.realName = realName;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder createId(Integer createId) {
+            obj.createId = createId;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder createName(String createName) {
+            obj.createName = createName;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder createTime(String createTime) {
+            obj.createTime = createTime;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Admin build() {
+            return this.obj;
+        }
+    }
+
+    /**
+     * 这是Mybatis Generator拓展插件生成的枚举(请勿删除).
+     * This class corresponds to the database table admin
+     *
+     * @mbg.generated
+     * @author generator
+     */
+    public enum Column {
+        adminId("admin_id"),
+        adminName("admin_name"),
+        adminPassword("admin_password"),
+        adminStatus("admin_status"),
+        realName("real_name"),
+        createId("create_id"),
+        createName("create_name"),
+        createTime("create_time");
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的属性(请勿删除).
+         * This field corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        private final String column;
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public String value() {
+            return this.column;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public String getValue() {
+            return this.column;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        Column(String column) {
+            this.column = column;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table admin
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public String asc() {
+            return this.column + " ASC";
+        }
     }
 }

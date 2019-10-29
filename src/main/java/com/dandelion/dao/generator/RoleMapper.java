@@ -1,11 +1,11 @@
 /**
  *@author generator
- *@date 2019-10-22
+ *@date 2019-10-29
  */
 package com.dandelion.dao.generator;
 
 import com.dandelion.bean.Role;
-import com.dandelion.bean.RoleExample;
+import com.dandelion.bean.example.RoleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -88,4 +88,13 @@ public interface RoleMapper {
      *@return int
      */
     int updateByPrimaryKey(Role record);
+
+    /**
+     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+     * This method corresponds to the database table role
+     *
+     * @mbg.generated
+     * @author generator
+     */
+    Role selectOneByExample(RoleExample example);
 }

@@ -3,7 +3,7 @@ package com.dandelion.service.impl;
 import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseServiceImpl;
 import com.dandelion.bean.WorkOrderType;
-import com.dandelion.bean.WorkOrderTypeExample;
+import com.dandelion.bean.example.WorkOrderTypeExample;
 import com.dandelion.dao.generator.WorkOrderTypeMapper;
 import com.dandelion.service.WorkOrderTypeService;
 import com.github.pagehelper.PageInfo;

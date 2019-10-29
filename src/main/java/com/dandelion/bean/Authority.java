@@ -1,6 +1,6 @@
 /**
  *@author generator
- *@date 2019-10-22
+ *@date 2019-10-29
  */
 package com.dandelion.bean;
 
@@ -289,5 +289,275 @@ public class Authority implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * 这是Mybatis Generator拓展插件生成的类(请勿删除).
+     * This class corresponds to the database table authority
+     *
+     * @mbg.generated
+     * @author generator
+     */
+    public static class Builder {
+        /**
+         * 这是Mybatis Generator拓展插件生成的属性(请勿删除).
+         * This field corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        private Authority obj;
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder() {
+            this.obj = new Authority();
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder authorityId(Integer authorityId) {
+            obj.authorityId = authorityId;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder authorityName(String authorityName) {
+            obj.authorityName = authorityName;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder authorityUrl(String authorityUrl) {
+            obj.authorityUrl = authorityUrl;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder authorityIcon(String authorityIcon) {
+            obj.authorityIcon = authorityIcon;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder authorityIdentifier(Integer authorityIdentifier) {
+            obj.authorityIdentifier = authorityIdentifier;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder authorityLevel(Integer authorityLevel) {
+            obj.authorityLevel = authorityLevel;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder parentAuthorityId(Integer parentAuthorityId) {
+            obj.parentAuthorityId = parentAuthorityId;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder authorityStatus(Integer authorityStatus) {
+            obj.authorityStatus = authorityStatus;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder authorityType(Integer authorityType) {
+            obj.authorityType = authorityType;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder createId(Integer createId) {
+            obj.createId = createId;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder createName(String createName) {
+            obj.createName = createName;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Builder createTime(String createTime) {
+            obj.createTime = createTime;
+            return this;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public Authority build() {
+            return this.obj;
+        }
+    }
+
+    /**
+     * 这是Mybatis Generator拓展插件生成的枚举(请勿删除).
+     * This class corresponds to the database table authority
+     *
+     * @mbg.generated
+     * @author generator
+     */
+    public enum Column {
+        authorityId("authority_id"),
+        authorityName("authority_name"),
+        authorityUrl("authority_url"),
+        authorityIcon("authority_icon"),
+        authorityIdentifier("authority_identifier"),
+        authorityLevel("authority_level"),
+        parentAuthorityId("parent_authority_id"),
+        authorityStatus("authority_status"),
+        authorityType("authority_type"),
+        createId("create_id"),
+        createName("create_name"),
+        createTime("create_time");
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的属性(请勿删除).
+         * This field corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        private final String column;
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public String value() {
+            return this.column;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public String getValue() {
+            return this.column;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        Column(String column) {
+            this.column = column;
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        /**
+         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+         * This method corresponds to the database table authority
+         *
+         * @mbg.generated
+         * @author generator
+         */
+        public String asc() {
+            return this.column + " ASC";
+        }
     }
 }

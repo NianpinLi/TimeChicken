@@ -23,7 +23,10 @@
 
         <plugin type="com.dandelion.plugins.SelectOneByExamplePlugin" />
         <plugin type="com.dandelion.plugins.ExampleEnhancedPlugin" />
-        <plugin type="com.dandelion.plugins.ExampleTargetPlugin" />
+        <plugin type="com.dandelion.plugins.ExampleTargetPlugin">
+            <!-- 修改Example类生成到目标包下 -->
+            <property name="targetPackage" value="com.dandelion.bean.example"/>
+        </plugin>
         <plugin type="com.dandelion.plugins.LogicalDeletePlugin" />
         <plugin type="com.dandelion.plugins.ModelBuilderPlugin" />
         <plugin type="com.dandelion.plugins.ModelColumnPlugin" />
@@ -43,7 +46,7 @@
             <!--<property name="suppressDate" value="true"/>-->
         <!--</commentGenerator>-->
         <!-- 自定义注释类 这里的type里写的是你的实现类的类全路径 -->
-        <!--<commentGenerator type="com.dandelion.utils.MyCommonGenerator"></commentGenerator>-->
+        <commentGenerator type="com.dandelion.utils.MyCommonGenerator"></commentGenerator>
 
         <!-- 配置数据源 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
@@ -75,9 +78,9 @@
         </javaClientGenerator>
 
         <!-- 指定我们要操作的表明和生成的javabean类名 -->
-        <!--<table tableName="admin" domainObjectName="Admin" ></table>-->
-        <!--<table tableName="role" domainObjectName="Role" ></table>-->
-        <!--<table tableName="authority" domainObjectName="Authority" ></table>-->
+        <table tableName="admin" domainObjectName="Admin" ></table>
+        <table tableName="role" domainObjectName="Role" ></table>
+        <table tableName="authority" domainObjectName="Authority" ></table>
         <table tableName="work_order_type" domainObjectName="WorkOrderType" ></table>
     </context>
 

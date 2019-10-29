@@ -1,11 +1,11 @@
 /**
  *@author generator
- *@date 2019-10-22
+ *@date 2019-10-29
  */
 package com.dandelion.dao.generator;
 
 import com.dandelion.bean.Authority;
-import com.dandelion.bean.AuthorityExample;
+import com.dandelion.bean.example.AuthorityExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -88,4 +88,13 @@ public interface AuthorityMapper {
      *@return int
      */
     int updateByPrimaryKey(Authority record);
+
+    /**
+     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
+     * This method corresponds to the database table authority
+     *
+     * @mbg.generated
+     * @author generator
+     */
+    Authority selectOneByExample(AuthorityExample example);
 }

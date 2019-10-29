@@ -73,7 +73,7 @@
     role_id, role_name, role_status, role_describe, parent_role_id, create_id, create_name, 
     create_time
   </sql>
-  <select id="selectByExample" parameterType="com.dandelion.bean.RoleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.dandelion.bean.example.RoleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -97,7 +97,7 @@
     delete from role
     where role_id = #{roleId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dandelion.bean.RoleExample">
+  <delete id="deleteByExample" parameterType="com.dandelion.bean.example.RoleExample">
     delete from role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -166,7 +166,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dandelion.bean.RoleExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.dandelion.bean.example.RoleExample" resultType="java.lang.Long">
     select count(*) from role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -256,4 +256,21 @@
       create_time = #{createTime,jdbcType=VARCHAR}
     where role_id = #{roleId,jdbcType=INTEGER}
   </update>
+  <select id="selectOneByExample" parameterType="com.dandelion.bean.example.RoleExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+      这个节点为代码生成工具生成，请不要修改!
+      @author generator
+    -->
+    select
+    <include refid="Base_Column_List" />
+    from role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    limit 1
+  </select>
 </mapper>

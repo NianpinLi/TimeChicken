@@ -1,8 +1,8 @@
 package com.dandelion.dao.self;
 
-import com.dandelion.bean.AdminExample;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
+import com.dandelion.bean.example.AdminExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
