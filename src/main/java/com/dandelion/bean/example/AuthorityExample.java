@@ -119,11 +119,9 @@ public class AuthorityExample {
     }
 
     /**
-     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-     * This method corresponds to the database table authority
-     *
-     * @mbg.generated
-     * @author generator
+     *自动生成方法
+     *@param orderByClause generator
+     *@return com.dandelion.bean.example.AuthorityExample
      */
     public AuthorityExample orderBy(String orderByClause) {
         this.setOrderByClause(orderByClause);
@@ -131,11 +129,9 @@ public class AuthorityExample {
     }
 
     /**
-     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-     * This method corresponds to the database table authority
-     *
-     * @mbg.generated
-     * @author generator
+     *自动生成方法
+     *@param orderByClauses generator
+     *@return com.dandelion.bean.example.AuthorityExample
      */
     public AuthorityExample orderBy(String ... orderByClauses) {
         StringBuffer sb = new StringBuffer();
@@ -976,22 +972,18 @@ public class AuthorityExample {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table authority
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return com.dandelion.bean.example.AuthorityExample
          */
         public AuthorityExample example() {
             return this.example;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table authority
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param ifAdd generator
+         *@param add generator
+         *@return Criteria
          */
         public Criteria andIf(boolean ifAdd, ICriteriaAdd add) {
             if (ifAdd) {
@@ -1009,11 +1001,9 @@ public class AuthorityExample {
          */
         public interface ICriteriaAdd {
             /**
-             * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-             * This method corresponds to the database table authority
-             *
-             * @mbg.generated
-             * @author generator
+             *自动生成方法
+             *@param add generator
+             *@return Criteria
              */
             Criteria add(Criteria add);
         }

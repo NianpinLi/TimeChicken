@@ -221,22 +221,16 @@ public class Admin implements Serializable {
         private Admin obj;
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
          */
         public Builder() {
             this.obj = new Admin();
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param adminId generator
+         *@return Builder
          */
         public Builder adminId(Integer adminId) {
             obj.adminId = adminId;
@@ -244,11 +238,9 @@ public class Admin implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param adminName generator
+         *@return Builder
          */
         public Builder adminName(String adminName) {
             obj.adminName = adminName;
@@ -256,11 +248,9 @@ public class Admin implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param adminPassword generator
+         *@return Builder
          */
         public Builder adminPassword(String adminPassword) {
             obj.adminPassword = adminPassword;
@@ -268,11 +258,9 @@ public class Admin implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param adminStatus generator
+         *@return Builder
          */
         public Builder adminStatus(Byte adminStatus) {
             obj.adminStatus = adminStatus;
@@ -280,11 +268,9 @@ public class Admin implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param realName generator
+         *@return Builder
          */
         public Builder realName(String realName) {
             obj.realName = realName;
@@ -292,11 +278,9 @@ public class Admin implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param createId generator
+         *@return Builder
          */
         public Builder createId(Integer createId) {
             obj.createId = createId;
@@ -304,11 +288,9 @@ public class Admin implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param createName generator
+         *@return Builder
          */
         public Builder createName(String createName) {
             obj.createName = createName;
@@ -316,11 +298,9 @@ public class Admin implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param createTime generator
+         *@return Builder
          */
         public Builder createTime(String createTime) {
             obj.createTime = createTime;
@@ -328,11 +308,8 @@ public class Admin implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return com.dandelion.bean.Admin
          */
         public Admin build() {
             return this.obj;
@@ -347,14 +324,22 @@ public class Admin implements Serializable {
      * @author generator
      */
     public enum Column {
-        adminId("admin_id"),
-        adminName("admin_name"),
-        adminPassword("admin_password"),
-        adminStatus("admin_status"),
-        realName("real_name"),
-        createId("create_id"),
-        createName("create_name"),
-        createTime("create_time");
+        /**admin_id */
+adminId("admin_id"),
+        /**admin_name */
+adminName("admin_name"),
+        /**admin_password */
+adminPassword("admin_password"),
+        /**admin_status */
+adminStatus("admin_status"),
+        /**real_name */
+realName("real_name"),
+        /**create_id */
+createId("create_id"),
+        /**create_name */
+createName("create_name"),
+        /**create_time */
+createTime("create_time");
 
         /**
          * 这是Mybatis Generator拓展插件生成的属性(请勿删除).
@@ -366,55 +351,40 @@ public class Admin implements Serializable {
         private final String column;
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String value() {
             return this.column;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String getValue() {
             return this.column;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param column generator
          */
         Column(String column) {
             this.column = column;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String desc() {
             return this.column + " DESC";
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table admin
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String asc() {
             return this.column + " ASC";

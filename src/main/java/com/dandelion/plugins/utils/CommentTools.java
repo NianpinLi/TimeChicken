@@ -17,6 +17,7 @@
 package com.dandelion.plugins.utils;
 
 
+import com.dandelion.utils.ObjectUtil;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.java.InnerInterface;
@@ -111,16 +112,16 @@ public class CommentTools {
      * @param introspectedTable 表
      */
     public static void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {
-        StringBuilder sb = new StringBuilder();
-        method.addJavaDocLine("/**"); 
-        method.addJavaDocLine(" * 这是Mybatis Generator拓展插件生成的方法(请勿删除).");
-        sb.append(" * This method corresponds to the database table ");
-        sb.append(introspectedTable.getFullyQualifiedTable());
-        method.addJavaDocLine(sb.toString());
-        method.addJavaDocLine(" *");
-        method.addJavaDocLine(" * "+MergeConstants.NEW_ELEMENT_TAG);
-        method.addJavaDocLine(" * @author generator");
-        method.addJavaDocLine(" */"); 
+        method.addJavaDocLine("/**");
+        method.addJavaDocLine(" *自动生成方法");
+        for (Parameter parameter : method.getParameters()) {
+            method.addJavaDocLine(" *@param "+parameter.getName()+" generator");
+        }
+        FullyQualifiedJavaType returnType = method.getReturnType();
+        if (!ObjectUtil.isNull(returnType)){
+            method.addJavaDocLine(" *@return "+returnType.toString());
+        }
+        method.addJavaDocLine(" */");
     }
 
     /**

@@ -221,22 +221,16 @@ public class Role implements Serializable {
         private Role obj;
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
          */
         public Builder() {
             this.obj = new Role();
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param roleId generator
+         *@return Builder
          */
         public Builder roleId(Integer roleId) {
             obj.roleId = roleId;
@@ -244,11 +238,9 @@ public class Role implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param roleName generator
+         *@return Builder
          */
         public Builder roleName(String roleName) {
             obj.roleName = roleName;
@@ -256,11 +248,9 @@ public class Role implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param roleStatus generator
+         *@return Builder
          */
         public Builder roleStatus(Integer roleStatus) {
             obj.roleStatus = roleStatus;
@@ -268,11 +258,9 @@ public class Role implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param roleDescribe generator
+         *@return Builder
          */
         public Builder roleDescribe(String roleDescribe) {
             obj.roleDescribe = roleDescribe;
@@ -280,11 +268,9 @@ public class Role implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param parentRoleId generator
+         *@return Builder
          */
         public Builder parentRoleId(Integer parentRoleId) {
             obj.parentRoleId = parentRoleId;
@@ -292,11 +278,9 @@ public class Role implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param createId generator
+         *@return Builder
          */
         public Builder createId(Integer createId) {
             obj.createId = createId;
@@ -304,11 +288,9 @@ public class Role implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param createName generator
+         *@return Builder
          */
         public Builder createName(String createName) {
             obj.createName = createName;
@@ -316,11 +298,9 @@ public class Role implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param createTime generator
+         *@return Builder
          */
         public Builder createTime(String createTime) {
             obj.createTime = createTime;
@@ -328,11 +308,8 @@ public class Role implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return com.dandelion.bean.Role
          */
         public Role build() {
             return this.obj;
@@ -347,14 +324,22 @@ public class Role implements Serializable {
      * @author generator
      */
     public enum Column {
-        roleId("role_id"),
-        roleName("role_name"),
-        roleStatus("role_status"),
-        roleDescribe("role_describe"),
-        parentRoleId("parent_role_id"),
-        createId("create_id"),
-        createName("create_name"),
-        createTime("create_time");
+        /**role_id */
+roleId("role_id"),
+        /**role_name */
+roleName("role_name"),
+        /**role_status */
+roleStatus("role_status"),
+        /**role_describe */
+roleDescribe("role_describe"),
+        /**parent_role_id */
+parentRoleId("parent_role_id"),
+        /**create_id */
+createId("create_id"),
+        /**create_name */
+createName("create_name"),
+        /**create_time */
+createTime("create_time");
 
         /**
          * 这是Mybatis Generator拓展插件生成的属性(请勿删除).
@@ -366,55 +351,40 @@ public class Role implements Serializable {
         private final String column;
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String value() {
             return this.column;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String getValue() {
             return this.column;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param column generator
          */
         Column(String column) {
             this.column = column;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String desc() {
             return this.column + " DESC";
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table role
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String asc() {
             return this.column + " ASC";

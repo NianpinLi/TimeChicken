@@ -90,11 +90,9 @@ public interface WorkOrderTypeMapper {
     int updateByPrimaryKey(WorkOrderType record);
 
     /**
-     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-     * This method corresponds to the database table work_order_type
-     *
-     * @mbg.generated
-     * @author generator
+     *自动生成方法
+     *@param example generator
+     *@return com.dandelion.bean.WorkOrderType
      */
     WorkOrderType selectOneByExample(WorkOrderTypeExample example);
 }

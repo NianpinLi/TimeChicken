@@ -90,11 +90,9 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
 
     /**
-     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-     * This method corresponds to the database table role
-     *
-     * @mbg.generated
-     * @author generator
+     *自动生成方法
+     *@param example generator
+     *@return com.dandelion.bean.Role
      */
     Role selectOneByExample(RoleExample example);
 }

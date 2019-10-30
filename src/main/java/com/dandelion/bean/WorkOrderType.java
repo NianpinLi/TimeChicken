@@ -199,22 +199,16 @@ public class WorkOrderType implements Serializable {
         private WorkOrderType obj;
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
          */
         public Builder() {
             this.obj = new WorkOrderType();
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param typeId generator
+         *@return Builder
          */
         public Builder typeId(Integer typeId) {
             obj.typeId = typeId;
@@ -222,11 +216,9 @@ public class WorkOrderType implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param typeName generator
+         *@return Builder
          */
         public Builder typeName(String typeName) {
             obj.typeName = typeName;
@@ -234,11 +226,9 @@ public class WorkOrderType implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param typeStatus generator
+         *@return Builder
          */
         public Builder typeStatus(Byte typeStatus) {
             obj.typeStatus = typeStatus;
@@ -246,11 +236,9 @@ public class WorkOrderType implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param procedure generator
+         *@return Builder
          */
         public Builder procedure(String procedure) {
             obj.procedure = procedure;
@@ -258,11 +246,9 @@ public class WorkOrderType implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param createId generator
+         *@return Builder
          */
         public Builder createId(Integer createId) {
             obj.createId = createId;
@@ -270,11 +256,9 @@ public class WorkOrderType implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param createTime generator
+         *@return Builder
          */
         public Builder createTime(String createTime) {
             obj.createTime = createTime;
@@ -282,11 +266,9 @@ public class WorkOrderType implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param createName generator
+         *@return Builder
          */
         public Builder createName(String createName) {
             obj.createName = createName;
@@ -294,11 +276,8 @@ public class WorkOrderType implements Serializable {
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return com.dandelion.bean.WorkOrderType
          */
         public WorkOrderType build() {
             return this.obj;
@@ -313,13 +292,20 @@ public class WorkOrderType implements Serializable {
      * @author generator
      */
     public enum Column {
-        typeId("type_id"),
-        typeName("type_name"),
-        typeStatus("type_status"),
-        procedure("procedure"),
-        createId("create_id"),
-        createTime("create_time"),
-        createName("create_name");
+        /**type_id */
+typeId("type_id"),
+        /**type_name */
+typeName("type_name"),
+        /**type_status */
+typeStatus("type_status"),
+        /**procedure */
+procedure("procedure"),
+        /**create_id */
+createId("create_id"),
+        /**create_time */
+createTime("create_time"),
+        /**create_name */
+createName("create_name");
 
         /**
          * 这是Mybatis Generator拓展插件生成的属性(请勿删除).
@@ -331,55 +317,40 @@ public class WorkOrderType implements Serializable {
         private final String column;
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String value() {
             return this.column;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String getValue() {
             return this.column;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@param column generator
          */
         Column(String column) {
             this.column = column;
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String desc() {
             return this.column + " DESC";
         }
 
         /**
-         * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-         * This method corresponds to the database table work_order_type
-         *
-         * @mbg.generated
-         * @author generator
+         *自动生成方法
+         *@return java.lang.String
          */
         public String asc() {
             return this.column + " ASC";
