@@ -63,7 +63,10 @@ public class WorkOrderController extends BaseController{
 
     /**
      * 新增/修改 工单类型
-     * @param params Map
+     * @param typeName String
+     * @param procedureName String
+     * @param procedureType String
+     * @param procedureRoleId String
      * @return Map
      * @throws Exception e
      */
