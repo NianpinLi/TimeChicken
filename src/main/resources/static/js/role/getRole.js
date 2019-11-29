@@ -44,17 +44,7 @@ layui.use(['table', 'table','form', 'treetable'], function () {
 
     $('#btn-add').click(function () {
         //新增角色弹窗
-        layer.open({
-            type: 2,
-            title: '新增角色',
-            shadeClose: true,
-            shade: 0,
-            area: ['550px', '420px'],
-            content: ['/role/addRole','no'],
-            end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                currentTable();　//layer.open关闭刷新
-            }
-        });
+        openDialog('新增角色','400','460','/role/addRole',currentTable);
     });
 
     $('#btn-delete').click(function () {
@@ -62,9 +52,7 @@ layui.use(['table', 'table','form', 'treetable'], function () {
         var ids = getTableCheckBox(table,'currentTable','roleId');
         if (ids != ""){
             //批量删除
-            layer.confirm('您确认要删除这些角色吗？', {
-                btn: ['确认','取消'] //按钮
-            }, function(){
+            openConfirm("你确认要删除吗？",function(){
                 //删除角色
                 $.post(
                     "/role/deleteRole",
@@ -75,7 +63,7 @@ layui.use(['table', 'table','form', 'treetable'], function () {
                     },
                     "JSON"
                 );
-            });
+            })
         }
     });
 
@@ -84,9 +72,7 @@ layui.use(['table', 'table','form', 'treetable'], function () {
         var data = obj.data;
         var layEvent = obj.event;
         if (layEvent === 'del') {
-            layer.confirm('确认删除当前角色吗？',{
-                btn: ['确认','取消'] //按钮
-            }, function(){
+            openConfirm("你确认要删除吗？",function(){
                 //删除角色
                 $.post(
                     "/role/deleteRole",
@@ -100,33 +86,13 @@ layui.use(['table', 'table','form', 'treetable'], function () {
             });
         } else if (layEvent === 'edit') {
             var url = '/role/updateRole?roleId='+data.roleId;
-            //修改角色弹窗
-            layer.open({
-                type: 2,
-                title: '修改角色',
-                shadeClose: true,
-                shade: 0,
-                area: ['380px', '420px'],
-                content: [url ,'no'],
-                end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                    currentTable();　//layer.open关闭刷新
-                }
-            });
+            //角色修改权限弹窗
+            openDialog('角色修改','500','600',url,currentTable);
 
         } else if(layEvent === 'empowerment'){
             var url = '/role/empowermentAuthority?roleId='+data.roleId;
             //角色分配权限弹窗
-            layer.open({
-                type: 2,
-                title: '分配权限',
-                shadeClose: true,
-                shade: 0,
-                area: ['500px', '75%'],
-                content: [url ,'yes'],
-                end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                    currentTable();//layer.open关闭刷新
-                }
-            });
+            openDialog('分配权限','400','600',url,currentTable);
         }
     });
 });

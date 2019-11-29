@@ -1,5 +1,7 @@
 package com.dandelion.service;
 
+import com.dandelion.bean.Authority;
+
 import java.util.Map;
 
 /**
@@ -26,9 +28,10 @@ public interface AuthorityService {
     /**
      * 权限信息回显
      * @param paramsMap Map
+     * @return Authority
      * @throws Exception e
      */
-    void getAuthorityById(Map<String, String> paramsMap) throws Exception;
+    Authority getAuthorityById(Map<String, String> paramsMap) throws Exception;
     /**
      * 新增 / 修改 权限
      * @param paramsMap Map

@@ -2,6 +2,7 @@ package com.dandelion.controller;
 
 import com.dandelion.base.BaseController;
 import com.dandelion.base.CommonMessage;
+import com.dandelion.bean.Admin;
 import com.dandelion.service.AdminService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -44,6 +45,15 @@ public class AdminController extends BaseController {
             return "common/login";
         }
     }
+    /**
+     * 用户登录
+     * @return String
+     * @throws Exception e
+     */
+    @RequestMapping("logout")
+    public String logout() throws Exception{
+        return "common/login";
+    }
 
     /**
      * 获取登录配置
@@ -52,6 +62,15 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "getIndexConfig", method = RequestMethod.GET)
     public @ResponseBody Map getIndexConfig() throws Exception{
         return adminService.getIndexConfig();
+    }
+
+    /**
+     * 清除服务器缓存
+     * @return Map
+     */
+    @RequestMapping(value = "/clearCache", method = RequestMethod.GET)
+    public @ResponseBody Map clearCache() throws Exception{
+        return adminService.clearCache();
     }
 
     /**
@@ -65,6 +84,34 @@ public class AdminController extends BaseController {
         return this.disPlay();
     }
 
+    /**
+     * 查看当前登录人信息
+     * @return String
+     * @throws Exception e
+     */
+    @RequestMapping(value = "getLoginAdminInfo", method = RequestMethod.GET)
+    public String getLoginAdminInfo() throws Exception{
+        this.setAttribute("admin", this.getLoginAdmin());
+        return this.disPlay();
+    }
+    /**
+     * 修改密码页面
+     * @return String
+     * @throws Exception e
+     */
+    @RequestMapping(value = "updatePassword", method = RequestMethod.GET)
+    public String updatePassword() throws Exception{
+        return this.disPlay();
+    }
+    /**
+     * 修改密码
+     * @return String
+     * @throws Exception e
+     */
+    @RequestMapping(value = "savePassword", method = RequestMethod.POST)
+    public @ResponseBody Map savePassword(@RequestParam Map<String,String> paramsMap) throws Exception{
+        return adminService.savePassword(paramsMap);
+    }
     /**
      * 查看用户列表
      * @param paramsMap Map
@@ -89,14 +136,15 @@ public class AdminController extends BaseController {
     }
 
     /**
-     * 用户新增页面跳转
+     * 用户修改页面跳转
      * @return String
      * @throws Exception e
      */
     @RequiresPermissions(value = {"/admin/updateAdmin"})
     @RequestMapping(value = "updateAdmin", method = RequestMethod.GET)
     public String updateAdmin(@RequestParam Map<String, String> paramsMap) throws Exception{
-        adminService.getAdminById(paramsMap);
+        Admin admin = adminService.getAdminById(paramsMap);
+        this.setAttribute("admin", admin);
         return this.disPlay();
     }
 

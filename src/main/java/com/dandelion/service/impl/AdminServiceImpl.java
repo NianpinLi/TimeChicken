@@ -12,9 +12,9 @@ import com.dandelion.bean.example.AdminExample;
 import com.dandelion.dao.generator.AdminMapper;
 import com.dandelion.dao.self.AdminSelfMapper;
 import com.dandelion.service.AdminService;
-import com.dandelion.utils.DateUtil;
 import com.dandelion.utils.EncryptionUtil;
 import com.dandelion.utils.ObjectUtil;
+import com.dandelion.utils.RedisUtil;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -25,8 +25,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +40,7 @@ import java.util.Map;
  *  AdminService
  */
 @Service
-public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implements AdminService{
+public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements AdminService{
 
     @Resource
     private AdminMapper adminMapper;
@@ -51,7 +49,7 @@ public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implem
     private AdminSelfMapper adminSelfMapper;
 
     @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisUtil redisUtil;
 
     private String managerId = "1";
     private String fieldName = "adminId";
@@ -63,6 +61,7 @@ public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implem
      * @throws Exception Exception
      */
     @Override
+    @ReadOnlyConnection
     public Map loginAdmin(Map<String, String> paramsMap) throws Exception{
         String adminName = paramsMap.get("adminName");
         String adminPassword = paramsMap.get("adminPassword");
@@ -89,18 +88,17 @@ public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implem
     @Override
     @ReadOnlyConnection
     public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams,String page) throws Exception{
-        ValueOperations<String, Object> redis = redisTemplate.opsForValue();
         String key = BaseRedisKey.ADMIN_AUTHORITY + page+ authorityParams.get("adminId");
-        Object o = redis.get(key);
-        if (o != null){
-            return (List<Authority>)o;
+        List list = redisUtil.getList(key, Authority.class);
+        if (list != null){
+            return list;
         }
         //拥有所有权限
         if(managerId.equals(authorityParams.get(fieldName))){
             authorityParams.put("adminId",null);
         }
         List<Authority> authorityList = adminSelfMapper.selectAuthorityByAdminId(authorityParams);
-        redis.set(key,authorityList);
+        redisUtil.set(key,authorityList);
         return authorityList;
     }
 
@@ -112,18 +110,17 @@ public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implem
     @Override
     @ReadOnlyConnection
     public List<Role> getRoleByAdminId(Map<String,String> authorityParams) throws Exception{
-        ValueOperations<String, Object> redis = redisTemplate.opsForValue();
         String key = BaseRedisKey.ADMIN_ROLE + authorityParams.get("adminId");
-        Object o = redis.get(key);
-        if (o != null){
-            return (List<Role>)o;
+        List list = redisUtil.getList(key, Role.class);
+        if (list != null){
+            return list;
         }
         //拥有所有角色
         if(managerId.equals(authorityParams.get(fieldName))){
             authorityParams.put("adminId",null);
         }
         List<Role> roleList = adminSelfMapper.selectRoleByAdminId(authorityParams);
-        redis.set(key,roleList);
+        redisUtil.set(key,roleList);
         return roleList;
     }
 
@@ -147,77 +144,7 @@ public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implem
         return adminList.get(0);
     }
 
-    /**
-     * 查询登录人信息
-     * @return Map
-     */
-    @Override
-    public Map getIndexConfig() throws Exception{
-        Map indexConfig = Maps.newHashMap();
 
-        //清除缓存配置
-        HashMap<String, Object> clearInfo = Maps.newHashMap();
-        clearInfo.put("clearUrl", "/layui/api/clear.json");
-        //欢迎页面配置
-        HashMap<String, Object> homeInfo = Maps.newHashMap();
-        homeInfo.put("title", "首页");
-        homeInfo.put("icon", "fa fa-home");
-        homeInfo.put("href", "/common/welcome");
-        //Logo配置
-        HashMap<String, Object> logoInfo = Maps.newHashMap();
-        logoInfo.put("title", "Family");
-        logoInfo.put("image", "/layui/images/logo.png");
-        logoInfo.put("href", "");
-        //菜单权限配置
-        Map menuInfo = this.getAuthority();
-
-        indexConfig.put("clearInfo",clearInfo);
-        indexConfig.put("homeInfo",homeInfo);
-        indexConfig.put("logoInfo",logoInfo);
-        indexConfig.put("menuInfo",menuInfo);
-        return indexConfig;
-    }
-
-    /**
-     * 获取当前登录用户的权限
-     * @return Map
-     * @throws Exception e
-     */
-    private Map getAuthority() throws Exception{
-        Admin admin = (Admin) this.getSession("adminSession");
-        //查询页面权限
-        Map<String,String> authorityParams = Maps.newHashMap();
-        authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
-        authorityParams.put("authorityType","1");
-        List<Authority> authorityList = this.getAuthorityByAdminId(authorityParams,"page_");
-        HashMap<Integer, Map> authorityMap = Maps.newHashMap();
-        HashMap<Integer, Map> authorityMenuMap = Maps.newHashMap();
-        for (Authority authority : authorityList) {
-            Map map  = Maps.newHashMap();
-            map.put("title",authority.getAuthorityName());
-            map.put("icon",authority.getAuthorityIcon());
-            if (authority.getAuthorityUrl() != null && !"#".equals(authority.getAuthorityUrl())){
-                map.put("href",authority.getAuthorityUrl());
-                map.put("target","_self");
-            }else {
-                map.put("child",Lists.newArrayList());
-            }
-            Integer parentId = authority.getParentAuthorityId();
-            Integer authorityId = authority.getAuthorityId();
-            authorityMap.put(authorityId, map);
-            if (parentId != -1){
-                //非顶级菜单
-                Map parent = authorityMap.get(parentId);
-                if (parent != null){
-                    ((List)parent.get("child")).add(map);
-                }
-            }else{
-                //顶级菜单
-                authorityMenuMap.put(authorityId,map);
-            }
-        }
-        return authorityMenuMap;
-    }
 
 
     /**
@@ -253,9 +180,7 @@ public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implem
         Admin admin = JSON.parseObject(JSON.toJSONString(paramsMap), Admin.class);
         if(ObjectUtil.isNull(admin.getAdminId())){
             //存入添加信息
-            admin.setCreateName(this.getLoginAdmin().getRealName());
-            admin.setCreateId(this.getLoginAdmin().getAdminId());
-            admin.setCreateTime(DateUtil.getNowDateEn());
+            this.setCreateInfo(admin, this.getLoginAdmin());
             //对用户名进行加盐
             ByteSource salt = ByteSource.Util.bytes(admin.getAdminName());
             //密码加密
@@ -272,12 +197,13 @@ public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implem
     /**
      * 根据AdminId 查询Admin
      * @param paramsMap Map
+     * @return Admin
+     * @throws Exception e
      */
     @Override
     @ReadOnlyConnection
-    public void getAdminById(Map<String, String> paramsMap) throws Exception{
-        Admin admin = adminMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("adminId")));
-        this.setAttribute("admin",admin);
+    public Admin getAdminById(Map<String, String> paramsMap) throws Exception{
+        return adminMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("adminId")));
     }
 
     /**
@@ -386,5 +312,122 @@ public class AdminServiceImplImpl extends BaseServiceImpl<Admin, Integer> implem
             adminMapper.deleteByExample(adminExample);
         }
         return this.successResult(false);
+    }
+
+    /**
+     * 查询登录人信息
+     * @return Map
+     */
+    @Override
+    @ReadOnlyConnection
+    public Map getIndexConfig() throws Exception{
+        Map indexConfig = Maps.newHashMap();
+
+        //清除缓存配置
+        HashMap<String, Object> clearInfo = Maps.newHashMap();
+        clearInfo.put("clearUrl", "/admin/clearCache");
+        //欢迎页面配置
+        HashMap<String, Object> homeInfo = Maps.newHashMap();
+        homeInfo.put("title", "首页");
+        homeInfo.put("icon", "fa fa-home");
+        homeInfo.put("href", "/common/welcome");
+        //Logo配置
+        HashMap<String, Object> logoInfo = Maps.newHashMap();
+        logoInfo.put("title", "Family");
+        logoInfo.put("image", "/layui/images/logo.png");
+        logoInfo.put("href", "");
+        //菜单权限配置
+        Map menuInfo = this.getAuthority();
+
+        indexConfig.put("clearInfo",clearInfo);
+        indexConfig.put("homeInfo",homeInfo);
+        indexConfig.put("logoInfo",logoInfo);
+        indexConfig.put("menuInfo",menuInfo);
+        return indexConfig;
+    }
+
+    /**
+     * 清除缓存
+     * @return Map
+     * @throws Exception e
+     */
+    @Override
+    public Map clearCache() throws Exception {
+        Admin admin = this.getLoginAdmin();
+        Integer adminId = admin.getAdminId();
+        redisUtil.delete("admin_authority_all_"+adminId);
+        redisUtil.delete("admin_authority_page_"+adminId);
+        redisUtil.delete("admin_role_"+adminId);
+        return successResult("清除服务器缓存成功", false);
+    }
+
+    /**
+     * 修改密码
+     * @return Map
+     * @throws Exception e
+     * @param paramsMap
+     */
+    @Override
+    public Map savePassword(Map<String, String> paramsMap) throws Exception {
+        if (!paramsMap.get("newPassword").equals(paramsMap.get("againPassword"))){
+            return errorResult(CommonMessage.ERROR,"新密码不一致",false);
+        }
+        Admin admin = this.getLoginAdmin();
+        //对用户名进行加盐
+        ByteSource salt = ByteSource.Util.bytes(admin.getAdminName());
+        //密码加密
+        String password = EncryptionUtil.encryptPassword("MD5", paramsMap.get("oldPassword"), salt, 3);
+        if (!password.equals(admin.getAdminPassword())){
+            return errorResult(CommonMessage.ERROR,"原密码错误",false);
+        }
+        Admin updateAdmin = new Admin();
+        updateAdmin.setAdminId(admin.getAdminId());
+        updateAdmin.setAdminPassword(EncryptionUtil.encryptPassword("MD5", paramsMap.get("newPassword"), salt, 3));
+        adminMapper.updateByPrimaryKeySelective(updateAdmin);
+        //清除缓存
+        clearCache();
+        return successResult(true);
+    }
+
+    /**
+     * 获取当前登录用户的权限
+     * @return Map
+     * @throws Exception e
+     */
+    @ReadOnlyConnection
+    private Map getAuthority() throws Exception{
+        Admin admin = (Admin) this.getSession("adminSession");
+        //查询页面权限
+        Map<String,String> authorityParams = Maps.newHashMap();
+        authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
+        authorityParams.put("authorityType","1");
+        List<Authority> authorityList = this.getAuthorityByAdminId(authorityParams,"page_");
+        HashMap<Integer, Map> authorityMap = Maps.newHashMap();
+        HashMap<Integer, Map> authorityMenuMap = Maps.newHashMap();
+        for (Authority authority : authorityList) {
+            Map map  = Maps.newHashMap();
+            map.put("title",authority.getAuthorityName());
+            map.put("icon",authority.getAuthorityIcon());
+            if (authority.getAuthorityUrl() != null && !"#".equals(authority.getAuthorityUrl())){
+                map.put("href",authority.getAuthorityUrl());
+                map.put("target","_self");
+            }else {
+                map.put("child",Lists.newArrayList());
+            }
+            Integer parentId = authority.getParentAuthorityId();
+            Integer authorityId = authority.getAuthorityId();
+            authorityMap.put(authorityId, map);
+            if (parentId != -1){
+                //非顶级菜单
+                Map parent = authorityMap.get(parentId);
+                if (parent != null){
+                    ((List)parent.get("child")).add(map);
+                }
+            }else{
+                //顶级菜单
+                authorityMenuMap.put(authorityId,map);
+            }
+        }
+        return authorityMenuMap;
     }
 }

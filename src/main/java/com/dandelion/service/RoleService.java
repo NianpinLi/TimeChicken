@@ -1,5 +1,7 @@
 package com.dandelion.service;
 
+import com.dandelion.bean.Role;
+
 import java.util.Map;
 
 /**
@@ -26,9 +28,10 @@ public interface RoleService {
     /**
      * 根据角色ID查询角色信息 存入Session中
      * @param paramsMap Map
+     * @return Role
      * @throws Exception e
      */
-    void getRoleById(Map<String, String> paramsMap) throws Exception;
+    Role getRoleById(Map<String, String> paramsMap) throws Exception;
     /**
      * 新增/修改 角色
      * @param paramsMap Map

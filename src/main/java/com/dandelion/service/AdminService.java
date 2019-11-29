@@ -46,12 +46,7 @@ public interface AdminService {
      * @throws Exception Exception
      */
     List<Role> getRoleByAdminId(Map<String,String> authorityParams) throws Exception;
-    /**
-     * 查询登录人信息
-     * @return Map
-     * @throws Exception Exception
-     */
-    Map getIndexConfig() throws Exception;
+
     /**
      * 查看所有用户
      * @param paramsMap Map
@@ -62,9 +57,10 @@ public interface AdminService {
     /**
      * 查询分配权限 回显
      * @param paramsMap Map
+     * @return Admin
      * @throws Exception Exception
      */
-    void getAdminById(Map<String, String> paramsMap) throws Exception;
+    Admin getAdminById(Map<String, String> paramsMap) throws Exception;
     /**
      * 新增 / 修改用户
      * @param paramsMap Map
@@ -100,4 +96,25 @@ public interface AdminService {
      * @throws Exception Exception
      */
     Map changeAdminStatus(Map<String, String> paramsMap) throws Exception;
+    /**
+     * 查询登录信息
+     * @return Map
+     * @throws Exception Exception
+     */
+    Map getIndexConfig() throws Exception;
+
+    /**
+     * 清除服务器缓存
+     * @return Map
+     * @throws Exception e
+     */
+    Map clearCache() throws Exception;
+
+    /**
+     * 修改密码
+     * @return Map
+     * @throws Exception e
+     * @param paramsMap
+     */
+    Map savePassword(Map<String, String> paramsMap) throws Exception;
 }

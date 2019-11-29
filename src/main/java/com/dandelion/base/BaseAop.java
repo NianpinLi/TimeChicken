@@ -13,6 +13,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.ExtendedServletRequestDataBinder;
 
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -49,7 +50,11 @@ public class BaseAop {
         Map<String, Object> paramMap = Maps.newHashMap();
         for (int i = 0; i < args.length; i++) {
             if (!(args[i] instanceof ExtendedServletRequestDataBinder) && !(args[i] instanceof HttpServletResponseWrapper)) {
-                paramMap.put(argNames[i], args[i]);
+                if (args[i] instanceof MultipartFile){
+                    paramMap.put(argNames[i], ((MultipartFile)args[i]).getName());
+                }else{
+                    paramMap.put(argNames[i], args[i]);
+                }
             }
         }
         if (paramMap.size() > 0) {

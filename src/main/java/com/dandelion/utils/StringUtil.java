@@ -2,7 +2,9 @@ package com.dandelion.utils;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,6 +113,20 @@ public class StringUtil {
     }
 
     /**
+     * Json to list bean
+     * @param value String
+     * @param clazz Class
+     * @param <T> t
+     * @return T
+     */
+    public static <T> List<T> stringToListBean(String value, Class<T> clazz) {
+        if(value==null||value.length()<=0||clazz==null){
+            return null;
+        }
+        return JSONArray.parseArray(value, clazz);
+    }
+
+    /**
      * bean to json
      * @param value T values
      * @return String
@@ -119,17 +135,6 @@ public class StringUtil {
         if(value==null){
             return null;
         }
-        Class <?> clazz = value.getClass();
-        if(clazz==int.class||clazz==Integer.class){
-            return ""+value;
-        }
-        else if(clazz==long.class||clazz==Long.class){
-            return ""+value;
-        }
-        else if(clazz==String.class){
-            return (String)value;
-        }else {
-            return JSON.toJSONString(value);
-        }
+        return JSON.toJSONString(value);
     }
 }

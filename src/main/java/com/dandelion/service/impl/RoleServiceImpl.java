@@ -29,7 +29,7 @@ import java.util.Map;
  *  角色管理Service
  */
 @Service
-public class RoleServiceImplImpl extends BaseServiceImpl<Role, Integer> implements RoleService{
+public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements RoleService{
 
     @Resource
     private RoleMapper roleMapper;
@@ -81,13 +81,14 @@ public class RoleServiceImplImpl extends BaseServiceImpl<Role, Integer> implemen
     /**
      * 根据角色ID查询角色信息 存入Session中
      * @param paramsMap Map
+     * @return Role
      * @throws Exception e
      */
     @Override
     @ReadOnlyConnection
-    public void getRoleById(Map<String, String> paramsMap) throws Exception {
-        Role role = roleMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("roleId")));
-        this.setAttribute("role",role);
+    public Role getRoleById(Map<String, String> paramsMap) throws Exception {
+        return roleMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("roleId")));
+
     }
 
     /**
@@ -102,9 +103,7 @@ public class RoleServiceImplImpl extends BaseServiceImpl<Role, Integer> implemen
         Role role = JSON.parseObject(JSON.toJSONString(paramsMap), Role.class);
         if(ObjectUtil.isNull(role.getRoleId())){
             //存入添加信息
-            role.setCreateName(this.getLoginAdmin().getRealName());
-            role.setCreateId(this.getLoginAdmin().getAdminId());
-            role.setCreateTime(DateUtil.getNowDateEn());
+            this.setCreateInfo(role, this.getLoginAdmin());
             //判断是否存在角色ID 不存在新增
             roleMapper.insertSelective(role);
         }else{
@@ -124,9 +123,9 @@ public class RoleServiceImplImpl extends BaseServiceImpl<Role, Integer> implemen
     @Transactional(rollbackFor=Exception.class)
     public Map deleteRole(Map<String, String> paramsMap) throws Exception {
         String roleIds = paramsMap.get("inRoleId");
-        RoleExample example = new RoleExample();
-        RoleExample.Criteria criteria = example.createCriteria();
         if (!ObjectUtil.isNull(roleIds)){
+            RoleExample example = new RoleExample();
+            RoleExample.Criteria criteria = example.createCriteria();
             setExample(paramsMap,criteria,"Role");
             roleMapper.deleteByExample(example);
         }

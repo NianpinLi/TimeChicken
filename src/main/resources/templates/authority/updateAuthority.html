@@ -15,20 +15,20 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">权限名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="authorityName" lay-verify="required" th:value="${authority.authorityName}" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
-                    <input type="hidden" name="authorityId" lay-verify="required" th:value="${authority.authorityId}" autocomplete="off" class="layui-input">
+                    <input type="text" name="authorityName" lay-verify="required|lengthFifty" th:value="${authority.authorityName}" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
+                    <input type="hidden" name="authorityId" lay-verify="required|lengthEight" th:value="${authority.authorityId}" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">权限图标</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="authorityIcon" id="iconPicker" th:value="${authority.authorityIcon}"  autocomplete="off" class="layui-input">
+                    <input type="text" name="authorityIcon" id="iconPicker" lay-verify="required|lengthFifty" th:value="${authority.authorityIcon}"  autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">权限路径</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="authorityUrl" lay-verify="required" th:value="${authority.authorityUrl}" placeholder="请输入,不存在请输入#" autocomplete="off" class="layui-input">
+                    <input type="text" name="authorityUrl" lay-verify="required|lengthFifty" th:value="${authority.authorityUrl}" placeholder="请输入,不存在请输入#" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -47,11 +47,9 @@
                     <input type="radio" name="authorityIdentifier" value="4" th:attr="checked = ${authority.authorityIdentifier == 4?true:false}" title="删除">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
+            <div class="layui-form-item common-center">
+                <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </form>
     </div>

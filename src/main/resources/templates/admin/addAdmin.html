@@ -14,7 +14,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户账号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="adminName" lay-verify="required" placeholder="请输入用户账号" autocomplete="off" class="layui-input">
+                    <input type="text" name="adminName" lay-verify="required|lengthFifty" placeholder="请输入用户账号" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -26,14 +26,12 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户姓名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="realName" lay-verify="required" placeholder="请输入用户姓名" autocomplete="off" class="layui-input">
+                    <input type="text" name="realName" lay-verify="required|lengthFifty" placeholder="请输入用户姓名" autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
+            <div class="layui-form-item common-center">
+                <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </form>
     </div>

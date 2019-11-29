@@ -1,6 +1,7 @@
 package com.dandelion.base;
 
 import com.dandelion.bean.Admin;
+import com.dandelion.utils.DateUtil;
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.StringUtil;
 import com.github.pagehelper.PageHelper;
@@ -338,6 +339,16 @@ public class BaseServiceImpl<T, PK extends Serializable> {
         return methodMap;
     }
 
+    protected void setCreateInfo(Object object, Admin admin) throws Exception{
+        Class clazz = object.getClass();
+        Method setCreateId = clazz.getMethod("setCreateId", Integer.class);
+        Method setCreateName = clazz.getMethod("setCreateName", String.class);
+        Method setCreateTime = clazz.getMethod("setCreateTime", String.class);
+        setCreateId.invoke(object, admin.getAdminId());
+        setCreateName.invoke(object, admin.getAdminName());
+        setCreateTime.invoke(object, DateUtil.getNowDateEn());
+    }
+
     /**
      * setSession 存入Session作用域
      * @param name String
@@ -417,12 +428,26 @@ public class BaseServiceImpl<T, PK extends Serializable> {
     /**
      * 错误信息返回
      * @param code int
+     * @param flag boolean
      * @return map
      */
     public Map errorResult(Integer code, boolean flag){
         HashMap resultMap = Maps.newHashMap();
         resultMap.put("code", code);
         resultMap.put("msg", CommonMessage.MESSAGE.get(code));
+        resultMap.put("close", flag);
+        return resultMap;
+    }
+
+    /**
+     * 错误信息返回
+     * @param flag boolean
+     * @return map
+     */
+    public Map errorResult( boolean flag){
+        HashMap resultMap = Maps.newHashMap();
+        resultMap.put("code", CommonMessage.ERROR);
+        resultMap.put("msg", CommonMessage.MESSAGE.get(CommonMessage.ERROR));
         resultMap.put("close", flag);
         return resultMap;
     }

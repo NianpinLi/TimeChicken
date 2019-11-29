@@ -12,8 +12,8 @@ layui.use(['table', 'treetable','form'], function () {
         treeTable.render({
             treeColIndex: 1,//树形图标显示在第几列
             treeSpid: -1,//最上级的父级id
-            treeDefaultClose: false,//是否默认折叠
-            treeLinkage: true,//父级展开时是否自动展开所有子级
+            treeDefaultClose: true,//是否默认折叠
+            treeLinkage: false,//父级展开时是否自动展开所有子级
             treeIdName: 'authorityId',//id字段的名称
             treePidName: 'parentAuthorityId',//pid字段的名称
             where:formData,//查询条件
@@ -66,17 +66,7 @@ layui.use(['table', 'treetable','form'], function () {
     });
     $('#btn-add').click(function () {
         //新增权限弹窗
-        layer.open({
-            type: 2,
-            title: '新增权限',
-            shadeClose: true,
-            shade: 0,
-            area: ['550px', '550px'],
-            content: ['/authority/addAuthority','no'],
-            end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                currentTable(formData);
-            }
-        });
+        openDialog('新增权限','550','550','/authority/addAuthority',currentTable);
     });
 
     //监听工具条
@@ -84,16 +74,14 @@ layui.use(['table', 'treetable','form'], function () {
         var data = obj.data;
         var layEvent = obj.event;
         if (layEvent === 'del') {
-            layer.confirm('确认删除当前权限吗？',{
-                btn: ['确认','取消'] //按钮
-            }, function(){
-                //删除权限
+            openConfirm("你确认要删除吗？",function(){
+                //删除用户
                 $.post(
                     "/authority/deleteAuthority",
                     {"equalToAuthorityId":data.id},
                     function (obj) {
                         responseObj(obj);
-                        currentTable(formData);
+                        currentTable();
                     },
                     "JSON"
                 );
@@ -101,17 +89,7 @@ layui.use(['table', 'treetable','form'], function () {
         } else if (layEvent === 'edit') {
             var url = '/authority/updateAuthority?authorityId='+data.id;
             //修改权限弹窗
-            layer.open({
-                type: 2,
-                title: '修改权限',
-                shadeClose: true,
-                shade: 0,
-                area: ['550px', '490px'],
-                content: [url ,'no'],
-                end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                    currentTable(formData);
-                }
-            });
+            openDialog('修改权限','550','500',url,currentTable);
 
         }
     });

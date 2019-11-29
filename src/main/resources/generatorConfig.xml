@@ -81,7 +81,6 @@
         <table tableName="admin" domainObjectName="Admin" ></table>
         <table tableName="role" domainObjectName="Role" ></table>
         <table tableName="authority" domainObjectName="Authority" ></table>
-        <table tableName="work_order_type" domainObjectName="WorkOrderType" ></table>
     </context>
 
 </generatorConfiguration>

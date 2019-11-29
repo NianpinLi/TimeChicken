@@ -65,17 +65,7 @@ layui.use(['table', 'table','form'], function () {
 
     $('#btn-add').click(function () {
         //新增角色弹窗
-        layer.open({
-            type: 2,
-            title: '新增用户',
-            shadeClose: true,
-            shade: 0,
-            area: ['380px', '420px'],
-            content: ['/admin/addAdmin','no'],
-            end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                currentTable();　//layer.open关闭刷新
-            }
-        });
+        openDialog('新增用户','380','420','/admin/addAdmin',currentTable);
     });
 
     $('#btn-delete').click(function () {
@@ -83,10 +73,8 @@ layui.use(['table', 'table','form'], function () {
         var ids = getTableCheckBox(table,'currentTable','adminId');
         if (ids != ""){
             //批量删除
-            layer.confirm('您确认要删除这些用户吗？', {
-                btn: ['确认','取消'] //按钮
-            }, function(){
-                //删除角色
+            openConfirm("你确认要删除吗？",function(){
+                //删除用户
                 $.post(
                     "/admin/deleteAdmin",
                     {"inAdminId":ids},
@@ -122,10 +110,8 @@ layui.use(['table', 'table','form'], function () {
         var data = obj.data;
         var layEvent = obj.event;
         if (layEvent === 'del') {
-            layer.confirm('确认删除当前用户吗？',{
-                btn: ['确认','取消'] //按钮
-            }, function(){
-                //删除角色
+            openConfirm("你确认要删除吗？",function(){
+                //删除用户
                 $.post(
                     "/admin/deleteAdmin",
                     {"inAdminId":data.adminId},
@@ -139,32 +125,11 @@ layui.use(['table', 'table','form'], function () {
         } else if (layEvent === 'edit') {
             var url = '/admin/updateAdmin?adminId='+data.adminId;
             //修改角色弹窗
-            layer.open({
-                type: 2,
-                title: '修改角色',
-                shadeClose: true,
-                shade: 0,
-                area: ['380px', '390px'],
-                content: [url ,'no'],
-                end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                    currentTable();　//layer.open关闭刷新
-                }
-            });
-
+            openDialog('修改角色','380','390',url,currentTable);
         } else if(layEvent === 'empowerment'){
             var url = '/admin/empowermentRole?adminId='+data.adminId;
             //角色分配权限弹窗
-            layer.open({
-                type: 2,
-                title: '分配角色',
-                shadeClose: true,
-                shade: 0,
-                area: ['500px', '75%'],
-                content: [url ,'yes'],
-                end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
-                    currentTable();//layer.open关闭刷新
-                }
-            });
+            openDialog('分配角色','400','500',url,currentTable);
         }
     });
 });

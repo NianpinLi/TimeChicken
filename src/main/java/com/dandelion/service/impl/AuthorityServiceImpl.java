@@ -7,7 +7,6 @@ import com.dandelion.bean.Authority;
 import com.dandelion.bean.example.AuthorityExample;
 import com.dandelion.dao.generator.AuthorityMapper;
 import com.dandelion.service.AuthorityService;
-import com.dandelion.utils.DateUtil;
 import com.dandelion.utils.ObjectUtil;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ import java.util.Map;
  *  权限Service
  */
 @Service
-public class AuthorityServiceImplImpl extends BaseServiceImpl<Authority,Integer> implements AuthorityService{
+public class AuthorityServiceImpl extends BaseServiceImpl<Authority,Integer> implements AuthorityService{
 
     @Resource
     private AuthorityMapper authorityMapper;
@@ -67,7 +66,7 @@ public class AuthorityServiceImplImpl extends BaseServiceImpl<Authority,Integer>
         //分页
         startPage(paramsMap);
         List<Authority> authorityList = authorityMapper.selectByExample(example);
-        PageInfo<Authority> pageInfo = new PageInfo(authorityList);
+        PageInfo<Authority> pageInfo = new PageInfo<>(authorityList);
         long total = pageInfo.getTotal();
         return pageResult(authorityList, total);
     }
@@ -80,7 +79,7 @@ public class AuthorityServiceImplImpl extends BaseServiceImpl<Authority,Integer>
      */
     @Override
     @Transactional(rollbackFor=Exception.class)
-    public Map saveAuthority(Map<String, String> paramsMap){
+    public Map saveAuthority(Map<String, String> paramsMap) throws Exception{
         try {
             //将Map 转化成 entity
             Authority authority = JSON.parseObject(JSON.toJSONString(paramsMap),Authority.class);
@@ -97,9 +96,7 @@ public class AuthorityServiceImplImpl extends BaseServiceImpl<Authority,Integer>
             String fieldName = "authorityId";
             if(ObjectUtil.isNull(paramsMap.get(fieldName))){
                 //不存在权限Id 新增
-                authority.setCreateName(this.getLoginAdmin().getRealName());
-                authority.setCreateId(this.getLoginAdmin().getAdminId());
-                authority.setCreateTime(DateUtil.getNowDateEn());
+                this.setCreateInfo(authority, this.getLoginAdmin());
                 if(ObjectUtil.isNull(authority.getParentAuthorityId())) {
                     //无上级权限
                     authority.setParentAuthorityId(-1);
@@ -111,10 +108,9 @@ public class AuthorityServiceImplImpl extends BaseServiceImpl<Authority,Integer>
                 authorityMapper.updateByPrimaryKeySelective(authority);
             }
         }catch (Exception e){
-
+            e.printStackTrace();
+            throw e;
         }
-
-
         return this.successResult(true);
     }
 
@@ -134,11 +130,11 @@ public class AuthorityServiceImplImpl extends BaseServiceImpl<Authority,Integer>
     /**
      * 权限信息回显
      * @param paramsMap Map
+     * @return Authority
      * @throws Exception e
      */
     @Override
-    public void getAuthorityById(Map<String, String> paramsMap)  throws Exception{
-        Authority authority = authorityMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("authorityId")));
-        this.setAttribute("authority",authority);
+    public Authority getAuthorityById(Map<String, String> paramsMap)  throws Exception{
+        return authorityMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("authorityId")));
     }
 }

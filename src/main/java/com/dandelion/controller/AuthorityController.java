@@ -1,6 +1,7 @@
 package com.dandelion.controller;
 
 import com.dandelion.base.BaseController;
+import com.dandelion.bean.Authority;
 import com.dandelion.service.AuthorityService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -70,7 +71,8 @@ public class AuthorityController extends BaseController {
     @RequestMapping(value = "updateAuthority", method = RequestMethod.GET)
     public String updateAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
         //查询权限数据并存入作用域
-        authorityService.getAuthorityById(paramsMap);
+        Authority authority = authorityService.getAuthorityById(paramsMap);
+        this.setAttribute("authority",authority);
         return this.disPlay();
     }
 

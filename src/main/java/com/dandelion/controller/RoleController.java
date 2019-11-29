@@ -1,6 +1,7 @@
 package com.dandelion.controller;
 
 import com.dandelion.base.BaseController;
+import com.dandelion.bean.Role;
 import com.dandelion.service.RoleService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -75,7 +76,8 @@ public class RoleController extends BaseController{
     @RequestMapping(value = "updateRole", method = RequestMethod.GET)
     public String updateRole(@RequestParam Map<String, String> paramsMap) throws Exception{
         //查询权限数据并存入作用域
-        roleService.getRoleById(paramsMap);
+        Role role = roleService.getRoleById(paramsMap);
+        this.setAttribute("role",role);
         return this.disPlay();
     }
 
