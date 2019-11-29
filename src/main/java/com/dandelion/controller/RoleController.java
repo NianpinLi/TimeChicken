@@ -44,7 +44,7 @@ public class RoleController extends BaseController{
      */
     @RequiresPermissions("/role/getRoleList")
     @RequestMapping(value = "getRoleList", method = RequestMethod.GET)
-    public @ResponseBody Map getRoleList(@RequestParam Map map) throws Exception{
+    public @ResponseBody Map getRoleList(@RequestParam Map<String,String> map) throws Exception{
         return roleService.getRoleList(map);
     }
 
@@ -65,7 +65,7 @@ public class RoleController extends BaseController{
      */
     @RequiresPermissions(value = {"/role/addRole","/workOrder/addType","/workOrder/updateType"}, logical = Logical.OR)
     @RequestMapping(value = "getRolePageList", method = RequestMethod.GET)
-    public @ResponseBody Map getRolePageList(@RequestParam Map map) throws Exception{
+    public @ResponseBody Map getRolePageList(@RequestParam Map<String,String> map) throws Exception{
         return roleService.getRolePageList(map);
     }
     /**

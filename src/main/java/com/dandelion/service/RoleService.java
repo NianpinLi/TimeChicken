@@ -17,14 +17,14 @@ public interface RoleService {
      * @return Map
      * @throws Exception e
      */
-    Map getRoleList(Map paramsMap) throws Exception;
+    Map getRoleList(Map<String,String> paramsMap) throws Exception;
     /**
      * 角色列表 带分页
      * @param paramsMap Map
      * @return Map
      * @throws Exception e
      */
-    Map getRolePageList(Map paramsMap) throws Exception;
+    Map getRolePageList(Map<String,String> paramsMap) throws Exception;
     /**
      * 根据角色ID查询角色信息 存入Session中
      * @param paramsMap Map

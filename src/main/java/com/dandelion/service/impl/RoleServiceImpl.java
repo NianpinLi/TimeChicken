@@ -9,7 +9,6 @@ import com.dandelion.bean.example.RoleExample;
 import com.dandelion.dao.generator.RoleMapper;
 import com.dandelion.dao.self.RoleSelfMapper;
 import com.dandelion.service.RoleService;
-import com.dandelion.utils.DateUtil;
 import com.dandelion.utils.ObjectUtil;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -45,7 +44,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
      */
     @Override
     @ReadOnlyConnection
-    public Map getRoleList(Map paramsMap) throws Exception{
+    public Map getRoleList(Map<String,String> paramsMap) throws Exception{
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
         //查询条件
@@ -63,7 +62,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
      */
     @Override
     @ReadOnlyConnection
-    public Map getRolePageList(Map paramsMap) throws Exception{
+    public Map getRolePageList(Map<String, String> paramsMap) throws Exception{
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
         //查询条件
@@ -73,7 +72,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
         //分页
         startPage(paramsMap);
         List<Role> roleList = roleMapper.selectByExample(example);
-        PageInfo<Role> pageInfo = new PageInfo(roleList);
+        PageInfo<Role> pageInfo = new PageInfo<>(roleList);
         long total = pageInfo.getTotal();
         return pageResult(roleList, total);
     }
@@ -149,7 +148,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
             paramsMap.put("adminId",String.valueOf(this.getLoginAdmin().getAdminId()));
         }
         List<Authority> allAuthorityList = roleSelfMapper.selectAuthorityByAdminId(paramsMap);
-        List zTreeNode = Lists.newArrayList();
+        List<Map<String, Object>> zTreeNode = Lists.newArrayList();
         HashMap<Integer, Map> authorityMap = Maps.newHashMap();
         allAuthorityList.forEach(authority -> {
             Map<String, Object> map = Maps.newHashMap();
@@ -160,14 +159,12 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
             Integer parentId = authority.getParentAuthorityId();
             Integer authorityId = authority.getAuthorityId();
             authorityMap.put(authorityId,map);
-            if (authorityList.contains(authorityId.intValue())){
+            if (authorityList.contains(authorityId)){
                 map.put("checked",true);
             }
             Map parent = authorityMap.get(parentId);
             if (parent != null){
-                if (parent != null){
-                    ((List)parent.get("data")).add(map);
-                }
+                ((List)parent.get("data")).add(map);
             }else{
                 zTreeNode.add(map);
             }
@@ -191,7 +188,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
         //添加新的权限
         String authorityIds = String.valueOf(paramsMap.get("authorityIds"));
         if (!ObjectUtil.isNull(authorityIds)){
-            List authorityIdList = Lists.newArrayList();
+            List<String> authorityIdList = Lists.newArrayList();
             String splitRegex = ",";
             for (String authorityId : authorityIds.split(splitRegex)) {
                 if (!ObjectUtil.isNull(authorityId) && !"on".equals(authorityId)){

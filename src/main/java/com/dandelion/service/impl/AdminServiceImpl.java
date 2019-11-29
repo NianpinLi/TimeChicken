@@ -89,7 +89,7 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
     @ReadOnlyConnection
     public List<Authority> getAuthorityByAdminId(Map<String,String> authorityParams,String page) throws Exception{
         String key = BaseRedisKey.ADMIN_AUTHORITY + page+ authorityParams.get("adminId");
-        List list = redisUtil.getList(key, Authority.class);
+        List<Authority> list = redisUtil.getList(key, Authority.class);
         if (list != null){
             return list;
         }
@@ -111,7 +111,7 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
     @ReadOnlyConnection
     public List<Role> getRoleByAdminId(Map<String,String> authorityParams) throws Exception{
         String key = BaseRedisKey.ADMIN_ROLE + authorityParams.get("adminId");
-        List list = redisUtil.getList(key, Role.class);
+        List<Role> list = redisUtil.getList(key, Role.class);
         if (list != null){
             return list;
         }
@@ -143,9 +143,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
         }
         return adminList.get(0);
     }
-
-
-
 
     /**
      * 查看所有用户
@@ -221,8 +218,8 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
             paramsMap.put("adminId",String.valueOf(this.getLoginAdmin().getAdminId()));
         }
         List<Role> allRoleList = adminSelfMapper.selectRoleByAdminId(paramsMap);
-        List zTreeNode = Lists.newArrayList();
-        HashMap<Integer, Map> roleMap = Maps.newHashMap();
+        List<Map<String, Object>> zTreeNode = Lists.newArrayList();
+        HashMap<Integer, Map<String, Object>> roleMap = Maps.newHashMap();
         allRoleList.forEach(role -> {
             Map<String, Object> map = Maps.newHashMap();
             map.put("value",role.getRoleId());
@@ -232,13 +229,13 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
             Integer parentId = role.getParentRoleId();
             Integer roleId = role.getRoleId();
             roleMap.put(roleId,map);
-            if (roleList.contains(roleId.intValue())){
+            if (roleList.contains(roleId)){
                 map.put("checked",true);
             }
             //非顶级菜单
-            Map parent = roleMap.get(parentId);
+            Map<String, Object> parent = roleMap.get(parentId);
             if (parent != null){
-                ((List)parent.get("data")).add(map);
+                ((List<Map<String, Object>>)parent.get("data")).add(map);
             }else{
                 zTreeNode.add(map);
             }
@@ -261,7 +258,7 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
         //添加新的权限
         String roleIds = String.valueOf(paramsMap.get("roleIds"));
         if (!ObjectUtil.isNull(roleIds)){
-            List roleIdList = Lists.newArrayList();
+            List<String> roleIdList = Lists.newArrayList();
             String splitRegex = ",";
             for (String roleId : roleIds.split(splitRegex)) {
                 if (!ObjectUtil.isNull(roleId) && !"on".equals(roleId)){
@@ -320,8 +317,8 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      */
     @Override
     @ReadOnlyConnection
-    public Map getIndexConfig() throws Exception{
-        Map indexConfig = Maps.newHashMap();
+    public Map<String,Object> getIndexConfig() throws Exception{
+        Map<String,Object> indexConfig = Maps.newHashMap();
 
         //清除缓存配置
         HashMap<String, Object> clearInfo = Maps.newHashMap();
@@ -363,9 +360,9 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
 
     /**
      * 修改密码
+     * @param paramsMap Map
      * @return Map
      * @throws Exception e
-     * @param paramsMap
      */
     @Override
     public Map savePassword(Map<String, String> paramsMap) throws Exception {
@@ -404,10 +401,10 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
         authorityParams.put("adminId",String.valueOf(admin.getAdminId()));
         authorityParams.put("authorityType","1");
         List<Authority> authorityList = this.getAuthorityByAdminId(authorityParams,"page_");
-        HashMap<Integer, Map> authorityMap = Maps.newHashMap();
-        HashMap<Integer, Map> authorityMenuMap = Maps.newHashMap();
+        HashMap<Integer, Map<String,Object>> authorityMap = Maps.newHashMap();
+        HashMap<Integer, Map<String,Object>> authorityMenuMap = Maps.newHashMap();
         for (Authority authority : authorityList) {
-            Map map  = Maps.newHashMap();
+            Map<String,Object> map  = Maps.newHashMap();
             map.put("title",authority.getAuthorityName());
             map.put("icon",authority.getAuthorityIcon());
             if (authority.getAuthorityUrl() != null && !"#".equals(authority.getAuthorityUrl())){
