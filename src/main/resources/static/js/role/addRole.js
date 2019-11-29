@@ -13,7 +13,7 @@ layui.use(['form', 'iconPickerFa', 'tableSelect'], function () {
             url:'/role/getRolePageList',
             cols: [
                 [
-                    { type: 'radio' },
+                    { type: 'radio'},
                     {field: 'roleId', title: '角色ID'},
                     {field: 'roleName', title: '角色名称'}
                 ]

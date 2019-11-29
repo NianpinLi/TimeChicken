@@ -44,7 +44,7 @@ layui.use(['table', 'table','form', 'treetable'], function () {
 
     $('#btn-add').click(function () {
         //新增角色弹窗
-        openDialog('新增角色','400','460','/role/addRole',currentTable);
+        openDialog('新增角色','440','480','/role/addRole',currentTable);
     });
 
     $('#btn-delete').click(function () {
@@ -87,7 +87,7 @@ layui.use(['table', 'table','form', 'treetable'], function () {
         } else if (layEvent === 'edit') {
             var url = '/role/updateRole?roleId='+data.roleId;
             //角色修改权限弹窗
-            openDialog('角色修改','500','600',url,currentTable);
+            openDialog('角色修改','440','480',url,currentTable);
 
         } else if(layEvent === 'empowerment'){
             var url = '/role/empowermentAuthority?roleId='+data.roleId;
