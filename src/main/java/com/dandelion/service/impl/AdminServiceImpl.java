@@ -369,7 +369,9 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      */
     @Override
     public Map savePassword(Map<String, String> paramsMap) throws Exception {
-        if (!paramsMap.get("newPassword").equals(paramsMap.get("againPassword"))){
+        String newPasswordKey = "newPassword";
+        String againPasswordKey = "againPassword";
+        if (!paramsMap.get(newPasswordKey).equals(paramsMap.get(againPasswordKey))){
             return errorResult(CommonMessage.ERROR,"新密码不一致",false);
         }
         Admin admin = this.getLoginAdmin();
