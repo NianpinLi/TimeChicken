@@ -3,6 +3,7 @@ package com.dandelion.dao;
 /**
  * className DataSourceContextHolder
  * description 标识存放ThreadLocal的实现
+ *
  * @author puyiliang
  * @date 2019/10/21 16:06
  */
@@ -13,7 +14,7 @@ public class DataSourceContextHolder {
      * MASTER 主
      * SLAVE 从
      */
-    public enum DataSourceType{
+    public enum DataSourceType {
         /**
          * 主
          */
@@ -26,18 +27,18 @@ public class DataSourceContextHolder {
 
     private static final ThreadLocal<DataSourceType> CONTEXT_HOLDER = new ThreadLocal<>();
 
-    public static void setDataSourceType(DataSourceType dbType){
-        if(dbType==null){
+    public static void setDataSourceType(DataSourceType dbType) {
+        if (dbType == null) {
             throw new NullPointerException();
         }
         CONTEXT_HOLDER.set(dbType);
     }
 
-    public static DataSourceType getDataSourceType(){
-        return CONTEXT_HOLDER.get()==null?DataSourceType.MASTER:CONTEXT_HOLDER.get();
+    public static DataSourceType getDataSourceType() {
+        return CONTEXT_HOLDER.get() == null ? DataSourceType.MASTER : CONTEXT_HOLDER.get();
     }
 
-    public static void clearDataSourceType(){
+    public static void clearDataSourceType() {
         CONTEXT_HOLDER.remove();
     }
 }

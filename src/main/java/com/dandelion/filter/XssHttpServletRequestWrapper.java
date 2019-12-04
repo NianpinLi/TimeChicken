@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * XssHttpServletRequestWrapper
- * @date      2019/10/15 14:28
- * @author    puyiliang
+ *
+ * @author puyiliang
  * Xss请求过滤
+ * @date 2019/10/15 14:28
  */
-public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper{
+public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     HttpServletRequest orgRequest = null;
     private boolean isIncludeRichText = false;
@@ -31,7 +32,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper{
     @Override
     public String getParameter(String name) {
         Boolean flag = ("content".equals(name) || name.endsWith("WithHtml"));
-        if( flag && !isIncludeRichText){
+        if (flag && !isIncludeRichText) {
             return super.getParameter(name);
         }
         name = JsoupUtil.clean(name);
@@ -45,8 +46,8 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper{
     @Override
     public String[] getParameterValues(String name) {
         String[] arr = super.getParameterValues(name);
-        if(arr != null){
-            for (int i=0;i<arr.length;i++) {
+        if (arr != null) {
+            for (int i = 0; i < arr.length; i++) {
                 arr[i] = JsoupUtil.clean(arr[i]);
             }
         }
@@ -71,6 +72,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper{
 
     /**
      * 获取最原始的request
+     *
      * @return HttpServletRequest
      */
     public HttpServletRequest getOrgRequest() {
@@ -79,6 +81,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper{
 
     /**
      * 获取最原始的request的静态方法
+     *
      * @return HttpServletRequest
      */
     public static HttpServletRequest getOrgRequest(HttpServletRequest req) {

@@ -16,9 +16,10 @@ import java.util.Map;
 
 /**
  * AuthorityController
- * @date      2019/9/20 17:17
- * @author    puyiliang
- *  权限控制管理模块
+ *
+ * @author puyiliang
+ * 权限控制管理模块
+ * @date 2019/9/20 17:17
  */
 @RequestMapping("/authority")
 @Controller
@@ -28,29 +29,33 @@ public class AuthorityController extends BaseController {
 
     /**
      * 跳转权限管理页面
+     *
      * @return String
      */
     @RequiresPermissions("/authority/getAuthority")
     @RequestMapping(value = "getAuthority", method = RequestMethod.GET)
-    public String getAuthority() throws Exception{
+    public String getAuthority() throws Exception {
         return this.disPlay();
     }
+
     /**
      * 查询所有权限列表
      */
     @RequiresPermissions("/authority/getAuthorityList")
     @RequestMapping(value = "getAuthorityList", method = RequestMethod.GET)
-    public @ResponseBody Map getAuthorityList(@RequestParam Map<String, String> paramsMap) throws Exception{
+    public @ResponseBody
+    Map getAuthorityList(@RequestParam Map<String, String> paramsMap) throws Exception {
         return authorityService.getAuthorityList(paramsMap);
     }
 
     /**
      * 跳转添加权限页面
+     *
      * @return String
      */
     @RequiresPermissions("/authority/addAuthority")
     @RequestMapping(value = "addAuthority", method = RequestMethod.GET)
-    public String addAuthority(){
+    public String addAuthority() {
         return this.disPlay();
     }
 
@@ -59,29 +64,32 @@ public class AuthorityController extends BaseController {
      */
     @RequiresPermissions("/authority/addAuthority")
     @RequestMapping(value = "getAuthorityPageList", method = RequestMethod.GET)
-    public @ResponseBody Map getAuthorityPageList(@RequestParam Map<String, String> paramsMap) throws Exception{
+    public @ResponseBody
+    Map getAuthorityPageList(@RequestParam Map<String, String> paramsMap) throws Exception {
         return authorityService.getAuthorityPageList(paramsMap);
     }
 
     /**
      * 跳转修改权限页面
+     *
      * @return String
      */
     @RequiresPermissions("/authority/updateAuthority")
     @RequestMapping(value = "updateAuthority", method = RequestMethod.GET)
-    public String updateAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
+    public String updateAuthority(@RequestParam Map<String, String> paramsMap) throws Exception {
         //查询权限数据并存入作用域
         Authority authority = authorityService.getAuthorityById(paramsMap);
-        this.setAttribute("authority",authority);
+        this.setAttribute("authority", authority);
         return this.disPlay();
     }
 
     /**
      * 新增/修改 权限
      */
-    @RequiresPermissions(value={"/authority/addAuthority","/authority/updateAuthority"},logical= Logical.OR)
+    @RequiresPermissions(value = {"/authority/addAuthority", "/authority/updateAuthority"}, logical = Logical.OR)
     @RequestMapping(value = "saveAuthority", method = RequestMethod.POST)
-    public @ResponseBody Map saveAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
+    public @ResponseBody
+    Map saveAuthority(@RequestParam Map<String, String> paramsMap) throws Exception {
         return authorityService.saveAuthority(paramsMap);
     }
 
@@ -89,7 +97,8 @@ public class AuthorityController extends BaseController {
      * 删除权限
      */
     @RequestMapping(value = "deleteAuthority", method = RequestMethod.POST)
-    public @ResponseBody Map deleteAuthority(@RequestParam Map<String, String> paramsMap) throws Exception{
+    public @ResponseBody
+    Map deleteAuthority(@RequestParam Map<String, String> paramsMap) throws Exception {
         return authorityService.deleteAuthority(paramsMap);
     }
 }

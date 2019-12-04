@@ -14,12 +14,13 @@ import java.util.regex.Pattern;
 
 /**
  * XssFilter
- * @date      2019/10/15 14:21
- * @author    puyiliang
- *  Xss 攻击过滤器
+ *
+ * @author puyiliang
+ * Xss 攻击过滤器
+ * @date 2019/10/15 14:21
  */
 @Slf4j
-public class XssFilter implements Filter{
+public class XssFilter implements Filter {
     /**
      * 是否过滤富文本内容
      */
@@ -28,15 +29,15 @@ public class XssFilter implements Filter{
     public List<String> excludes = Lists.newArrayList();
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException,ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        if(handleExcludeUrl(req, resp)){
+        if (handleExcludeUrl(req, resp)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request,IS_INCLUDE_RICH_TEXT);
+        XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request, IS_INCLUDE_RICH_TEXT);
         filterChain.doFilter(xssRequest, response);
     }
 
@@ -61,7 +62,7 @@ public class XssFilter implements Filter{
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         String isIncludeRichText = filterConfig.getInitParameter("isIncludeRichText");
-        if(!ObjectUtil.isNull(isIncludeRichText)){
+        if (!ObjectUtil.isNull(isIncludeRichText)) {
             IS_INCLUDE_RICH_TEXT = Boolean.parseBoolean(isIncludeRichText);
         }
         String temp = filterConfig.getInitParameter("excludes");
@@ -74,6 +75,7 @@ public class XssFilter implements Filter{
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 
 }
