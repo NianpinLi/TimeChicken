@@ -338,4 +338,71 @@
     </if>
     limit 1
   </select>
+  <insert id="batchInsert" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      这个节点为代码生成工具生成，请不要修改!
+      @author generator
+    -->
+    insert into authority (authority_id, authority_name, authority_url, authority_icon, authority_identifier, authority_level, parent_authority_id, authority_status, authority_type, create_id, create_name, create_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+       (#{item.authorityId,jdbcType=INTEGER}, #{item.authorityName,jdbcType=VARCHAR}, #{item.authorityUrl,jdbcType=VARCHAR}, #{item.authorityIcon,jdbcType=VARCHAR}, #{item.authorityIdentifier,jdbcType=INTEGER}, #{item.authorityLevel,jdbcType=INTEGER}, #{item.parentAuthorityId,jdbcType=INTEGER}, #{item.authorityStatus,jdbcType=INTEGER}, #{item.authorityType,jdbcType=INTEGER}, #{item.createId,jdbcType=INTEGER}, #{item.createName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="batchInsertSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      这个节点为代码生成工具生成，请不要修改!
+      @author generator
+    -->
+    insert into authority (
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      <foreach collection="selective" item="column" separator=",">
+        <if test="'authority_id' == column.value">
+          #{item.authorityId,jdbcType=INTEGER}
+        </if>
+        <if test="'authority_name' == column.value">
+          #{item.authorityName,jdbcType=VARCHAR}
+        </if>
+        <if test="'authority_url' == column.value">
+          #{item.authorityUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="'authority_icon' == column.value">
+          #{item.authorityIcon,jdbcType=VARCHAR}
+        </if>
+        <if test="'authority_identifier' == column.value">
+          #{item.authorityIdentifier,jdbcType=INTEGER}
+        </if>
+        <if test="'authority_level' == column.value">
+          #{item.authorityLevel,jdbcType=INTEGER}
+        </if>
+        <if test="'parent_authority_id' == column.value">
+          #{item.parentAuthorityId,jdbcType=INTEGER}
+        </if>
+        <if test="'authority_status' == column.value">
+          #{item.authorityStatus,jdbcType=INTEGER}
+        </if>
+        <if test="'authority_type' == column.value">
+          #{item.authorityType,jdbcType=INTEGER}
+        </if>
+        <if test="'create_id' == column.value">
+          #{item.createId,jdbcType=INTEGER}
+        </if>
+        <if test="'create_name' == column.value">
+          #{item.createName,jdbcType=VARCHAR}
+        </if>
+        <if test="'create_time' == column.value">
+          #{item.createTime,jdbcType=VARCHAR}
+        </if>
+      </foreach>
+      )
+    </foreach>
+  </insert>
 </mapper>

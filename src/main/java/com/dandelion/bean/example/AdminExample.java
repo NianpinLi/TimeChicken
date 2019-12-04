@@ -1,6 +1,6 @@
 /**
  *@author generator
- *@date 2019-10-30
+ *@date 2019-12-04
  */
 package com.dandelion.bean.example;
 
@@ -146,7 +146,7 @@ public class AdminExample {
     }
 
     /**
-     * admin 2019-10-30
+     * admin 2019-12-04
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -519,6 +519,136 @@ public class AdminExample {
             return (Criteria) this;
         }
 
+        public Criteria andOrganizationIdIsNull() {
+            addCriterion("organization_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdIsNotNull() {
+            addCriterion("organization_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdEqualTo(Integer value) {
+            addCriterion("organization_id =", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdNotEqualTo(Integer value) {
+            addCriterion("organization_id <>", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdGreaterThan(Integer value) {
+            addCriterion("organization_id >", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("organization_id >=", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdLessThan(Integer value) {
+            addCriterion("organization_id <", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdLessThanOrEqualTo(Integer value) {
+            addCriterion("organization_id <=", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdIn(List<Integer> values) {
+            addCriterion("organization_id in", values, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdNotIn(List<Integer> values) {
+            addCriterion("organization_id not in", values, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdBetween(Integer value1, Integer value2) {
+            addCriterion("organization_id between", value1, value2, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("organization_id not between", value1, value2, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameIsNull() {
+            addCriterion("organization_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameIsNotNull() {
+            addCriterion("organization_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameEqualTo(String value) {
+            addCriterion("organization_name =", value, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameNotEqualTo(String value) {
+            addCriterion("organization_name <>", value, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameGreaterThan(String value) {
+            addCriterion("organization_name >", value, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameGreaterThanOrEqualTo(String value) {
+            addCriterion("organization_name >=", value, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameLessThan(String value) {
+            addCriterion("organization_name <", value, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameLessThanOrEqualTo(String value) {
+            addCriterion("organization_name <=", value, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameLike(String value) {
+            addCriterion("organization_name like", value, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameNotLike(String value) {
+            addCriterion("organization_name not like", value, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameIn(List<String> values) {
+            addCriterion("organization_name in", values, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameNotIn(List<String> values) {
+            addCriterion("organization_name not in", values, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameBetween(String value1, String value2) {
+            addCriterion("organization_name between", value1, value2, "organizationName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationNameNotBetween(String value1, String value2) {
+            addCriterion("organization_name not between", value1, value2, "organizationName");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateIdIsNull() {
             addCriterion("create_id is null");
             return (Criteria) this;
@@ -770,7 +900,7 @@ public class AdminExample {
     }
 
     /**
-     * admin 2019-10-30
+     * admin 2019-12-04
      */
     public static class Criterion {
         private String condition;

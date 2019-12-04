@@ -31,6 +31,8 @@
         <plugin type="com.dandelion.plugins.ModelBuilderPlugin" />
         <plugin type="com.dandelion.plugins.ModelColumnPlugin" />
         <plugin type="com.dandelion.plugins.UpsertPlugin" />
+        <!-- 批量插入插件 -->
+        <plugin type="com.dandelion.plugins.BatchInsertPlugin" />
 
         <!-- 重命名生成的 Example和其中的 Criteria-->
         <!--<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin" >-->
@@ -50,7 +52,7 @@
 
         <!-- 配置数据源 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/family?serverTimezone=UTC"
+                        connectionURL="jdbc:mysql://localhost:3306/my-project?serverTimezone=UTC"
                         userId="root"
                         password="Duan1217!">
         </jdbcConnection>
@@ -62,18 +64,18 @@
         </javaTypeResolver>
 
         <!-- 配置生成的javabean所存放的路径和包（使用绝对路径） -->
-        <javaModelGenerator targetPackage="com.dandelion.bean" targetProject="C:\workspace\family\src\main\java">
+        <javaModelGenerator targetPackage="com.dandelion.bean" targetProject="C:\workspace_one\family\src\main\java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
         <!-- 配置生成的**Mapper.xml文件所存放的路径和包（使用绝对路径） -->
-        <sqlMapGenerator targetPackage="generator"  targetProject="C:\workspace\family\src\main\resources\mybatis">
+        <sqlMapGenerator targetPackage="generator"  targetProject="C:\workspace_one\family\src\main\resources\mybatis">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
         <!-- 配置生成的**Mapper.java接口文件所存放的路径和包（使用绝对路径） -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dandelion.dao.generator"  targetProject="C:\workspace\family\src\main\java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dandelion.dao.generator"  targetProject="C:\workspace_one\family\src\main\java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 

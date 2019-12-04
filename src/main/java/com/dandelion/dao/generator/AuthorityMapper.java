@@ -1,6 +1,6 @@
 /**
  *@author generator
- *@date 2019-10-30
+ *@date 2019-12-04
  */
 package com.dandelion.dao.generator;
 
@@ -95,4 +95,19 @@ public interface AuthorityMapper {
      *@return com.dandelion.bean.Authority
      */
     Authority selectOneByExample(AuthorityExample example);
+
+    /**
+     *自动生成方法
+     *@param list generator
+     *@return int
+     */
+    int batchInsert(@Param("list") List<Authority> list);
+
+    /**
+     *自动生成方法
+     *@param list generator
+     *@param selective generator
+     *@return int
+     */
+    int batchInsertSelective(@Param("list") List<Authority> list, @Param("selective") Authority.Column ... selective);
 }

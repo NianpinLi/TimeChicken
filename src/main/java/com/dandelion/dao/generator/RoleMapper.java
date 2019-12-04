@@ -1,6 +1,6 @@
 /**
  *@author generator
- *@date 2019-10-30
+ *@date 2019-12-04
  */
 package com.dandelion.dao.generator;
 
@@ -95,4 +95,19 @@ public interface RoleMapper {
      *@return com.dandelion.bean.Role
      */
     Role selectOneByExample(RoleExample example);
+
+    /**
+     *自动生成方法
+     *@param list generator
+     *@return int
+     */
+    int batchInsert(@Param("list") List<Role> list);
+
+    /**
+     *自动生成方法
+     *@param list generator
+     *@param selective generator
+     *@return int
+     */
+    int batchInsertSelective(@Param("list") List<Role> list, @Param("selective") Role.Column ... selective);
 }

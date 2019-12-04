@@ -273,4 +273,59 @@
     </if>
     limit 1
   </select>
+  <insert id="batchInsert" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      这个节点为代码生成工具生成，请不要修改!
+      @author generator
+    -->
+    insert into role (role_id, role_name, role_status, role_describe, parent_role_id, create_id, create_name, create_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+       (#{item.roleId,jdbcType=INTEGER}, #{item.roleName,jdbcType=VARCHAR}, #{item.roleStatus,jdbcType=INTEGER}, #{item.roleDescribe,jdbcType=VARCHAR}, #{item.parentRoleId,jdbcType=INTEGER}, #{item.createId,jdbcType=INTEGER}, #{item.createName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="batchInsertSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      这个节点为代码生成工具生成，请不要修改!
+      @author generator
+    -->
+    insert into role (
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      <foreach collection="selective" item="column" separator=",">
+        <if test="'role_id' == column.value">
+          #{item.roleId,jdbcType=INTEGER}
+        </if>
+        <if test="'role_name' == column.value">
+          #{item.roleName,jdbcType=VARCHAR}
+        </if>
+        <if test="'role_status' == column.value">
+          #{item.roleStatus,jdbcType=INTEGER}
+        </if>
+        <if test="'role_describe' == column.value">
+          #{item.roleDescribe,jdbcType=VARCHAR}
+        </if>
+        <if test="'parent_role_id' == column.value">
+          #{item.parentRoleId,jdbcType=INTEGER}
+        </if>
+        <if test="'create_id' == column.value">
+          #{item.createId,jdbcType=INTEGER}
+        </if>
+        <if test="'create_name' == column.value">
+          #{item.createName,jdbcType=VARCHAR}
+        </if>
+        <if test="'create_time' == column.value">
+          #{item.createTime,jdbcType=VARCHAR}
+        </if>
+      </foreach>
+      )
+    </foreach>
+  </insert>
 </mapper>

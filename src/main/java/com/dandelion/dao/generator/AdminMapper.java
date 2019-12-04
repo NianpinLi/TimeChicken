@@ -1,6 +1,6 @@
 /**
  *@author generator
- *@date 2019-10-30
+ *@date 2019-12-04
  */
 package com.dandelion.dao.generator;
 
@@ -95,4 +95,19 @@ public interface AdminMapper {
      *@return com.dandelion.bean.Admin
      */
     Admin selectOneByExample(AdminExample example);
+
+    /**
+     *自动生成方法
+     *@param list generator
+     *@return int
+     */
+    int batchInsert(@Param("list") List<Admin> list);
+
+    /**
+     *自动生成方法
+     *@param list generator
+     *@param selective generator
+     *@return int
+     */
+    int batchInsertSelective(@Param("list") List<Admin> list, @Param("selective") Admin.Column ... selective);
 }
