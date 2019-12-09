@@ -44,4 +44,27 @@ public class ObjectUtil {
         }
         return true;
     }
+
+
+    /**
+     * 判断对象是否为数字
+     * @param obj Object
+     * @return boolean
+     */
+    public static boolean isNumber (Object obj) {
+        if (obj == null){
+            return false;
+        }
+        if (obj instanceof Number) {
+            return true;
+        } else if (obj instanceof String){
+            try{
+                Double.parseDouble((String)obj);
+                return true;
+            }catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
 }

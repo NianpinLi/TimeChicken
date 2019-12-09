@@ -20,6 +20,8 @@ public class StringUtil {
 
     private static Pattern upCase = Pattern.compile("[A-Z]");
 
+    public static String nullStr = "null";
+
     /**
      * 下划线转驼峰
      * @param str String
@@ -86,6 +88,19 @@ public class StringUtil {
             return str;
         }
         return str.substring(0,1).toLowerCase() + str.substring(1);
+    }
+
+    /**
+     * 判断字符串如果是null 将其转换为" "
+     * @param str String
+     * @return String
+     */
+    public static String castStringNullToEmpty(String str){
+        if (ObjectUtil.isNull(str) || nullStr.equals(str.toLowerCase())){
+            return " ";
+        }else {
+            return str;
+        }
     }
 
     /**
