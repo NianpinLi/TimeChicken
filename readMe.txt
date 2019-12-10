@@ -24,4 +24,4 @@
 1.项目编码请严格遵守阿里编码守则
 2.项目编码使用 Alibaba Java Coding Guidelines 做代码检查
 3.增删改需在Service方法上添加 @Transactional(rollbackFor=Exception.class) 注解做事务控制
-4.导出功能设计（必须先查询导出总量, 然后分批次查询导出POI以节约内容,POI使用 WorkBook workBook = new SXSSFWorkBook(size); size 必须指定大小以节约系统内存,一般不大于500）
+4.导出功能设计- 导出必须使用线程，不能直接导出，（必须先查询导出总量, 然后分批次查询导出POI以节约内容,POI使用 WorkBook workBook = new SXSSFWorkBook(size); size 必须指定大小以节约系统内存,一般不大于500）

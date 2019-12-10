@@ -17,14 +17,11 @@ public class BaseScheduled {
     /**
      * 定时任务1
      */
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 1800000)
     public void printOne(){
         try{
-            //睡眠半小时
-            Thread.sleep(60000 * 30);
             //打印当前线程名字
             log.info("定时任务1"+Thread.currentThread().getName());
-
         }catch (Exception e){
             log.error(e.getMessage());
         }
@@ -33,14 +30,11 @@ public class BaseScheduled {
     /**
      * 定时任务2
      */
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 1800000)
     public void printTwo(){
         try{
-            //睡眠半小时
-            Thread.sleep(60000 * 30);
             //打印当前线程名字
             log.info("定时任务2"+Thread.currentThread().getName());
-
         }catch (Exception e){
             log.error(e.getMessage());
         }
