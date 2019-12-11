@@ -39,13 +39,14 @@
                 <div class="layui-form-item logo-title">
                     <h1>用户登录</h1>
                 </div>
+                <span style="align-content: center;color: red" th:if="${not #strings.isEmpty(errorMsg)}" th:text="${errorMsg}"></span>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="adminName"></label>
-                    <input type="text" name="adminName" lay-verify="required|account" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input">
+                    <input type="text" name="adminName" th:value="${admin?.adminName}" lay-verify="required|account" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="adminPassword"></label>
-                    <input type="password" name="adminPassword" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="adminPassword" th:value="${admin?.adminPassword}" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
@@ -74,16 +75,12 @@
             lineColor:'#5cbdaa'
         });
     });
-//    layui.use(['form'], function () {
-//        var form = layui.form,
-//            layer = layui.layer;
-//
-//        // 登录过期的时候，跳出ifram框架
-//        if (top.location != self.location) top.location = self.location;
-
-        // 粒子线条背景
-
-//    });
+    // layui.use(['form'], function () {
+    //     // 登录过期的时候，跳出ifram框架
+    //     if (top.location != self.location) {
+    //         top.location = self.location;
+    //     }
+    // });
 </script>
 </body>
 </html>

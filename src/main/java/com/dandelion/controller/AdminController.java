@@ -43,7 +43,8 @@ public class AdminController extends BaseController {
         if (CommonMessage.SUCCESS.equals(code)) {
             return "index/index";
         } else {
-            setAttribute("error", map.get("message"));
+            this.setAttribute("admin", paramsMap);
+            this.setAttribute("errorMsg", map.get("msg"));
             return "common/login";
         }
     }

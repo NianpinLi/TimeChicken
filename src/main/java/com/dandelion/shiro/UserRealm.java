@@ -4,6 +4,7 @@ import com.dandelion.bean.Admin;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
 import com.dandelion.service.AdminService;
+import com.dandelion.utils.ObjectUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,14 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken){
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String adminName = token.getUsername();
+        if(ObjectUtil.isNull(adminName)){
+            //账号不存在（为空）
+            throw new UnknownAccountException();
+        }
+        if(ObjectUtil.isNull(token.getPassword())){
+            //密码错误
+            throw new IncorrectCredentialsException();
+        }
         String adminPassword = String.valueOf(token.getPassword());
         Admin reqAdmin = new Admin();
         reqAdmin.setAdminName(adminName);
@@ -52,6 +61,7 @@ public class UserRealm extends AuthorizingRealm {
             log.error("系统错误", e);
         }
         if (admin == null){
+            //账户不存在
             throw new UnknownAccountException();
         }
         // 存入用户信息
