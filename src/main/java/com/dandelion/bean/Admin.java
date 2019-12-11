@@ -1,6 +1,6 @@
 /**
  *@author generator
- *@date 2019-12-04
+ *@date 2019-12-11
  */
 package com.dandelion.bean;
 
@@ -31,16 +31,6 @@ public class Admin implements Serializable {
      * 用户真实姓名
      */
     private String realName;
-
-    /**
-     * 所属机构ID
-     */
-    private Integer organizationId;
-
-    /**
-     * 所属机构
-     */
-    private String organizationName;
 
     /**
      * 创建人ID
@@ -143,38 +133,6 @@ public class Admin implements Serializable {
     }
 
     /**
-     * 所属机构ID
-     * @return organization_id 所属机构ID
-     */
-    public Integer getOrganizationId() {
-        return organizationId;
-    }
-
-    /**
-     * 所属机构ID
-     * @param organizationId 所属机构ID
-     */
-    public void setOrganizationId(Integer organizationId) {
-        this.organizationId = organizationId;
-    }
-
-    /**
-     * 所属机构
-     * @return organization_name 所属机构
-     */
-    public String getOrganizationName() {
-        return organizationName;
-    }
-
-    /**
-     * 所属机构
-     * @param organizationName 所属机构
-     */
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName == null ? null : organizationName.trim();
-    }
-
-    /**
      * 创建人ID
      * @return create_id 创建人ID
      */
@@ -237,8 +195,6 @@ public class Admin implements Serializable {
         sb.append(", adminPassword=").append(adminPassword);
         sb.append(", adminStatus=").append(adminStatus);
         sb.append(", realName=").append(realName);
-        sb.append(", organizationId=").append(organizationId);
-        sb.append(", organizationName=").append(organizationName);
         sb.append(", createId=").append(createId);
         sb.append(", createName=").append(createName);
         sb.append(", createTime=").append(createTime);
@@ -323,26 +279,6 @@ public class Admin implements Serializable {
 
         /**
          *自动生成方法
-         *@param organizationId generator
-         *@return Builder
-         */
-        public Builder organizationId(Integer organizationId) {
-            obj.organizationId = organizationId;
-            return this;
-        }
-
-        /**
-         *自动生成方法
-         *@param organizationName generator
-         *@return Builder
-         */
-        public Builder organizationName(String organizationName) {
-            obj.organizationName = organizationName;
-            return this;
-        }
-
-        /**
-         *自动生成方法
          *@param createId generator
          *@return Builder
          */
@@ -398,10 +334,6 @@ adminPassword("admin_password"),
 adminStatus("admin_status"),
         /**real_name */
 realName("real_name"),
-        /**organization_id */
-organizationId("organization_id"),
-        /**organization_name */
-organizationName("organization_name"),
         /**create_id */
 createId("create_id"),
         /**create_name */

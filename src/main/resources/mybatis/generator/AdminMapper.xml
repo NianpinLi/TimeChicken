@@ -7,8 +7,6 @@
     <result column="admin_password" jdbcType="VARCHAR" property="adminPassword" />
     <result column="admin_status" jdbcType="TINYINT" property="adminStatus" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
-    <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
-    <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
     <result column="create_id" jdbcType="INTEGER" property="createId" />
     <result column="create_name" jdbcType="VARCHAR" property="createName" />
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
@@ -72,8 +70,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    admin_id, admin_name, admin_password, admin_status, real_name, organization_id, organization_name, 
-    create_id, create_name, create_time
+    admin_id, admin_name, admin_password, admin_status, real_name, create_id, create_name, 
+    create_time
   </sql>
   <select id="selectByExample" parameterType="com.dandelion.bean.example.AdminExample" resultMap="BaseResultMap">
     select
@@ -107,13 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.dandelion.bean.Admin">
     insert into admin (admin_id, admin_name, admin_password, 
-      admin_status, real_name, organization_id, 
-      organization_name, create_id, create_name, 
-      create_time)
+      admin_status, real_name, create_id, 
+      create_name, create_time)
     values (#{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR}, 
-      #{adminStatus,jdbcType=TINYINT}, #{realName,jdbcType=VARCHAR}, #{organizationId,jdbcType=INTEGER}, 
-      #{organizationName,jdbcType=VARCHAR}, #{createId,jdbcType=INTEGER}, #{createName,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=VARCHAR})
+      #{adminStatus,jdbcType=TINYINT}, #{realName,jdbcType=VARCHAR}, #{createId,jdbcType=INTEGER}, 
+      #{createName,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dandelion.bean.Admin">
     insert into admin
@@ -132,12 +128,6 @@
       </if>
       <if test="realName != null">
         real_name,
-      </if>
-      <if test="organizationId != null">
-        organization_id,
-      </if>
-      <if test="organizationName != null">
-        organization_name,
       </if>
       <if test="createId != null">
         create_id,
@@ -164,12 +154,6 @@
       </if>
       <if test="realName != null">
         #{realName,jdbcType=VARCHAR},
-      </if>
-      <if test="organizationId != null">
-        #{organizationId,jdbcType=INTEGER},
-      </if>
-      <if test="organizationName != null">
-        #{organizationName,jdbcType=VARCHAR},
       </if>
       <if test="createId != null">
         #{createId,jdbcType=INTEGER},
@@ -206,12 +190,6 @@
       <if test="record.realName != null">
         real_name = #{record.realName,jdbcType=VARCHAR},
       </if>
-      <if test="record.organizationId != null">
-        organization_id = #{record.organizationId,jdbcType=INTEGER},
-      </if>
-      <if test="record.organizationName != null">
-        organization_name = #{record.organizationName,jdbcType=VARCHAR},
-      </if>
       <if test="record.createId != null">
         create_id = #{record.createId,jdbcType=INTEGER},
       </if>
@@ -233,8 +211,6 @@
       admin_password = #{record.adminPassword,jdbcType=VARCHAR},
       admin_status = #{record.adminStatus,jdbcType=TINYINT},
       real_name = #{record.realName,jdbcType=VARCHAR},
-      organization_id = #{record.organizationId,jdbcType=INTEGER},
-      organization_name = #{record.organizationName,jdbcType=VARCHAR},
       create_id = #{record.createId,jdbcType=INTEGER},
       create_name = #{record.createName,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=VARCHAR}
@@ -257,12 +233,6 @@
       <if test="realName != null">
         real_name = #{realName,jdbcType=VARCHAR},
       </if>
-      <if test="organizationId != null">
-        organization_id = #{organizationId,jdbcType=INTEGER},
-      </if>
-      <if test="organizationName != null">
-        organization_name = #{organizationName,jdbcType=VARCHAR},
-      </if>
       <if test="createId != null">
         create_id = #{createId,jdbcType=INTEGER},
       </if>
@@ -281,8 +251,6 @@
       admin_password = #{adminPassword,jdbcType=VARCHAR},
       admin_status = #{adminStatus,jdbcType=TINYINT},
       real_name = #{realName,jdbcType=VARCHAR},
-      organization_id = #{organizationId,jdbcType=INTEGER},
-      organization_name = #{organizationName,jdbcType=VARCHAR},
       create_id = #{createId,jdbcType=INTEGER},
       create_name = #{createName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=VARCHAR}
@@ -311,10 +279,10 @@
       这个节点为代码生成工具生成，请不要修改!
       @author generator
     -->
-    insert into admin (admin_id, admin_name, admin_password, admin_status, real_name, organization_id, organization_name, create_id, create_name, create_time)
+    insert into admin (admin_id, admin_name, admin_password, admin_status, real_name, create_id, create_name, create_time)
     values
     <foreach collection="list" item="item" separator=",">
-       (#{item.adminId,jdbcType=INTEGER}, #{item.adminName,jdbcType=VARCHAR}, #{item.adminPassword,jdbcType=VARCHAR}, #{item.adminStatus,jdbcType=TINYINT}, #{item.realName,jdbcType=VARCHAR}, #{item.organizationId,jdbcType=INTEGER}, #{item.organizationName,jdbcType=VARCHAR}, #{item.createId,jdbcType=INTEGER}, #{item.createName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR})
+       (#{item.adminId,jdbcType=INTEGER}, #{item.adminName,jdbcType=VARCHAR}, #{item.adminPassword,jdbcType=VARCHAR}, #{item.adminStatus,jdbcType=TINYINT}, #{item.realName,jdbcType=VARCHAR}, #{item.createId,jdbcType=INTEGER}, #{item.createName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR})
     </foreach>
   </insert>
   <insert id="batchInsertSelective" parameterType="map">
@@ -346,12 +314,6 @@
         </if>
         <if test="'real_name' == column.value">
           #{item.realName,jdbcType=VARCHAR}
-        </if>
-        <if test="'organization_id' == column.value">
-          #{item.organizationId,jdbcType=INTEGER}
-        </if>
-        <if test="'organization_name' == column.value">
-          #{item.organizationName,jdbcType=VARCHAR}
         </if>
         <if test="'create_id' == column.value">
           #{item.createId,jdbcType=INTEGER}
