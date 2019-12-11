@@ -31,6 +31,8 @@
         <plugin type="com.dandelion.plugins.ModelBuilderPlugin" />
         <plugin type="com.dandelion.plugins.ModelColumnPlugin" />
         <plugin type="com.dandelion.plugins.UpsertPlugin" />
+        <!-- 覆写xml 插件 -->
+        <plugin type="com.dandelion.plugins.OverwriteXmlPlugin" />
         <!-- 批量插入插件 -->
         <plugin type="com.dandelion.plugins.BatchInsertPlugin" />
 
