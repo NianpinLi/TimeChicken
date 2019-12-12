@@ -4,6 +4,7 @@ import com.dandelion.base.BaseController;
 import com.dandelion.base.CommonMessage;
 import com.dandelion.bean.Admin;
 import com.dandelion.service.AdminService;
+import com.dandelion.utils.ObjectUtil;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,9 @@ public class AdminController extends BaseController {
         if (CommonMessage.SUCCESS.equals(code)) {
             return "index/index";
         } else {
-            this.setAttribute("admin", paramsMap);
+            if (!ObjectUtil.isNull(paramsMap) && paramsMap.size() > 0){
+                this.setAttribute("admin", paramsMap);
+            }
             this.setAttribute("errorMsg", map.get("msg"));
             return "common/login";
         }
