@@ -28,11 +28,6 @@ import java.util.Map;
  */
 public class BaseServiceImpl<T, PK extends Serializable> {
 
-    private String fieldSort = "field";
-    private String orderSort = "order";
-    private int isNullType = 2;
-    private int inType = 3;
-    private int likeType = 1;
     private String stringClass = "java.lang.String";
     private String intClass = "java.lang.Integer";
     private String intName = "int";
@@ -53,24 +48,9 @@ public class BaseServiceImpl<T, PK extends Serializable> {
     private String bigDecimalClass = "java.math.BigDecimal";
     private String bigIntegerClass = "java.math.BigInteger";
 
-    private String equalTo= "equalTo";
-    private String notEqualTo= "notEqualTo";
-    private String greaterThanOrEqualTo= "greaterThanOrEqualTo";
-    private String greaterThan= "greaterThan";
-    private String lessThanOrEqualTo= "lessThanOrEqualTo";
-    private String lessThan= "lessThan";
-    private String between= "between";
-    private String notBetween= "notBetween";
-    private String in= "in";
-    private String notIn= "notIn";
-    private String isNull= "isNull";
-    private String isNotNull= "isNotNull";
-    private String like= "like";
-    private String notLike= "notLike";
-
-
-
     protected void setOrderByClause(Map<String, String> paramsMap, Object example, String beanName) throws Exception{
+        String fieldSort = "field";
+        String orderSort = "order";
         if(!ObjectUtil.isNull(paramsMap.get(fieldSort)) && !ObjectUtil.isNull(paramsMap.get(orderSort))){
             String field = paramsMap.get(fieldSort);
             String order = paramsMap.get(orderSort);
@@ -93,7 +73,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
         //获取实体BeanClass
         Class beanClass = Class.forName("com.dandelion.bean." + beanName);
         for (String key : paramsMap.keySet()) {
-            StringBuffer methodBuffer = new StringBuffer("and");
+            StringBuilder methodBuilder = new StringBuilder("and");
             if (ObjectUtil.isNull(paramsMap.get(key))){
                 continue;
             }
@@ -107,7 +87,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
                 //不支持的参数
                 continue;
             }
-            methodBuffer.append(methodArray[0]).append(methodArray[1]);
+            methodBuilder.append(methodArray[0]).append(methodArray[1]);
             Class criteriaClass = object.getClass();
             //方法名
             String attribute = StringUtil.stringFirstLowCase(methodArray[0]);
@@ -116,20 +96,21 @@ public class BaseServiceImpl<T, PK extends Serializable> {
             String value = String.valueOf(paramsMap.get(key));
             if(type == 2){
                 // isNull
-                Method method = criteriaClass.getMethod(methodBuffer.toString());
+                Method method = criteriaClass.getMethod(methodBuilder.toString());
                 method.invoke(object);
                 return;
             }
             if (type == 3){
                 // in
-                Method method = criteriaClass.getMethod(methodBuffer.toString(), List.class);
+                Method method = criteriaClass.getMethod(methodBuilder.toString(), List.class);
                 invokeListMethod(method,attributeType,object,value);
                 return;
             }
-            Method method = criteriaClass.getMethod(methodBuffer.toString(), attributeType);
-            switch (type){
-                case 1:method.invoke(object,"%"+value+"%");break;
-                default:invokeMethod(method,attributeType,object,value);break;
+            Method method = criteriaClass.getMethod(methodBuilder.toString(), attributeType);
+            if(type == 1){
+                method.invoke(object,"%"+value+"%");
+            }else{
+                invokeMethod(method,attributeType,object,value);
             }
         }
     }
@@ -157,6 +138,8 @@ public class BaseServiceImpl<T, PK extends Serializable> {
         //获取属性类型Class
         Class attributeType = beanClass.getDeclaredField(attribute).getType();
         Class criteriaClass = object.getClass();
+        int isNullType = 2;
+        int inType = 3;
         if(type == isNullType){
             // isNull
             Method method = criteriaClass.getMethod(methodBuffer.toString());
@@ -276,56 +259,73 @@ public class BaseServiceImpl<T, PK extends Serializable> {
     }
 
     private Map getMethodMap(String key){
+        String equalTo= "equalTo";
+        String notEqualTo= "notEqualTo";
+        String greaterThanOrEqualTo= "greaterThanOrEqualTo";
+        String greaterThan= "greaterThan";
+        String lessThanOrEqualTo= "lessThanOrEqualTo";
+        String lessThan= "lessThan";
+        String between= "between";
+        String notBetween= "notBetween";
+        String in= "in";
+        String notIn= "notIn";
+        String isNull= "isNull";
+        String isNotNull= "isNotNull";
+        String like= "like";
+        String notLike= "notLike";
+        int likeType = 1;
         int type = 0;
+        int length = key.length();
+
         String[] methodArray = new String[2];
         if (key.startsWith(equalTo)){
-            methodArray[0] = key.substring(7,key.length());
+            methodArray[0] = key.substring(7,length);
             methodArray[1] = "EqualTo";
         }else if (key.startsWith(notEqualTo)){
-            methodArray[0] = key.substring(10,key.length());
+            methodArray[0] = key.substring(10,length);
             methodArray[1] = "NotEqualTo";
         }else if (key.startsWith(greaterThanOrEqualTo)){
-            methodArray[0] = key.substring(20,key.length());
+            methodArray[0] = key.substring(20,length);
             methodArray[1] = "GreaterThanOrEqualTo";
         }else if (key.startsWith(greaterThan)){
-            methodArray[0] = key.substring(11,key.length());
+            methodArray[0] = key.substring(11,length);
             methodArray[1] = "GreaterThan";
         }else if (key.startsWith(lessThanOrEqualTo)){
-            methodArray[0] = key.substring(17,key.length());
+            methodArray[0] = key.substring(17,length);
             methodArray[1] = "LessThanOrEqualTo";
         }else if (key.startsWith(lessThan)){
-            methodArray[0] = key.substring(8,key.length());
+            methodArray[0] = key.substring(8,length);
             methodArray[1] = "LessThan";
         }else if (key.startsWith(between)){
-            methodArray[0] = key.substring(7,key.length());
+            methodArray[0] = key.substring(7,length);
             methodArray[1] = "Between";
             type = 4;
         }else if (key.startsWith(notBetween)){
-            methodArray[0] = key.substring(10,key.length());
+            methodArray[0] = key.substring(10,length);
             methodArray[1] = "NotBetween";
             type = 4;
         }else if (key.startsWith(in)){
-            methodArray[0] = key.substring(2,key.length());
+            methodArray[0] = key.substring(2,length);
             methodArray[1] = "In";
             type = 3;
         }else if (key.startsWith(notIn)){
-            methodArray[0] = key.substring(5,key.length());
+            methodArray[0] = key.substring(5,length);
             methodArray[1] = "NotIn";
             type = 3;
         }else if (key.startsWith(isNull)){
-            methodArray[0] = key.substring(6,key.length());
+            methodArray[0] = key.substring(6,length);
             methodArray[1] = "IsNull";
             type = 2;
         }else if (key.startsWith(isNotNull)){
-            methodArray[0] = key.substring(9,key.length());
+            methodArray[0] = key.substring(9,length);
             methodArray[1] = "IsNotNull";
             type = 2;
         }else if (key.startsWith(like)){
-            methodArray[0] = key.substring(4,key.length());
+            methodArray[0] = key.substring(4,length);
             methodArray[1] = "Like";
             type = likeType;
         }else if (key.startsWith(notLike)){
-            methodArray[0] = key.substring(7,key.length());
+            methodArray[0] = key.substring(7,length);
             methodArray[1] = "NotLike";
             type = likeType;
         }else{
@@ -340,7 +340,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
     }
 
     protected void setCreateInfo(Object object, Admin admin) throws Exception{
-        Class clazz = object.getClass();
+        Class<?> clazz = object.getClass();
         Method setCreateId = clazz.getMethod("setCreateId", Integer.class);
         Method setCreateName = clazz.getMethod("setCreateName", String.class);
         Method setCreateTime = clazz.getMethod("setCreateTime", String.class);
@@ -404,7 +404,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @return map
      */
     public Map pageResult(List list, long total){
-        HashMap resultMap = Maps.newHashMap();
+        HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("data", list);
         resultMap.put("count", total);
         resultMap.put("code", 0);
@@ -419,7 +419,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @return map
      */
     public Map errorResult(Integer code, String message,boolean flag){
-        HashMap resultMap = Maps.newHashMap();
+        HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", code);
         resultMap.put("msg", message);
         resultMap.put("close", flag);
@@ -432,7 +432,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @return map
      */
     public Map errorResult(Integer code, boolean flag){
-        HashMap resultMap = Maps.newHashMap();
+        HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", code);
         resultMap.put("msg", CommonMessage.MESSAGE.get(code));
         resultMap.put("close", flag);
@@ -445,7 +445,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @return map
      */
     public Map errorResult( boolean flag){
-        HashMap resultMap = Maps.newHashMap();
+        HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.ERROR);
         resultMap.put("msg", CommonMessage.MESSAGE.get(CommonMessage.ERROR));
         resultMap.put("close", flag);
@@ -456,7 +456,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @return map
      */
     public Map successResult(boolean flag){
-        HashMap resultMap = Maps.newHashMap();
+        HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.SUCCESS);
         resultMap.put("msg", CommonMessage.MESSAGE.get(CommonMessage.SUCCESS));
         resultMap.put("close", flag);
@@ -468,7 +468,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @return map
      */
     public Map successResult(String message, boolean flag){
-        HashMap resultMap = Maps.newHashMap();
+        HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.SUCCESS);
         resultMap.put("msg", message);
         resultMap.put("close", flag);
@@ -481,7 +481,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @return map
      */
     public Map successResult(Object data, boolean flag){
-        HashMap resultMap = Maps.newHashMap();
+        HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.SUCCESS);
         resultMap.put("data", data);
         resultMap.put("close", flag);
