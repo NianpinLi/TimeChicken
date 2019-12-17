@@ -28,25 +28,25 @@ import java.util.Map;
  */
 public class BaseServiceImpl<T, PK extends Serializable> {
 
-    private String stringClass = "java.lang.String";
-    private String intClass = "java.lang.Integer";
-    private String intName = "int";
-    private String floatClass = "java.lang.Float";
-    private String floatName = "float";
-    private String doubleClass = "java.lang.Double";
-    private String doubleName = "double";
-    private String longClass = "java.lang.Long";
-    private String longName = "long";
-    private String charClass = "java.lang.Character";
-    private String charName = "char";
-    private String shortClass = "java.lang.Short";
-    private String shortName = "short";
-    private String byteClass = "java.lang.Byte";
-    private String byteName = "byte";
-    private String booleanClass = "java.lang.Boolean";
-    private String booleanName = "boolean";
-    private String bigDecimalClass = "java.math.BigDecimal";
-    private String bigIntegerClass = "java.math.BigInteger";
+    private static String stringClass = "java.lang.String";
+    private static String intClass = "java.lang.Integer";
+    private static String intName = "int";
+    private static String floatClass = "java.lang.Float";
+    private static String floatName = "float";
+    private static String doubleClass = "java.lang.Double";
+    private static String doubleName = "double";
+    private static String longClass = "java.lang.Long";
+    private static String longName = "long";
+    private static String charClass = "java.lang.Character";
+    private static String charName = "char";
+    private static String shortClass = "java.lang.Short";
+    private static String shortName = "short";
+    private static String byteClass = "java.lang.Byte";
+    private static String byteName = "byte";
+    private static String booleanClass = "java.lang.Boolean";
+    private static String booleanName = "boolean";
+    private static String bigDecimalClass = "java.math.BigDecimal";
+    private static String bigIntegerClass = "java.math.BigInteger";
 
     protected void setOrderByClause(Map<String, String> paramsMap, Object example, String beanName) throws Exception{
         String fieldSort = "field";
