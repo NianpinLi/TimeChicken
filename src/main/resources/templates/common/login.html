@@ -50,9 +50,11 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
-                    <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
+                    <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha">
                     <div class="captcha-img">
-                        <img id="captchaPic" th:src="@{/layui/images/captcha.jpg}">
+                        <a href="javascript:getVerificationCode();">
+                            <img id="captchaPic" th:title="点击刷新验证码" th:src="@{/common/verification}">
+                        </a>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -79,7 +81,11 @@
             dotColor:'#5cbdaa',
             lineColor:'#5cbdaa'
         });
+
     });
+    function getVerificationCode(){
+        $("#captchaPic").prop('src','verification?a='+new Date().getTime());
+    }
 </script>
 </body>
 </html>

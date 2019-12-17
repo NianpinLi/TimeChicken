@@ -1,8 +1,11 @@
 package com.dandelion.base;
 
 import com.dandelion.bean.Admin;
+import com.dandelion.utils.PictureVerificationCodeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -10,6 +13,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * BaseController  公共Controller
@@ -26,6 +30,28 @@ public class BaseController {
     @RequestMapping("common/login")
     public String toLogin() {
         return "common/login";
+    }
+
+    /**
+     * @author jiaqing.xu@hand-china.com
+     * @date 2017/8/23
+     * @description 生成图片验证码
+     */
+    @RequestMapping(value = "/common/verification", method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public void verification(HttpServletResponse response) throws IOException {
+         // 设置响应的类型格式为图片格式
+          response.setContentType("image/jpeg");
+          // 禁止图像缓存。
+          response.setHeader("Pragma", "no-cache");
+          response.setHeader("Cache-Control", "no-cache");
+          response.setDateHeader("Expires", 0);
+          //实例生成验证码对象
+          PictureVerificationCodeUtil instance = new PictureVerificationCodeUtil();
+          //将验证码存入session
+          this.setSession("verification", instance.getCode());
+          //向页面输出验证码图片
+          instance.write(response.getOutputStream());
     }
     @RequestMapping("common/noAuthority")
     public String noAuthority() {
@@ -55,6 +81,15 @@ public class BaseController {
      */
     public void setAttribute(String name, Object value) {
         this.getRequest().setAttribute(name, value);
+    }
+
+    /**
+     * setSession 存入Session作用域
+     * @param name String
+     * @param value Object
+     */
+    public void setSession(String name, Object value) {
+        this.getRequest().getSession().setAttribute(name, value);
     }
 
     /**

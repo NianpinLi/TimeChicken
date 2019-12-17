@@ -15,6 +15,7 @@ import com.dandelion.service.AdminService;
 import com.dandelion.utils.EncryptionUtil;
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.RedisUtil;
+import com.dandelion.utils.StringUtil;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -65,6 +66,12 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
     @Override
     @ReadOnlyConnection
     public Map loginAdmin(Map<String, String> paramsMap) throws Exception {
+        //判断验证码
+        String code = String.valueOf(this.getSession("verification")).toLowerCase();
+        String captcha = paramsMap.get("captcha");
+        if (ObjectUtil.isNull(captcha) || !code.equals(captcha.toLowerCase())){
+            return errorResult(CommonMessage.PARAMS_ERROR, "验证码不正确", false);
+        }
         String adminName = paramsMap.get("adminName");
         String adminPassword = paramsMap.get("adminPassword");
         UsernamePasswordToken token = new UsernamePasswordToken(adminName, adminPassword);
