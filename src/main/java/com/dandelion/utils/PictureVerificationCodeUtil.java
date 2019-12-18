@@ -86,7 +86,7 @@ public class PictureVerificationCodeUtil {
 
     public void createCode() {
         // 每个字符的宽度
-        int codeX = width / (codeCount + 3);
+        int codeWidth = width / (codeCount + 3);
         // 字体的高度
         int fontHeight = height - 5;
         // 图像buffer
@@ -108,7 +108,7 @@ public class PictureVerificationCodeUtil {
             // 设置字体颜色
             g.setColor(getRandomColor());
             // 设置字体位置
-            g.drawString(strRand, (i + 1) * codeX, fontHeight);
+            g.drawString(strRand, (i + 1) * codeWidth, fontHeight);
             randomCode.append(strRand);
         }
         code = randomCode.toString();

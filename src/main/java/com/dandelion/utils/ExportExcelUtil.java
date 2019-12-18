@@ -22,6 +22,11 @@ public class ExportExcelUtil {
      */
     private static int sheetDataLength = 59999;
 
+    /**
+     * 数字最长长度
+     */
+    private static int numberMaxLength = 12;
+
 
 
     /**
@@ -394,7 +399,7 @@ public class ExportExcelUtil {
      */
     private static void setCellValue(Cell cell, Object value, CellStyle cellStyle){
 
-        if (ObjectUtil.isNumber(value) && String.valueOf(value).length() <= 12){
+        if (ObjectUtil.isNumber(value) && String.valueOf(value).length() <= numberMaxLength){
             //当数据为数字类型 且 长度小于12位（非科学计数法）
             cell.setCellType(CellType.NUMERIC);
             cell.setCellValue(Double.parseDouble(String.valueOf(value)));
