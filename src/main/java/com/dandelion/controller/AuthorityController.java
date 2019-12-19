@@ -43,8 +43,8 @@ public class AuthorityController extends BaseController {
      */
     @RequiresPermissions("/authority/getAuthorityList")
     @RequestMapping(value = "getAuthorityList", method = RequestMethod.GET)
-    public @ResponseBody
-    Map getAuthorityList(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map getAuthorityList(@RequestParam Map<String, String> paramsMap) throws Exception {
         return authorityService.getAuthorityList(paramsMap);
     }
 
@@ -64,8 +64,8 @@ public class AuthorityController extends BaseController {
      */
     @RequiresPermissions("/authority/addAuthority")
     @RequestMapping(value = "getAuthorityPageList", method = RequestMethod.GET)
-    public @ResponseBody
-    Map getAuthorityPageList(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map getAuthorityPageList(@RequestParam Map<String, String> paramsMap) throws Exception {
         return authorityService.getAuthorityPageList(paramsMap);
     }
 
@@ -88,8 +88,8 @@ public class AuthorityController extends BaseController {
      */
     @RequiresPermissions(value = {"/authority/addAuthority", "/authority/updateAuthority"}, logical = Logical.OR)
     @RequestMapping(value = "saveAuthority", method = RequestMethod.POST)
-    public @ResponseBody
-    Map saveAuthority(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map saveAuthority(@RequestParam Map<String, String> paramsMap) throws Exception {
         return authorityService.saveAuthority(paramsMap);
     }
 
@@ -97,8 +97,8 @@ public class AuthorityController extends BaseController {
      * 删除权限
      */
     @RequestMapping(value = "deleteAuthority", method = RequestMethod.POST)
-    public @ResponseBody
-    Map deleteAuthority(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map deleteAuthority(@RequestParam Map<String, String> paramsMap) throws Exception {
         return authorityService.deleteAuthority(paramsMap);
     }
 }

@@ -1,7 +1,6 @@
 package com.dandelion.base;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.dao.DataSourceContextHolder;
 import com.dandelion.utils.DateUtil;
 import com.google.common.collect.Maps;
@@ -13,11 +12,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.ExtendedServletRequestDataBinder;
 
 import javax.servlet.http.HttpServletResponseWrapper;
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -72,21 +71,18 @@ public class BaseAop {
     }
 
     /**
-     * 从库方法AOP 如果Service方法中添加注解 @ReadOnlyConnection 查询走从库
+     * 主库方法AOP 如果Service方法中添加注解 @Transactional 查询走从库
      * @param proceedingJoinPoint ProceedingJoinPoint
-     * @param readOnlyConnection ReadOnlyConnection
+     * @param Transactional Transactional
      * @return Object
      * @throws Throwable e
      */
-    @Around("@annotation(readOnlyConnection)")
-    public Object proceed(ProceedingJoinPoint proceedingJoinPoint,ReadOnlyConnection readOnlyConnection) throws Throwable {
+    @Around("@annotation(Transactional)")
+    public Object proceed(ProceedingJoinPoint proceedingJoinPoint, Transactional Transactional) throws Throwable {
         try {
             Signature signature = proceedingJoinPoint.getSignature();
-            String[] noLogMethod = {"getRoleByAdminId","getAuthorityByAdminId"};
-            if (!Arrays.asList(noLogMethod).contains(signature.getName())){
-                log.info("从库查询，查询方法:{}",signature);
-            }
-            DataSourceContextHolder.setDataSourceType(DataSourceContextHolder.DataSourceType.SLAVE);
+            log.info("主库操作，查询方法:{}",signature);
+            DataSourceContextHolder.setDataSourceType(DataSourceContextHolder.DataSourceType.MASTER);
             return proceedingJoinPoint.proceed();
         }finally {
             DataSourceContextHolder.clearDataSourceType();

@@ -339,7 +339,8 @@ public class BaseServiceImpl<T, PK extends Serializable> {
         return methodMap;
     }
 
-    protected void setCreateInfo(Object object, Admin admin) throws Exception{
+    protected void setCreateInfo(Object object) throws Exception{
+        Admin admin = this.getLoginAdmin();
         Class<?> clazz = object.getClass();
         Method setCreateId = clazz.getMethod("setCreateId", Integer.class);
         Method setCreateName = clazz.getMethod("setCreateName", String.class);
@@ -403,7 +404,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @param total Long
      * @return map
      */
-    public Map pageResult(List list, long total){
+    public Map<String, Object> pageResult(List list, long total){
         HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("data", list);
         resultMap.put("count", total);
@@ -418,7 +419,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @param flag String 是否关闭当前页面 true管理 false不关闭
      * @return map
      */
-    public Map errorResult(Integer code, String message,boolean flag){
+    public Map<String, Object> errorResult(Integer code, String message,boolean flag){
         HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", code);
         resultMap.put("msg", message);
@@ -431,7 +432,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @param flag boolean
      * @return map
      */
-    public Map errorResult(Integer code, boolean flag){
+    public Map<String, Object> errorResult(Integer code, boolean flag){
         HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", code);
         resultMap.put("msg", CommonMessage.MESSAGE.get(code));
@@ -444,7 +445,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @param flag boolean
      * @return map
      */
-    public Map errorResult( boolean flag){
+    public Map<String, Object> errorResult( boolean flag){
         HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.ERROR);
         resultMap.put("msg", CommonMessage.MESSAGE.get(CommonMessage.ERROR));
@@ -455,7 +456,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * 成功信息返回
      * @return map
      */
-    public Map successResult(boolean flag){
+    public Map<String, Object> successResult(boolean flag){
         HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.SUCCESS);
         resultMap.put("msg", CommonMessage.MESSAGE.get(CommonMessage.SUCCESS));
@@ -467,7 +468,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @param message String
      * @return map
      */
-    public Map successResult(String message, boolean flag){
+    public Map<String, Object> successResult(String message, boolean flag){
         HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.SUCCESS);
         resultMap.put("msg", message);
@@ -480,7 +481,7 @@ public class BaseServiceImpl<T, PK extends Serializable> {
      * @param data Object
      * @return map
      */
-    public Map successResult(Object data, boolean flag){
+    public Map<String, Object> successResult(Object data, boolean flag){
         HashMap<String, Object> resultMap = Maps.newHashMap();
         resultMap.put("code", CommonMessage.SUCCESS);
         resultMap.put("data", data);

@@ -54,8 +54,8 @@ public class MybatisConfig extends MybatisAutoConfiguration {
         Map<Object,Object> targetDataResources = new ClassLoaderRepository.SoftHashMap();
         targetDataResources.put(DataSourceContextHolder.DataSourceType.MASTER,masterDataSource);
         targetDataResources.put(DataSourceContextHolder.DataSourceType.SLAVE,slaveDataSource);
-        //默认源
-        proxy.setDefaultTargetDataSource(masterDataSource);
+        //默认从库源
+        proxy.setDefaultTargetDataSource(slaveDataSource);
         proxy.setTargetDataSources(targetDataResources);
         return proxy;
     }

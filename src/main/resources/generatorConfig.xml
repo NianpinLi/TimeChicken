@@ -83,9 +83,10 @@
         </javaClientGenerator>
 
         <!-- 指定我们要操作的表明和生成的javabean类名 -->
-        <table schema="my-project" tableName="admin" domainObjectName="Admin" ></table>
-        <table schema="my-project" tableName="role" domainObjectName="Role" ></table>
-        <table schema="my-project" tableName="authority" domainObjectName="Authority" ></table>
+<!--        <table schema="my-project" tableName="admin" domainObjectName="Admin" ></table>-->
+<!--        <table schema="my-project" tableName="role" domainObjectName="Role" ></table>-->
+<!--        <table schema="my-project" tableName="authority" domainObjectName="Authority" ></table>-->
+        <table schema="my-project" tableName="notice" domainObjectName="Notice" ></table>
     </context>
 
 </generatorConfiguration>

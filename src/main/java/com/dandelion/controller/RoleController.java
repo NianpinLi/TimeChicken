@@ -47,8 +47,8 @@ public class RoleController extends BaseController {
      */
     @RequiresPermissions("/role/getRoleList")
     @RequestMapping(value = "getRoleList", method = RequestMethod.GET)
-    public @ResponseBody
-    Map getRoleList(@RequestParam Map<String, String> map) throws Exception {
+    @ResponseBody
+    public Map getRoleList(@RequestParam Map<String, String> map) throws Exception {
         return roleService.getRoleList(map);
     }
 
@@ -71,8 +71,8 @@ public class RoleController extends BaseController {
      */
     @RequiresPermissions(value = {"/role/addRole", "/workOrder/addType", "/workOrder/updateType"}, logical = Logical.OR)
     @RequestMapping(value = "getRolePageList", method = RequestMethod.GET)
-    public @ResponseBody
-    Map getRolePageList(@RequestParam Map<String, String> map) throws Exception {
+    @ResponseBody
+    public Map getRolePageList(@RequestParam Map<String, String> map) throws Exception {
         return roleService.getRolePageList(map);
     }
 
@@ -95,8 +95,8 @@ public class RoleController extends BaseController {
      */
     @RequiresPermissions(value = {"/role/addRole", "/role/updateRole"}, logical = Logical.OR)
     @RequestMapping(value = "saveRole", method = RequestMethod.POST)
-    public @ResponseBody
-    Map saveRole(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map saveRole(@RequestParam Map<String, String> paramsMap) throws Exception {
         return roleService.saveRole(paramsMap);
     }
 
@@ -105,8 +105,8 @@ public class RoleController extends BaseController {
      */
     @RequiresPermissions(value = {"/role/deleteRole"})
     @RequestMapping(value = "deleteRole", method = RequestMethod.POST)
-    public @ResponseBody
-    Map deleteRole(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map deleteRole(@RequestParam Map<String, String> paramsMap) throws Exception {
         return roleService.deleteRole(paramsMap);
     }
 
@@ -125,8 +125,8 @@ public class RoleController extends BaseController {
      */
     @RequiresPermissions(value = {"/role/empowermentAuthority"})
     @RequestMapping(value = "getRoleAuthorityTree", method = RequestMethod.GET)
-    public @ResponseBody
-    Map getRoleAuthorityTree(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map getRoleAuthorityTree(@RequestParam Map<String, String> paramsMap) throws Exception {
         //查询(现有权限,所有权限并组成树形结构)
         return roleService.empowermentAuthority(paramsMap);
     }
@@ -136,8 +136,8 @@ public class RoleController extends BaseController {
      */
     @RequiresPermissions(value = {"/role/empowermentAuthority"})
     @RequestMapping(value = "saveEmpowermentAuthority", method = RequestMethod.POST)
-    public @ResponseBody
-    Map saveEmpowermentAuthority(@RequestParam Map<String, Object> paramsMap) throws Exception {
+    @ResponseBody
+    public Map saveEmpowermentAuthority(@RequestParam Map<String, Object> paramsMap) throws Exception {
         return roleService.saveEmpowermentAuthority(paramsMap);
     }
 }

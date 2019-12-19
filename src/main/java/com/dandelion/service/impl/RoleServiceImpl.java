@@ -1,7 +1,6 @@
 package com.dandelion.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseServiceImpl;
 import com.dandelion.bean.Authority;
 import com.dandelion.bean.Role;
@@ -45,7 +44,6 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
      * @throws Exception e
      */
     @Override
-    @ReadOnlyConnection
     public Map getRoleList(Map<String, String> paramsMap) throws Exception {
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
@@ -64,7 +62,6 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
      * @throws Exception e
      */
     @Override
-    @ReadOnlyConnection
     public Map getRolePageList(Map<String, String> paramsMap) throws Exception {
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
@@ -88,7 +85,6 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
      * @throws Exception e
      */
     @Override
-    @ReadOnlyConnection
     public Role getRoleById(Map<String, String> paramsMap) throws Exception {
         return roleMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("roleId")));
 
@@ -107,7 +103,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
         Role role = JSON.parseObject(JSON.toJSONString(paramsMap), Role.class);
         if (ObjectUtil.isNull(role.getRoleId())) {
             //存入添加信息
-            this.setCreateInfo(role, this.getLoginAdmin());
+            this.setCreateInfo(role);
             //判断是否存在角色ID 不存在新增
             roleMapper.insertSelective(role);
         } else {
@@ -145,7 +141,6 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements R
      * @throws Exception e
      */
     @Override
-    @ReadOnlyConnection
     public Map empowermentAuthority(Map<String, String> paramsMap) throws Exception {
         //查询当前角色拥有的权限
         List<Integer> authorityList = roleSelfMapper.selectAuthorityIdByRoleId(paramsMap);

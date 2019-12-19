@@ -206,8 +206,8 @@ public class AdminController extends BaseController {
      */
     @RequiresPermissions(value = {"/admin/empowermentRole"})
     @RequestMapping(value = "getRoleTree", method = RequestMethod.GET)
-    public @ResponseBody
-    Map getRoleTree(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map getRoleTree(@RequestParam Map<String, String> paramsMap) throws Exception {
         //查询(现有权限,所有权限并组成树形结构)
         return adminService.empowermentRole(paramsMap);
     }
@@ -217,8 +217,8 @@ public class AdminController extends BaseController {
      */
     @RequiresPermissions(value = {"/admin/empowermentRole"})
     @RequestMapping(value = "saveEmpowermentRole", method = RequestMethod.POST)
-    public @ResponseBody
-    Map saveEmpowermentRole(@RequestParam Map<String, Object> paramsMap) throws Exception {
+    @ResponseBody
+    public Map saveEmpowermentRole(@RequestParam Map<String, Object> paramsMap) throws Exception {
         return adminService.saveEmpowermentRole(paramsMap);
     }
 
@@ -227,8 +227,8 @@ public class AdminController extends BaseController {
      */
     @RequiresPermissions(value = {"/admin/deleteAdmin"})
     @RequestMapping(value = "deleteAdmin", method = RequestMethod.POST)
-    public @ResponseBody
-    Map deleteAdmin(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map deleteAdmin(@RequestParam Map<String, String> paramsMap) throws Exception {
         return adminService.deleteAdmin(paramsMap);
     }
 
@@ -238,8 +238,8 @@ public class AdminController extends BaseController {
      */
     @RequiresPermissions(value = {"/admin/changeAdminStatus"})
     @RequestMapping(value = "changeAdminStatus", method = RequestMethod.POST)
-    public @ResponseBody
-    Map changeAdminStatus(@RequestParam Map<String, String> paramsMap) throws Exception {
+    @ResponseBody
+    public Map changeAdminStatus(@RequestParam Map<String, String> paramsMap) throws Exception {
         return adminService.changeAdminStatus(paramsMap);
     }
 }

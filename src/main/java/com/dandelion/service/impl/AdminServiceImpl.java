@@ -1,7 +1,6 @@
 package com.dandelion.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.dandelion.annotation.ReadOnlyConnection;
 import com.dandelion.base.BaseRedisKey;
 import com.dandelion.base.BaseServiceImpl;
 import com.dandelion.base.CommonMessage;
@@ -15,7 +14,6 @@ import com.dandelion.service.AdminService;
 import com.dandelion.utils.EncryptionUtil;
 import com.dandelion.utils.ObjectUtil;
 import com.dandelion.utils.RedisUtil;
-import com.dandelion.utils.StringUtil;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -64,7 +62,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      * @throws Exception Exception
      */
     @Override
-    @ReadOnlyConnection
     public Map loginAdmin(Map<String, String> paramsMap) throws Exception {
         //判断验证码
         String code = String.valueOf(this.getSession("verification")).toLowerCase();
@@ -96,7 +93,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      * @return List
      */
     @Override
-    @ReadOnlyConnection
     public List<Authority> getAuthorityByAdminId(Map<String, String> authorityParams, String page) throws Exception {
         String key = BaseRedisKey.ADMIN_AUTHORITY + page + authorityParams.get("adminId");
         List<Authority> list = redisUtil.getList(key, Authority.class);
@@ -119,7 +115,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      * @return List
      */
     @Override
-    @ReadOnlyConnection
     public List<Role> getRoleByAdminId(Map<String, String> authorityParams) throws Exception {
         String key = BaseRedisKey.ADMIN_ROLE + authorityParams.get("adminId");
         List<Role> list = redisUtil.getList(key, Role.class);
@@ -143,7 +138,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      * @throws Exception e
      */
     @Override
-    @ReadOnlyConnection
     public Admin getAdminByAdminName(String adminName) throws Exception {
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
@@ -164,7 +158,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      * @throws Exception Exception
      */
     @Override
-    @ReadOnlyConnection
     public Map getAdminList(Map<String, String> paramsMap) throws Exception {
         AdminExample example = new AdminExample();
         AdminExample.Criteria criteria = example.createCriteria();
@@ -191,7 +184,7 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
         Admin admin = JSON.parseObject(JSON.toJSONString(paramsMap), Admin.class);
         if (ObjectUtil.isNull(admin.getAdminId())) {
             //存入添加信息
-            this.setCreateInfo(admin, this.getLoginAdmin());
+            this.setCreateInfo(admin);
             //对用户名进行加盐
             ByteSource salt = ByteSource.Util.bytes(admin.getAdminName());
             //密码加密
@@ -213,7 +206,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      * @throws Exception e
      */
     @Override
-    @ReadOnlyConnection
     public Admin getAdminById(Map<String, String> paramsMap) throws Exception {
         return adminMapper.selectByPrimaryKey(Integer.parseInt(paramsMap.get("adminId")));
     }
@@ -224,7 +216,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      * @param paramsMap Map
      */
     @Override
-    @ReadOnlyConnection
     public Map empowermentRole(Map<String, String> paramsMap) {
         //查询当前用户拥有的角色
         List<Integer> roleList = adminSelfMapper.selectRoleIdByAdminId(paramsMap);
@@ -336,7 +327,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      * @return Map
      */
     @Override
-    @ReadOnlyConnection
     public Map<String, Object> getIndexConfig() throws Exception {
         Map<String, Object> indexConfig = Maps.newHashMap();
 
@@ -416,7 +406,6 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer> implements
      * @return Map
      * @throws Exception e
      */
-    @ReadOnlyConnection
     private Map getAuthority() throws Exception {
         Admin admin = (Admin) this.getSession("adminSession");
         //查询页面权限
